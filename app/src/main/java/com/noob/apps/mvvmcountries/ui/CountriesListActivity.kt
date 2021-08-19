@@ -19,11 +19,6 @@ class CountriesListActivity : AppCompatActivity() {
     private lateinit var mViewModel: CountryListViewModel
     private lateinit var mActivityBinding: ActivityCountriesListBinding
 
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
