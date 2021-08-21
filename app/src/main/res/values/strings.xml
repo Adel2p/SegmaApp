@@ -3,5 +3,8 @@
     <string name="app_no_internet_msg">Internet connection is required!</string>
     <string name="refresh_button">Refresh Button</string>
     <string name="welcome_msg">welcome to segma app</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="password"> Password</string>
+    <string name="forget_password"> Forget Password?</string>
 
 </resources>

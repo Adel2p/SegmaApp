@@ -29,8 +29,8 @@ class CountriesListActivity : AppCompatActivity() {
         mActivityBinding.viewModel = mViewModel
         mActivityBinding.lifecycleOwner = this
 
-        initializeRecyclerView()
-        initializeObservers()
+        //initializeRecyclerView()
+       // initializeObservers()
     }
 
     private fun initializeRecyclerView() {
