@@ -6,5 +6,8 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="password"> Password</string>
     <string name="forget_password"> Forget Password?</string>
+    <string name="have_not_account"> Have Not Account?</string>
+    <string name="create_new_account"> Create New Account?</string>
+
 
 </resources>
