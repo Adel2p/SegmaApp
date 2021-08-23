@@ -4,26 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Login.LoginActivity">
+    tools:context=".ui.visitor.Visitor">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="300dp"
+        android:text="@string/full_name"
+        android:textColor="@color/gray_purple"
+        android:textSize="22dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til3"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/curved_edittext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFullName"
+
+        >
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etFullName"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingBottom="30dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txtMobileNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="250dp"
         android:text="@string/mobile_number"
         android:textColor="@color/gray_purple"
         android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/til3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til1"
+        android:id="@+id/til4"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/curved_edittext"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,128 +77,78 @@
             android:id="@+id/etMobileNumber"
             android:layout_width="match_parent"
             android:layout_height="65dp"
-            android:inputType="phone"
+            android:inputType="number"
             android:paddingStart="10dp"
-            android:paddingBottom="30dp"
+            android:paddingTop="30dp"
             android:textColor="@color/black"
             android:textSize="18sp" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/password"
-        android:textColor="@color/gray_purple"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til1"
-
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til2"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/curved_edittext"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-        app:passwordToggleEnabled="true">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:inputType="textPassword"
-            android:textColor="@color/black"
-            android:paddingStart="10dp"
-            android:paddingBottom="30dp"
-            android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginButton"
+        android:id="@+id/VisitorButton"
         android:layout_width="339dp"
         android:layout_height="72dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="150dp"
         android:background="@drawable/curved_button"
         android:gravity="center"
-        android:text="@string/login"
+        android:text="@string/visitor"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til2" />
+        app:layout_constraintTop_toBottomOf="@+id/til4" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtForgetPassword"
-        android:layout_width="127dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="200dp"
-        android:text="@string/forget_password"
-        android:textColor="@color/blue"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til2" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat2"
+        android:id="@+id/linearLayoutCompat3"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="560dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="550dp"
+        android:layout_marginEnd="100dp"
         android:layout_marginBottom="100dp"
         android:orientation="horizontal"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/VisitorButton"
+
         >
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtHaveNotAccount"
+            android:id="@+id/haveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/have_not_account"
+            android:paddingStart="40dp"
+            android:text="@string/have_account"
             android:textColor="@color/gray_purple"
 
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtCreateNewAccount"
+            android:id="@+id/txtlogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_new_account"
+            android:text="@string/login"
             android:textColor="@color/blue"
 
+
             />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtVisitor"
-        android:layout_width="84dp"
-        android:layout_height="43dp"
-        android:layout_marginBottom="48dp"
-        android:gravity="center"
-        android:text="@string/visitor"
-        android:textColor="@color/blue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat2" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+

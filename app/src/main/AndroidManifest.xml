@@ -15,15 +15,19 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.visitor.Visitor"
+            android:exported="true" />
+        <activity
+            android:name=".ui.Login.Visitor.Visitor"
+            android:exported="true" />
+        <activity
             android:name=".ui.Login.LoginActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.Splash.SplashActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
-
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
