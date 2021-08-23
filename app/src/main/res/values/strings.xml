@@ -6,11 +6,11 @@
     <string name="mobile_number">Mobile Number </string>
     <string name="password"> Password</string>
     <string name="forget_password"> Forget Password?</string>
-    <string name="login_button">Login Button</string>
+    <string name="login">Login </string>
     <string name="have_not_account"> Have Not Account?</string>
-    <string name="create_new_account"> Create New Account?</string>
-    <string name="visitor_button">Visitor Button</string>
-    <string name="have_account">Have Account</string>
+    <string name="create_new_account"> Create New Account</string>
+    <string name="visitor">Visitor </string>
+    <string name="have_account">Have Account? </string>
     <string name="full_name">Full Name</string>
 
 
