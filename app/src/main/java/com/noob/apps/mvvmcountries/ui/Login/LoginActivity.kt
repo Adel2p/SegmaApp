@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.ui.CountriesListActivity
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
