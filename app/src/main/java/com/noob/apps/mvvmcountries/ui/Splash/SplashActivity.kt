@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.ui.Login.LoginActivity
+import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
