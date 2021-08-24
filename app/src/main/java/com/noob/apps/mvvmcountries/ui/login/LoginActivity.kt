@@ -8,6 +8,7 @@ import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityCountriesListBinding
 import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
 import com.noob.apps.mvvmcountries.ui.CountriesListActivity
+import com.noob.apps.mvvmcountries.ui.signup.SignUp
 import com.noob.apps.mvvmcountries.ui.visitor.Visitor
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +20,12 @@ class LoginActivity : AppCompatActivity() {
 
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, Visitor::class.java))
+        }
+
+
+
+        mActivityBinding.txtCreateNewAccount.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, SignUp::class.java))
         }
 
 

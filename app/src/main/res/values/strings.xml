@@ -12,6 +12,8 @@
     <string name="visitor">Visitor </string>
     <string name="have_account">Have Account? </string>
     <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="Continue">Continue</string>
 
 
 </resources>
