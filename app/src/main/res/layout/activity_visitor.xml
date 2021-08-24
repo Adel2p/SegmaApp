@@ -40,7 +40,8 @@
             android:paddingStart="10dp"
             android:paddingBottom="30dp"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,7 +76,8 @@
             android:paddingStart="10dp"
             android:paddingBottom="30dp"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,13 +114,13 @@
         android:id="@+id/txtlogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:textColor="@color/blue"
         android:layout_marginStart="2dp"
         android:layout_marginTop="20dp"
+        android:text="@string/login"
+        android:textColor="#0277BD"
+        android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/txthaveAccount"
         app:layout_constraintTop_toBottomOf="@+id/VisitorButton"
-        android:textSize="15sp"
 
 
         />

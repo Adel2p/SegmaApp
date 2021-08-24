@@ -17,9 +17,12 @@
         <activity
             android:name=".ui.visitor.Visitor"
             android:exported="true" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true" />
 
         <activity
-            android:name=".ui.TestActivity"
+            android:name=".ui.Splash.SplashActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
