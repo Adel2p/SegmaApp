@@ -15,15 +15,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.signup.SignUp"
-            android:exported="true" />
+            android:name=".ui.signup.SignUpActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.visitor.Visitor"
-            android:exported="true" />
+            android:name=".ui.visitor.VisitorActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="true" />
-
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.Splash.SplashActivity"
             android:exported="true"
