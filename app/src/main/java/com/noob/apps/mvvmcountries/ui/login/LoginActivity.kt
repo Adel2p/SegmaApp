@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
-import com.noob.apps.mvvmcountries.ui.CountriesListActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
@@ -31,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
         mActivityBinding.loginButton.setOnClickListener {
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-            Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             if (MobileNumberValidator.validCellPhone(mobileNumber)) {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             } else {
