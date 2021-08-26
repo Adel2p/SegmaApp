@@ -30,12 +30,12 @@ class LoginActivity : AppCompatActivity() {
         mActivityBinding.loginButton.setOnClickListener {
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-            if (MobileNumberValidator.validCellPhone(mobileNumber)&&mobileNumber.isNotEmpty()) {
+            if (MobileNumberValidator.validCellPhone(mobileNumber)) {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             }
-            if (PasswordValidation.isValidPassword(password)&&password.isNotEmpty()) {
+            if (PasswordValidation.isValidPassword(password)) {
                 Toast.makeText(this, password, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etPassword.error = "Invalid Password"

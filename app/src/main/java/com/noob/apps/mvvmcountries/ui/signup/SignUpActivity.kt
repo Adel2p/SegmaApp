@@ -35,18 +35,18 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etFullName.error = "This Field Is Requried"
             }
-            if (MobileNumberValidator.validCellPhone(mobileNumber) && mobileNumber.isNotEmpty()) {
+            if (MobileNumberValidator.validCellPhone(mobileNumber)) {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             }
-            if (PasswordValidation.isValidPassword(password)&&password.isNotEmpty()) {
+            if (PasswordValidation.isValidPassword(password)) {
                 Toast.makeText(this, password, Toast.LENGTH_LONG).show()
 
             } else {
                 mActivityBinding.etPassword.error = "Invalid  Password"
             }
-            if (EmailValidation.validMail(eMail)&&eMail.isNotEmpty()) {
+            if (EmailValidation.validMail(eMail)) {
                 Toast.makeText(this, eMail, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etemail.error = "Invalid Email"
