@@ -45,11 +45,11 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
             android:clickable="true"
+            android:contentDescription="@string/refresh_button"
             android:focusable="true"
             android:onClick="@{(v) -> viewModel.onRefreshClicked(v)}"
             android:src="@drawable/ic_refresh"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/refresh_button" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

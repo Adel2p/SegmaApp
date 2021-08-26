@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, VisitorActivity::class.java))
         }
-
         mActivityBinding.txtCreateNewAccount.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
         }
@@ -35,9 +34,6 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             }
-
-
         }
     }
-
 }
