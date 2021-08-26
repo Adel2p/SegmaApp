@@ -35,13 +35,6 @@ class VisitorActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             }
-            if (PasswordValidation.isValidPassword(password)) {
-                Toast.makeText(this, password, Toast.LENGTH_LONG).show()
-
-            } else {
-                mActivityBinding.etPassword.error = "Invalid  Password"
-            }
-
         }
     }
 }
