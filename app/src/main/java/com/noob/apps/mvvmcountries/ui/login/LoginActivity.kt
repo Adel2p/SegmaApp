@@ -10,6 +10,7 @@ import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
+import com.noob.apps.mvvmcountries.utils.PasswordValidation
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mobileNumber: String
@@ -33,6 +34,11 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+            }
+            if (PasswordValidation.isValidPassword(password)) {
+                Toast.makeText(this, password, Toast.LENGTH_LONG).show()
+            } else {
+                mActivityBinding.etPassword.error = "Invalid Password"
             }
         }
     }
