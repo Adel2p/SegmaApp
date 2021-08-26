@@ -35,6 +35,9 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etFullName.error = "This Field Is Requried"
             }
+            if(mobileNumber.isEmpty()){
+                mActivityBinding.etMobileNumber.error="This Term Is Requried"
+            }
             if (MobileNumberValidator.validCellPhone(mobileNumber)) {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             } else {

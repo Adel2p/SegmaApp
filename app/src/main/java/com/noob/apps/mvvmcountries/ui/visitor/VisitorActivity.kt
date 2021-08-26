@@ -30,6 +30,9 @@ class VisitorActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etFullName.error = "This Term Is Requried"
             }
+            if(mobileNumber.isEmpty()){
+               mActivityBinding.etMobileNumber.error="This Term Is Requried"
+            }
             if (MobileNumberValidator.validCellPhone(mobileNumber)&&mobileNumber.isNotEmpty()) {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             }
