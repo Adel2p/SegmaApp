@@ -40,13 +40,13 @@ class SignUpActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             }
-            if (PasswordValidation.isValidPassword(password)) {
+            if (PasswordValidation.isValidPassword(password)&&password.isNotEmpty()) {
                 Toast.makeText(this, password, Toast.LENGTH_LONG).show()
 
             } else {
                 mActivityBinding.etPassword.error = "Invalid  Password"
             }
-            if (EmailValidation.validMail(eMail)) {
+            if (EmailValidation.validMail(eMail)&&eMail.isNotEmpty()) {
                 Toast.makeText(this, eMail, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etemail.error = "Invalid Email"
