@@ -19,11 +19,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
-
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, VisitorActivity::class.java))
         }
-
         mActivityBinding.txtCreateNewAccount.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
         }
@@ -34,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+            }
+            if(password.isEmpty()){
+                mActivityBinding.etPassword.error = "Invalid password"
             }
 
 
