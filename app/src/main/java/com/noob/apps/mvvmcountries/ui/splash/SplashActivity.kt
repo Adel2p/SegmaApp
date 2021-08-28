@@ -1,10 +1,9 @@
-package com.noob.apps.mvvmcountries.ui.Splash
+package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.ui.TestActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit

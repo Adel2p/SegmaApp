@@ -30,7 +30,7 @@ class CountriesListActivity : AppCompatActivity() {
         mActivityBinding.lifecycleOwner = this
 
         //initializeRecyclerView()
-       // initializeObservers()
+        // initializeObservers()
     }
 
     private fun initializeRecyclerView() {

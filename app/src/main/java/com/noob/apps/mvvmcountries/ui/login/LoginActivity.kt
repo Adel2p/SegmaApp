@@ -10,6 +10,7 @@ import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
+import com.noob.apps.mvvmcountries.utils.PasswordValidation
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var mobileNumber: String
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
+
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, VisitorActivity::class.java))
         }
@@ -33,12 +35,11 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             }
-            if(password.isEmpty()){
-                mActivityBinding.etPassword.error = "Invalid password"
+            if (PasswordValidation.isValidPassword(password)) {
+                Toast.makeText(this, password, Toast.LENGTH_LONG).show()
+            } else {
+                mActivityBinding.etPassword.error = "Invalid Password"
             }
-
-
         }
     }
-
 }
