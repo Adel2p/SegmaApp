@@ -3,7 +3,6 @@ package com.noob.apps.mvvmcountries.ui.signup
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivitySignUpBinding
@@ -30,32 +29,37 @@ class SignUpActivity : AppCompatActivity() {
             eMail = mActivityBinding.etemail.text.toString()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-            if (fullName.isNotEmpty()) {
-                Toast.makeText(this, fullName, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etFullName.error = "This Field Is Requried"
-            }
-            if(mobileNumber.isEmpty()){
-                mActivityBinding.etMobileNumber.error="This Term Is Requried"
-            }
-            if (MobileNumberValidator.validCellPhone(mobileNumber)) {
-                Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
-            }
-            if (PasswordValidation.isValidPassword(password)) {
-                Toast.makeText(this, password, Toast.LENGTH_LONG).show()
+            if (checkValidation())
+                startActivity(Intent(this@SignUpActivity, VerifyOtpActivity::class.java))
 
-            } else {
-                mActivityBinding.etPassword.error = "Invalid  Password"
-            }
-            if (EmailValidation.validMail(eMail)) {
-                Toast.makeText(this, eMail, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etemail.error = "Invalid Email"
-            }
         }
     }
+
+    private fun checkValidation(): Boolean {
+        var isValid = true
+        if (fullName.isEmpty()) {
+            mActivityBinding.etFullName.error = getString(R.string.requried_field)
+            isValid = false
+        }
+        if (mobileNumber.isEmpty()) {
+            mActivityBinding.etMobileNumber.error = "This Term Is Requried"
+            isValid = false
+        }
+        if (!MobileNumberValidator.validCellPhone(mobileNumber)) {
+            mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+            isValid = false
+        }
+        if (!PasswordValidation.isValidPassword(password)) {
+            mActivityBinding.etPassword.error = "Invalid  Password"
+            isValid = false
+        }
+        if (!EmailValidation.validMail(eMail)) {
+            mActivityBinding.etemail.error = "Invalid Email"
+            isValid = false
+        }
+        return isValid
+    }
+
 
 }
 

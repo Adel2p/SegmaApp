@@ -18,6 +18,8 @@ class SplashActivity : AppCompatActivity() {
                 val intent = Intent(this@SplashActivity,LoginActivity::class.java)
                 startActivity(intent)
                 finish()
+
+
             }
         }
 

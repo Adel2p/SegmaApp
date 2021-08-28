@@ -3,10 +3,10 @@ package com.noob.apps.mvvmcountries.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
+import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
@@ -30,16 +30,26 @@ class LoginActivity : AppCompatActivity() {
         mActivityBinding.loginButton.setOnClickListener {
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-            if (MobileNumberValidator.validCellPhone(mobileNumber)) {
-                Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+
+            if (checkValidation()) {
+                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                finish()
             }
-            if (PasswordValidation.isValidPassword(password)) {
-                Toast.makeText(this, password, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etPassword.error = "Invalid Password"
-            }
+
         }
     }
+
+    private fun checkValidation(): Boolean {
+        var isValid=true
+        if (!MobileNumberValidator.validCellPhone(mobileNumber)) {
+            mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+            isValid=false
+        }
+        if (!PasswordValidation.isValidPassword(password)) {
+            mActivityBinding.etPassword.error = "Invalid Password"
+            isValid=false
+        }
+        return isValid
+    }
+
 }
