@@ -3,7 +3,6 @@ package com.noob.apps.mvvmcountries.ui.signup
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivitySignUpBinding
@@ -30,24 +29,37 @@ class SignUpActivity : AppCompatActivity() {
             eMail = mActivityBinding.etemail.text.toString()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-            checkValidation()
-            startActivity(Intent(this@SignUpActivity, VerifyOtpActivity::class.java))
+            if (checkValidation())
+                startActivity(Intent(this@SignUpActivity, VerifyOtpActivity::class.java))
 
         }
     }
 
-    private fun checkValidation() {
-        if (fullName.isEmpty())
+    private fun checkValidation(): Boolean {
+        var isValid = true
+        if (fullName.isEmpty()) {
             mActivityBinding.etFullName.error = getString(R.string.requried_field)
-        if (mobileNumber.isEmpty())
+            isValid = false
+        }
+        if (mobileNumber.isEmpty()) {
             mActivityBinding.etMobileNumber.error = "This Term Is Requried"
-        if (!MobileNumberValidator.validCellPhone(mobileNumber))
+            isValid = false
+        }
+        if (!MobileNumberValidator.validCellPhone(mobileNumber)) {
             mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
-        if (!PasswordValidation.isValidPassword(password))
+            isValid = false
+        }
+        if (!PasswordValidation.isValidPassword(password)) {
             mActivityBinding.etPassword.error = "Invalid  Password"
-        if (!EmailValidation.validMail(eMail))
+            isValid = false
+        }
+        if (!EmailValidation.validMail(eMail)) {
             mActivityBinding.etemail.error = "Invalid Email"
+            isValid = false
+        }
+        return isValid
     }
+
 
 }
 
