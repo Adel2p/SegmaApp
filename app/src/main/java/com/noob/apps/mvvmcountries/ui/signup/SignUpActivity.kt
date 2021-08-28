@@ -30,31 +30,23 @@ class SignUpActivity : AppCompatActivity() {
             eMail = mActivityBinding.etemail.text.toString()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-            if (fullName.isNotEmpty()) {
-                Toast.makeText(this, fullName, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etFullName.error = "This Field Is Requried"
-            }
-            if(mobileNumber.isEmpty()){
-                mActivityBinding.etMobileNumber.error="This Term Is Requried"
-            }
-            if (MobileNumberValidator.validCellPhone(mobileNumber)) {
-                Toast.makeText(this, mobileNumber, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
-            }
-            if (PasswordValidation.isValidPassword(password)) {
-                Toast.makeText(this, password, Toast.LENGTH_LONG).show()
+            checkValidation()
+            startActivity(Intent(this@SignUpActivity, VerifyOtpActivity::class.java))
 
-            } else {
-                mActivityBinding.etPassword.error = "Invalid  Password"
-            }
-            if (EmailValidation.validMail(eMail)) {
-                Toast.makeText(this, eMail, Toast.LENGTH_LONG).show()
-            } else {
-                mActivityBinding.etemail.error = "Invalid Email"
-            }
         }
+    }
+
+    private fun checkValidation() {
+        if (fullName.isEmpty())
+            mActivityBinding.etFullName.error = getString(R.string.requried_field)
+        if (mobileNumber.isEmpty())
+            mActivityBinding.etMobileNumber.error = "This Term Is Requried"
+        if (!MobileNumberValidator.validCellPhone(mobileNumber))
+            mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+        if (!PasswordValidation.isValidPassword(password))
+            mActivityBinding.etPassword.error = "Invalid  Password"
+        if (!EmailValidation.validMail(eMail))
+            mActivityBinding.etemail.error = "Invalid Email"
     }
 
 }

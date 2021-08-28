@@ -100,6 +100,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="200dp"
             android:text="@string/forget_password"
+            android:textSize="16sp"
             android:textColor="@color/blue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
@@ -119,29 +120,40 @@
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtForgetPassword" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtCreateNewAccount"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            app:layout_constraintTop_toBottomOf="@id/loginButton"
             android:layout_marginTop="20dp"
-            android:text="@string/create_new_account"
-            android:textColor="@color/blue"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+            app:layout_constraintStart_toStartOf="@+id/loginButton"
+            app:layout_constraintEnd_toEndOf="@+id/loginButton"
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtHaveNotAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/have_not_account"
-            android:textColor="@color/gray_purple"
-            android:textSize="15sp"
-            app:layout_constraintStart_toEndOf="@id/txtCreateNewAccount"
-            app:layout_constraintTop_toTopOf="@id/txtCreateNewAccount" />
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtCreateNewAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_new_account"
+                android:textColor="@color/blue"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                 />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtHaveNotAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@string/have_not_account"
+                android:textColor="@color/gray_purple"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/txtCreateNewAccount"
+                app:layout_constraintTop_toTopOf="@id/txtCreateNewAccount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtVisitor"
