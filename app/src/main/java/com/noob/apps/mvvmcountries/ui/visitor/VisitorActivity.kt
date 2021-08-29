@@ -23,16 +23,27 @@ class VisitorActivity : AppCompatActivity() {
         mActivityBinding.VisitorButton.setOnClickListener {
             fullName = mActivityBinding.etFullName.text.toString()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
-            checkValidation()
+            if(checkValidation()){
+                ///////////////////////
+
+            }
         }
     }
 
-    private fun checkValidation() {
-        if (fullName.isEmpty())
+    private fun checkValidation():Boolean {
+        var isValid = true
+        if (fullName.isEmpty()) {
             mActivityBinding.etFullName.error = "This Term Is Requried"
-        if (mobileNumber.isEmpty())
+            isValid = false
+        }
+        if (mobileNumber.isEmpty()) {
             mActivityBinding.etMobileNumber.error = "This Term Is Requried"
-        if (!MobileNumberValidator.validCellPhone(mobileNumber) && mobileNumber.isEmpty())
+            isValid = false
+        }
+        if (!MobileNumberValidator.validCellPhone(mobileNumber) && mobileNumber.isEmpty()) {
             mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+            isValid = false
+        }
+        return isValid
     }
 }

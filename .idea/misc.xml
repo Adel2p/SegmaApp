@@ -9,6 +9,7 @@
         <entry key="..\:/segma/app/src/main/res/drawable/ic_app_logo.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_backkk.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_hide.xml" value="0.23854166666666668" />
+        <entry key="..\:/segma/app/src/main/res/drawable/ic_illustration_success.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_main_background.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_mibile_black.xml" value="0.23854166666666668" />
@@ -26,7 +27,11 @@
         <entry key="..\:/segma/app/src/main/res/layout/activity_splash2.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_verify_otp.xml" value="0.20833333333333334" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_visitor.xml" value="0.264" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_welcome.xml" value="0.2225117248566962" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_welcome2.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/countries_list_item.xml" value="0.22239583333333332" />
+        <entry key="..\:/segma/app/src/main/res/layout/fragment_welcome.xml" value="0.264" />
+        <entry key="..\:/segma/app/src/main/res/layout/fragment_welcomef.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.23854166666666668" />
       </map>
