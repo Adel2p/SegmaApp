@@ -15,6 +15,9 @@
     <string name="email">Email</string>
     <string name="Continue">Continue</string>
     <string name="requried_field">This Field Is Required</string>
+    <string name="invalid_mobile_number">Invalid Mobile Number</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="invalid_email">Invalid Email</string>
     <string name="welcome">Welcome To You</string>
     <string name="your_account_created_successfully">Your Account Created Successfully</string>
 

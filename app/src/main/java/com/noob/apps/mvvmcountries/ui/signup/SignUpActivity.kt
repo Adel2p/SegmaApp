@@ -42,19 +42,19 @@ class SignUpActivity : AppCompatActivity() {
             isValid = false
         }
         if (mobileNumber.isEmpty()) {
-            mActivityBinding.etMobileNumber.error = "This Term Is Requried"
+            mActivityBinding.etMobileNumber.error = getString(R.string.requried_field)
             isValid = false
         }
         if (!MobileNumberValidator.validCellPhone(mobileNumber)) {
-            mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
+            mActivityBinding.etMobileNumber.error = getString(R.string.invalid_mobile_number)
             isValid = false
         }
         if (!PasswordValidation.isValidPassword(password)) {
-            mActivityBinding.etPassword.error = "Invalid  Password"
+            mActivityBinding.etPassword.error = getString(R.string.invalid_password)
             isValid = false
         }
         if (!EmailValidation.validMail(eMail)) {
-            mActivityBinding.etemail.error = "Invalid Email"
+            mActivityBinding.etemail.error = getString(R.string.invalid_email)
             isValid = false
         }
         return isValid
