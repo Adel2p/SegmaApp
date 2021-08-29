@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.WelcomeFragment">
-
+    tools:context=".WelcomeFragment">
     <!-- TODO: Update blank fragment layout -->
-
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,18 +33,4 @@
         android:text="@string/your_account_created_successfully"
         android:textColor="@color/gray_purple"
         android:textSize="14sp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/continueButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="550dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/curved_button"
-        android:gravity="center"
-        android:text="@string/Continue"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
 </FrameLayout>
