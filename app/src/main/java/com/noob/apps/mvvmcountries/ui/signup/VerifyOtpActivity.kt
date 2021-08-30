@@ -1,13 +1,11 @@
 package com.noob.apps.mvvmcountries.ui.signup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityVerifyOtpBinding
-import com.mukesh.OnOtpCompletionListener
 import com.noob.apps.mvvmcountries.ui.welcome.WelcomeActivity
 
 
