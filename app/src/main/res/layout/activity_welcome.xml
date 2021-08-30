@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.welcome.WelcomeActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/welcomeFrg"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp" />
+        android:layout_height="match_parent"
+        tools:context=".ui.welcome.WelcomeActivity">
 
-    <Button
-        android:id="@+id/continueButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="600dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/curved_button_blue"
-        android:text="@string/Continue"
-        android:textColor="@color/white"
-        android:textSize="22sp"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/welcomeImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ic_login_success"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-        />
+            />
 
-</RelativeLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/welcome"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/welcomeImg"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeImg"
+            app:layout_constraintEnd_toEndOf="@+id/welcomeImg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtCreateAccountSuccessfully"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/your_account_created_successfully"
+            android:textColor="@color/gray_purple"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/txtWelcome"
+            app:layout_constraintEnd_toEndOf="@+id/txtWelcome"
+            app:layout_constraintTop_toBottomOf="@+id/txtWelcome" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
