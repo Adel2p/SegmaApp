@@ -1,5 +1,6 @@
 package com.noob.apps.mvvmcountries.ui.signup
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -7,8 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityVerifyOtpBinding
 import com.mukesh.OnOtpCompletionListener
-
-
+import com.noob.apps.mvvmcountries.ui.welcome.WelcomeActivity
 
 
 class VerifyOtpActivity : AppCompatActivity() {
@@ -22,13 +22,13 @@ class VerifyOtpActivity : AppCompatActivity() {
         mActivityBinding.txtChangeNumber.setOnClickListener {
             finish()
         }
-mActivityBinding.otpView.onc
-        mActivityBinding.otpView.setListener(OnOtpCompletionListener { otp -> // do Stuff
-            mActivityBinding.confirmButton.setImageResource(R.drawable.curved_button_blue);
-        })
-        mActivityBinding.confirmButton.setOnClickListener{
-        val otp =mActivityBinding.otpView.text.toString()
-            Toast.makeText(this,otp,Toast.LENGTH_LONG).show()
+        mActivityBinding.otpView.setOtpCompletionListener {
+            mActivityBinding.confirmButton.setBackgroundResource(R.drawable.curved_button_blue)
+        }
+        mActivityBinding.confirmButton.setOnClickListener {
+            val otp = mActivityBinding.otpView.text.toString()
+           // Toast.makeText(this, otp, Toast.LENGTH_LONG).show()
+            startActivity(Intent (this@VerifyOtpActivity, WelcomeActivity::class.java))
         }
     }
 }
