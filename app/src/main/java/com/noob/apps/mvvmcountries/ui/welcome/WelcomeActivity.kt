@@ -6,9 +6,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityWelcomeBinding
-import com.noob.apps.mvvmcountries.databinding.CountriesListItemBinding
 import com.noob.apps.mvvmcountries.ui.educational.EducationalActivity
-import com.noob.apps.mvvmcountries.ui.login.LoginActivity
+
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var mActivityBinding: ActivityWelcomeBinding
