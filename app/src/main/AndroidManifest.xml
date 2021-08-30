@@ -16,7 +16,9 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ui.welcome.WelcomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ui.home.WelcomeActivity2"
             android:exported="true" />
@@ -27,10 +29,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.signup.VerifyOtpActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="true"

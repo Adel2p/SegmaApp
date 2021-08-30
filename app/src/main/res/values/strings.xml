@@ -20,6 +20,11 @@
     <string name="invalid_email">Invalid Email</string>
     <string name="welcome">Welcome To You</string>
     <string name="your_account_created_successfully">Your Account Created Successfully</string>
+    <string name="verify_otp">Please Enter OTP Code Received On Mobile</string>
+    <string name="change_number">Change Number</string>
+    <string name="confirm">Confirm</string>
+    <string name="not_receive_otp_code">Not Receive OTP Code?</string>
+    <string name="resend">Resend</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
