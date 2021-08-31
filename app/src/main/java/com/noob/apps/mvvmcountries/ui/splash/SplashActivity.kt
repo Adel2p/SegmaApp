@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
+import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 

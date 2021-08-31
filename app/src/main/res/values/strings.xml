@@ -28,6 +28,18 @@
     <string name="educational_level">Please Enter Your Educational Level</string>
     <string name="basic_level">Basic Level</string>
     <string name="university_level">University Level</string>
+    <string name="university_information">University Information</string>
+    <string name="continue_university_information">Please Continue Your University Information</string>
+    <string name="collage">Collage</string>
+    <string name="term">Term</string>
+    <string name="year">Year</string>
+    <string name="department">Department</string>
+    <string name="save">Save</string>
+    <string name="enter_mobile_number">Please Enter Your Mobile Number Used To Register</string>
+    <string name="to_retrieve_your_password"> To Retrieve Your Password</string>
+    <string name="enter_new_password">Please Enter Your New Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
