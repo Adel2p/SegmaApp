@@ -21,12 +21,12 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
-        mActivityBinding.txtlogin.setOnClickListener {
+        mActivityBinding.txtLogin.setOnClickListener {
             startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
         }
-        mActivityBinding.continueBotton.setOnClickListener {
+        mActivityBinding.continueButton.setOnClickListener {
             fullName = mActivityBinding.etFullName.text.toString()
-            eMail = mActivityBinding.etemail.text.toString()
+            eMail = mActivityBinding.etEmail.text.toString()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
            // if (checkValidation()) {
@@ -57,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
             isValid = false
         }
         if (!EmailValidation.validMail(eMail)) {
-            mActivityBinding.etemail.error = getString(R.string.invalid_email)
+            mActivityBinding.etEmail.error = getString(R.string.invalid_email)
             isValid = false
         }
         return isValid

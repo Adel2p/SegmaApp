@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/inputFullName" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputemail"
+            android:id="@+id/inputEmail"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
@@ -81,7 +81,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtEmail">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etemail"
+                android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:inputType="textEmailAddress"
@@ -101,7 +101,7 @@
             android:textColor="@color/gray_purple"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputemail" />
+            app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputMobile"
@@ -165,7 +165,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/continueBotton"
+            android:id="@+id/continueButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
@@ -183,7 +183,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txthaveAccount"
+            android:id="@+id/txtHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="110dp"
@@ -192,10 +192,10 @@
             android:textColor="@color/gray_purple"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/continueBotton" />
+            app:layout_constraintTop_toBottomOf="@+id/continueButton" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtlogin"
+            android:id="@+id/txtLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
@@ -203,7 +203,7 @@
             android:text="@string/login"
             android:textColor="@color/blue"
             android:textSize="15sp"
-            app:layout_constraintStart_toEndOf="@+id/txthaveAccount"
-            app:layout_constraintTop_toBottomOf="@+id/continueBotton" />
+            app:layout_constraintStart_toEndOf="@+id/txtHaveAccount"
+            app:layout_constraintTop_toBottomOf="@+id/continueButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

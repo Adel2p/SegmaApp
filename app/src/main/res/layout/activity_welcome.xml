@@ -16,8 +16,8 @@
             android:layout_marginTop="140dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ic_login_success"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
             />
@@ -30,9 +30,9 @@
             android:text="@string/welcome"
             android:textColor="@color/black"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/welcomeImg"
             app:layout_constraintStart_toStartOf="@+id/welcomeImg"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeImg"
-            app:layout_constraintEnd_toEndOf="@+id/welcomeImg" />
+            app:layout_constraintTop_toBottomOf="@+id/welcomeImg" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtCreateAccountSuccessfully"
@@ -42,9 +42,24 @@
             android:text="@string/your_account_created_successfully"
             android:textColor="@color/gray_purple"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/txtWelcome"
             app:layout_constraintEnd_toEndOf="@+id/txtWelcome"
+            app:layout_constraintStart_toStartOf="@+id/txtWelcome"
             app:layout_constraintTop_toBottomOf="@+id/txtWelcome" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/continueButton"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/curved_button_blue"
+            android:text="@string/Continue"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCreateAccountSuccessfully" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
