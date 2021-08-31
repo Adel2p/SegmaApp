@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
+import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
@@ -23,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, VisitorActivity::class.java))
+        }
+        mActivityBinding.txtForgetPassword.setOnClickListener{
+            startActivity(Intent(this@LoginActivity, ForgetPasswordActivity::class.java))
         }
         mActivityBinding.txtCreateNewAccount.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
