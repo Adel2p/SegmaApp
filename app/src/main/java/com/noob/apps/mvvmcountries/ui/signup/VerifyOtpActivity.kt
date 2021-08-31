@@ -27,6 +27,7 @@ class VerifyOtpActivity : AppCompatActivity() {
             val otp = mActivityBinding.otpView.text.toString()
            // Toast.makeText(this, otp, Toast.LENGTH_LONG).show()
             startActivity(Intent (this@VerifyOtpActivity, WelcomeActivity::class.java))
+            finish()
         }
     }
 }

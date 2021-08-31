@@ -17,6 +17,7 @@ class WelcomeActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         mActivityBinding.continueButton.setOnClickListener {
             startActivity(Intent(this@WelcomeActivity, EducationalActivity::class.java))
+            finishAffinity()
         }
     }
 }
