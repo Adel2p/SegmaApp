@@ -49,10 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="@+id/txtCollage"
-            app:layout_constraintTop_toBottomOf="@+id/txtCollage"
-
-
-            >
+            app:layout_constraintTop_toBottomOf="@+id/txtCollage">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/collageSp"
@@ -114,7 +111,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtYear"
             android:layout_width="wrap_content"
@@ -131,9 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="@+id/txtYear"
-            app:layout_constraintTop_toBottomOf="@+id/txtYear"
-
-            >
+            app:layout_constraintTop_toBottomOf="@+id/txtYear">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/yearSp"
@@ -153,12 +147,8 @@
                 android:src="@drawable/ic_down_arrow"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                />
-
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtDep"
@@ -173,15 +163,12 @@
 
             />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/depLay"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             app:layout_constraintStart_toStartOf="@+id/txtDep"
-            app:layout_constraintTop_toBottomOf="@+id/txtDep"
-
-            >
+            app:layout_constraintTop_toBottomOf="@+id/txtDep">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/depSp"
@@ -192,9 +179,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/curved_spinner"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -204,8 +189,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -221,10 +204,6 @@
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="@+id/depLay"
             app:layout_constraintStart_toStartOf="@+id/depLay"
-            app:layout_constraintTop_toBottomOf="@+id/depLay"
-
-            />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/depLay" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
