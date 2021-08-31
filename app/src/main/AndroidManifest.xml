@@ -15,8 +15,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.welcome.UniversityActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
             android:name=".ui.educational.EducationalActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ui.welcome.WelcomeActivity"
             android:exported="true"

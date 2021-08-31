@@ -10,6 +10,7 @@
         <entry key="..\:/segma/app/src/main/res/drawable/curved_button_blue.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/curved_button_gray.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/curved_edittext.xml" value="0.264" />
+        <entry key="..\:/segma/app/src/main/res/drawable/curved_spinner.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_app_bg.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_app_logo.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_backkk.xml" value="0.23854166666666668" />
@@ -32,6 +33,7 @@
         <entry key="..\:/segma/app/src/main/res/layout/activity_sign_up.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_splash.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_splash2.xml" value="0.22239583333333332" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_university.xml" value="0.20833333333333334" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_verify_otp.xml" value="0.23046875" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_visitor.xml" value="0.264" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_welcome.xml" value="0.2225117248566962" />
