@@ -25,8 +25,8 @@ class VerifyOtpActivity : AppCompatActivity() {
         }
         mActivityBinding.confirmButton.setOnClickListener {
             val otp = mActivityBinding.otpView.text.toString()
-           // Toast.makeText(this, otp, Toast.LENGTH_LONG).show()
-            startActivity(Intent (this@VerifyOtpActivity, WelcomeActivity::class.java))
+            // Toast.makeText(this, otp, Toast.LENGTH_LONG).show()
+            startActivity(Intent(this@VerifyOtpActivity, WelcomeActivity::class.java))
             finish()
         }
     }
