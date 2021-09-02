@@ -15,10 +15,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.forgetpassword.ForgetPasswordResetActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.forgetpassword.ForgetPasswordActivity"
             android:exported="true"

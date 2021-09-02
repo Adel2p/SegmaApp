@@ -1,19 +1,26 @@
 package com.noob.apps.mvvmcountries.ui.welcome
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CustomDropDownAdapter
 import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.adapters.DapartmentAdapter
 import com.noob.apps.mvvmcountries.adapters.yearAdapter
 import com.noob.apps.mvvmcountries.databinding.ActivityUniversityBinding
+import com.noob.apps.mvvmcountries.ui.main.MainActivity
+import com.noob.apps.mvvmcountries.utils.UserPreferences
+import kotlinx.coroutines.launch
 
 class UniversityActivity : AppCompatActivity() {
+    private lateinit var userPreferences: UserPreferences
     private lateinit var mActivityBinding: ActivityUniversityBinding
     private var collage = ""
     private var term = ""
@@ -106,8 +113,23 @@ class UniversityActivity : AppCompatActivity() {
             }
         }
         mActivityBinding.saveButton.setOnClickListener{
-            Toast.makeText(this,"click saved",Toast.LENGTH_LONG).show()
+            lifecycleScope.launch {
+                userPreferences.saveUserData(true)
+            }
+            startActivity(Intent(this@UniversityActivity,MainActivity::class.java))
+
         }
+        userPreferences = UserPreferences(this)
+
+        val bookmark = "Hello"
+        lifecycleScope.launch {
+            userPreferences.incrementCounter(bookmark)
+        }
+
+
+        userPreferences.exampleCounterFlow.asLiveData().observe(this, {
+            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        })
 
 
 //        val adapter = ArrayAdapter(this,
@@ -125,6 +147,11 @@ class UniversityActivity : AppCompatActivity() {
 //                // write code to perform some action
 //           }
     }
+
+
+
+
+
 
     private fun checkValidation() {
         if (collage.isNotEmpty() && term.isNotEmpty() && year.isNotEmpty() && dep.isNotEmpty()) {
