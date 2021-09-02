@@ -10,12 +10,11 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " settingpref")
 class UserPreferences(
     appContext: Context
 ) {
     private val applicationContext = appContext.applicationContext
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " settingpref")
     val EXAMPLE_COUNTER = stringPreferencesKey("example_counter")
     val SAVED_USER = booleanPreferencesKey("saved_user")
     val exampleCounterFlow: Flow<String> = appContext.dataStore.data
