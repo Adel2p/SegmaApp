@@ -114,7 +114,7 @@ class UniversityActivity : AppCompatActivity() {
         }
         mActivityBinding.saveButton.setOnClickListener{
             lifecycleScope.launch {
-                userPreferences.saveUserData(true)
+                userPreferences.saveUniversityData(true)
             }
             startActivity(Intent(this@UniversityActivity,MainActivity::class.java))
 

@@ -10,14 +10,15 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " settingpref")
 class UserPreferences(
     appContext: Context
 ) {
     private val applicationContext = appContext.applicationContext
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " settingpref")
+
     val EXAMPLE_COUNTER = stringPreferencesKey("example_counter")
     val SAVED_USER = booleanPreferencesKey("saved_user")
+    val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
     val exampleCounterFlow: Flow<String> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
@@ -31,16 +32,28 @@ class UserPreferences(
         }
     }
 
-    suspend fun saveUserData(isSaved: Boolean) {
+    suspend fun saveUniversityData(isSaved: Boolean) {
         applicationContext.dataStore.edit { settings ->
             val currentCounterValue = settings[SAVED_USER] ?: isSaved
             settings[SAVED_USER] = currentCounterValue
         }
     }
-    val savedUserFlow: Flow<Boolean> = appContext.dataStore.data
+    val getUniversityData: Flow<Boolean> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
             preferences[SAVED_USER] ?: false
+        }
+
+    suspend fun saveUserLogedIn(islogedin: Boolean) {
+        applicationContext.dataStore.edit { settings ->
+            val currentCounterValue = settings[SAVED_LOGEDIN] ?: islogedin
+            settings[SAVED_LOGEDIN] = currentCounterValue
+        }
+    }
+    val savedLogginedFlow: Flow<Boolean> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[SAVED_LOGEDIN] ?: false
         }
 
 
