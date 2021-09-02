@@ -3,19 +3,25 @@ package com.noob.apps.mvvmcountries.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
 import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
+import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
+import com.noob.apps.mvvmcountries.ui.welcome.WelcomeActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
-import com.noob.apps.mvvmcountries.utils.NetworkHelper
 import com.noob.apps.mvvmcountries.utils.PasswordValidation
+import com.noob.apps.mvvmcountries.utils.UserPreferences
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var userPreferences: UserPreferences
+    private var isSaved=false
     private lateinit var mobileNumber: String
     private lateinit var password: String
     private lateinit var mActivityBinding: ActivityLoginBinding
@@ -23,11 +29,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
+        userPreferences = UserPreferences(this)
 
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, VisitorActivity::class.java))
         }
-        mActivityBinding.txtForgetPassword.setOnClickListener{
+        mActivityBinding.txtForgetPassword.setOnClickListener {
             startActivity(Intent(this@LoginActivity, ForgetPasswordActivity::class.java))
         }
         mActivityBinding.txtCreateNewAccount.setOnClickListener {
@@ -36,12 +43,22 @@ class LoginActivity : AppCompatActivity() {
         mActivityBinding.loginButton.setOnClickListener {
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
+
             if (checkValidation()) {
-                if (NetworkHelper.isOnline(this)) {
+                ////////save user loged in
+                lifecycleScope.launch {
+                    userPreferences.saveUserLogedIn(true)
+                }
+                userPreferences.getUniversityData.asLiveData().observe(this, {
+                    isSaved = it
+                })
+                if (isSaved) {
                     startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     finish()
-                } else {
-                    Toast.makeText(this, "Check your Connection", Toast.LENGTH_LONG).show()
+                }
+                else{
+                    startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
+                    finish()
                 }
             }
 
