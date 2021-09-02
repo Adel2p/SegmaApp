@@ -41,7 +41,7 @@
             android:fontFamily="@font/regular"
             android:text="@string/collage"
             android:textColor="@color/gray_purple"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/txtContinueInfo"
             app:layout_constraintTop_toBottomOf="@+id/txtContinueInfo"
 
