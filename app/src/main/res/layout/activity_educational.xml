@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:fontFamily="@font/semibold"
             android:text="@string/educational_level"
             android:textColor="@color/black"
             android:textSize="14sp"
@@ -54,16 +55,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/semibold"
                 android:text="@string/basic_level"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/studyingImg"
                 app:layout_constraintStart_toStartOf="@+id/studyingImg"
-                app:layout_constraintTop_toBottomOf="@+id/studyingImg"
-
-                />
+                app:layout_constraintTop_toBottomOf="@+id/studyingImg" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layUniversityLevel"
@@ -82,27 +81,20 @@
                 android:background="@drawable/ic_studying_cuate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtUniversityLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="27dp"
+                android:fontFamily="@font/semibold"
                 android:text="@string/university_level"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/universityImg"
-
-
-                />
-
-
+                app:layout_constraintEnd_toEndOf="@+id/universityImg"
+                app:layout_constraintStart_toStartOf="@+id/universityImg"
+                app:layout_constraintTop_toBottomOf="@+id/universityImg" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -16,21 +16,21 @@
             android:background="@drawable/ic_app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtFullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/regular"
             android:text="@string/full_name"
             android:textColor="@color/gray_purple"
             android:textSize="18sp"
+            app:fontFamily="@font/regular"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputFullName"
@@ -42,9 +42,7 @@
             android:background="@drawable/curved_edittext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtFullName"
-
-            >
+            app:layout_constraintTop_toBottomOf="@+id/txtFullName">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFullName"
@@ -57,7 +55,6 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 tools:ignore="SpeakableTextPresentCheck" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -66,9 +63,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:fontFamily="@font/regular"
             android:text="@string/mobile_number"
             android:textColor="@color/gray_purple"
             android:textSize="18sp"
+            app:fontFamily="@font/regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputFullName" />
 
@@ -78,6 +77,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/curved_edittext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtMobileNumber">
@@ -105,10 +105,12 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/curved_button_blue"
+            android:fontFamily="@font/bold"
             android:gravity="center"
             android:text="@string/visitor"
             android:textColor="@color/white"
             android:textSize="22sp"
+            app:fontFamily="@font/bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
 
@@ -118,9 +120,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/regular"
             android:text="@string/have_account"
             android:textColor="@color/gray_purple"
             android:textSize="15sp"
+            app:fontFamily="@font/regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/VisitorButton" />
 
@@ -130,9 +134,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/semibold"
             android:text="@string/login"
             android:textColor="#0277BD"
             android:textSize="15sp"
+            app:fontFamily="@font/semibold"
             app:layout_constraintStart_toEndOf="@+id/txthaveAccount"
             app:layout_constraintTop_toBottomOf="@+id/VisitorButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>

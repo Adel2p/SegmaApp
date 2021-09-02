@@ -17,7 +17,8 @@ class SplashActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(TimeUnit.SECONDS.toMillis(3))
             withContext(Dispatchers.Main) {
-                val intent = Intent(this@SplashActivity,LoginActivity::class.java)
+                val intent = Intent(this@SplashActivity, UniversityActivity::class.java)
+
                 startActivity(intent)
                 finish()
 
@@ -26,4 +27,4 @@ class SplashActivity : AppCompatActivity() {
         }
 
     }
-    }
+}
