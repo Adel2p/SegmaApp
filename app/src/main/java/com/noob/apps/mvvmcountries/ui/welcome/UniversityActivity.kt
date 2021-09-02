@@ -6,12 +6,16 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CustomDropDownAdapter
 import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.adapters.DapartmentAdapter
 import com.noob.apps.mvvmcountries.adapters.yearAdapter
 import com.noob.apps.mvvmcountries.databinding.ActivityUniversityBinding
+import com.noob.apps.mvvmcountries.utils.UserPreferences
+import kotlinx.coroutines.launch
 
 class UniversityActivity : AppCompatActivity() {
     private lateinit var mActivityBinding: ActivityUniversityBinding
@@ -19,6 +23,8 @@ class UniversityActivity : AppCompatActivity() {
     private var term = ""
     private var year = ""
     private var dep = ""
+    private lateinit var userPreferences: UserPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -124,6 +130,17 @@ class UniversityActivity : AppCompatActivity() {
 //            override fun onNothingSelected(parent: AdapterView<*>) {
 //                // write code to perform some action
 //           }
+        userPreferences = UserPreferences(this)
+
+        val bookmark = "Hello"
+        lifecycleScope.launch {
+            userPreferences.incrementCounter(bookmark)
+        }
+
+
+        userPreferences.exampleCounterFlow.asLiveData().observe(this, {
+            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun checkValidation() {
