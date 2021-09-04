@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
         android:id="@+id/home"
         android:title="@string/main"
-        android:icon="@drawable/ic_home_icon"/>
+        android:icon="@drawable/ic_home_icon"
+        />
     <item
         android:id="@+id/courses"
         android:title="@string/course"
@@ -16,5 +19,8 @@
         android:id="@+id/more"
         android:title="@string/more"
         android:icon="@drawable/ic_more_icon"/>
+
+
+
 
 </menu>
