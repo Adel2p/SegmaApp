@@ -40,6 +40,10 @@
     <string name="enter_new_password">Please Enter Your New Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
+    <string name="main">Main</string>
+    <string name="course">Course</string>
+    <string name="library">Library</string>
+    <string name="more">More</string>
     <string-array name="Collages">
         <item>please select collage</item>
         <item>Kotlin</item>
