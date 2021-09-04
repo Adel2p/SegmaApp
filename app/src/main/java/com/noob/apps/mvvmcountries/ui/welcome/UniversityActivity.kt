@@ -116,7 +116,7 @@ class UniversityActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 userPreferences.saveUniversityData(true)
             }
-            startActivity(Intent(this@UniversityActivity,MainActivity::class.java))
+            startActivity(Intent(this@UniversityActivity,WelcomeActivity::class.java))
 
         }
         userPreferences = UserPreferences(this)

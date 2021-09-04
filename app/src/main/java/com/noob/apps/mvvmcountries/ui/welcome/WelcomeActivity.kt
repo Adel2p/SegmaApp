@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityWelcomeBinding
-import com.noob.apps.mvvmcountries.ui.educational.EducationalActivity
+import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 
 
 class WelcomeActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class WelcomeActivity : AppCompatActivity() {
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         mActivityBinding.continueButton.setOnClickListener {
-            startActivity(Intent(this@WelcomeActivity, EducationalActivity::class.java))
+            startActivity(Intent(this@WelcomeActivity, HomeActivity::class.java))
             finishAffinity()
         }
     }
