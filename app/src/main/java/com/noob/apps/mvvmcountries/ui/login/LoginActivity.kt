@@ -13,7 +13,6 @@ import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
-import com.noob.apps.mvvmcountries.ui.welcome.WelcomeActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 import com.noob.apps.mvvmcountries.utils.PasswordValidation
 import com.noob.apps.mvvmcountries.utils.UserPreferences
