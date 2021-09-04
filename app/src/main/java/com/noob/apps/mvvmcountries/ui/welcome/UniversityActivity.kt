@@ -33,14 +33,19 @@ class UniversityActivity : AppCompatActivity() {
         val termList = resources.getStringArray(R.array.Term)
         val depList = resources.getStringArray(R.array.Department)
         val yearList = resources.getStringArray(R.array.Year)
+
         val customDropDownAdapter = CustomDropDownAdapter(this, collageList.toList())
         mActivityBinding.collageSp.adapter = customDropDownAdapter
+
         val termAdapter = TermAdapter(this, termList.toList())
         mActivityBinding.termSp.adapter = termAdapter
+
         val departmentAdapter = DapartmentAdapter(this, depList.toList())
         mActivityBinding.depSp.adapter = departmentAdapter
+
         val yearAdapter = yearAdapter(this, yearList.toList())
         mActivityBinding.yearSp.adapter = yearAdapter
+
         mActivityBinding.collageSp.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
