@@ -15,7 +15,6 @@ import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.adapters.DapartmentAdapter
 import com.noob.apps.mvvmcountries.adapters.yearAdapter
 import com.noob.apps.mvvmcountries.databinding.ActivityUniversityBinding
-import com.noob.apps.mvvmcountries.ui.main.MainActivity
 import com.noob.apps.mvvmcountries.utils.UserPreferences
 import kotlinx.coroutines.launch
 
