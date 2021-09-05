@@ -9,6 +9,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_login_success.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_refresh.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_splash_bg.xml" value="0.1537037037037037" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/navigation_view_colored.xml" value="0.14907407407407408" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_countries_list.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_login.xml" value="0.18" />
@@ -16,6 +17,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_verify_otp.xml" value="0.10190217391304347" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_visitor.xml" value="0.1213768115942029" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/countries_list_item.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/test.xml" value="0.1" />
         <entry key="..\:/segma/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/curved_button.xml" value="0.23854166666666668" />
