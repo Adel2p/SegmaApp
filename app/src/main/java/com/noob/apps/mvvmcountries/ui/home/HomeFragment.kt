@@ -50,26 +50,25 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return mActivityBinding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val lec = Lecture("computer science", "DR mohamed adel", "2")
-        val lec1 = Lecture("computer science", "DR mohamed adel", "2")
-        listOfLectures.add(lec1)
+        val lec=Lecture("computer science","DR mohamed adel","2")
+        val lec2=Lecture("computer science","DR mohamed adel","2")
         listOfLectures.add(lec)
+        listOfLectures.add(lec2)
+
         initializeRecyclerView()
         mAdapter.setData(listOfLectures)
     }
-
     private fun initializeRecyclerView() {
         mAdapter = LecturesAdapter()
         mActivityBinding.rvLectures.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(requireContext(), 2)
+
             adapter = mAdapter
         }
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
