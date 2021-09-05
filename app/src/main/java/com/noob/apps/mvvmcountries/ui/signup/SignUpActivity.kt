@@ -29,12 +29,12 @@ class SignUpActivity : AppCompatActivity() {
             eMail = mActivityBinding.etEmail.text.toString()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
-           // if (checkValidation()) {
+          //  if (checkValidation()) {
                 val intent = Intent(this@SignUpActivity, VerifyOtpActivity::class.java)
                 intent.putExtra("MOBILE_NUMBER", mobileNumber)
                 startActivity(intent)
 
-          //  }
+         //   }
         }
     }
 
