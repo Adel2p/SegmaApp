@@ -15,16 +15,10 @@ import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
 import com.noob.apps.mvvmcountries.databinding.FragmentHomeBinding
 import com.noob.apps.mvvmcountries.models.Lecture
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
     private lateinit var mActivityBinding: FragmentHomeBinding
     val listOfLectures: MutableList<Lecture> = mutableListOf()
@@ -50,16 +44,30 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return mActivityBinding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val lec=Lecture("computer science","DR mohamed adel","2")
-        val lec2=Lecture("computer science","DR mohamed adel","2")
+        val lec = Lecture("computer science", "DR mohamed adel", "2")
+        val lec2 = Lecture("computer science", "DR mohamed adel", "2")
+        val lec3 = Lecture("computer science", "DR mohamed adel", "2")
+        val lec4 = Lecture("computer science", "DR mohamed adel", "2")
+        val lec5 = Lecture("computer science", "DR mohamed adel", "2")
+        val lec6 = Lecture("computer science", "DR mohamed adel", "2")
+        val lec7 = Lecture("computer science", "DR mohamed adel", "2")
+
         listOfLectures.add(lec)
         listOfLectures.add(lec2)
+        listOfLectures.add(lec3)
+        listOfLectures.add(lec4)
+        listOfLectures.add(lec5)
+        listOfLectures.add(lec6)
+        listOfLectures.add(lec7)
+
 
         initializeRecyclerView()
         mAdapter.setData(listOfLectures)
     }
+
     private fun initializeRecyclerView() {
         mAdapter = LecturesAdapter()
         mActivityBinding.rvLectures.apply {
@@ -69,17 +77,8 @@ class HomeFragment : Fragment() {
             adapter = mAdapter
         }
     }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
