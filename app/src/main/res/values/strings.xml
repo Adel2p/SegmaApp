@@ -44,6 +44,8 @@
     <string name="course">Course</string>
     <string name="library">Library</string>
     <string name="more">More</string>
+    <string name="lecture">Lectures</string>
+
     <string-array name="Collages">
         <item>please select collage</item>
         <item>Kotlin</item>
