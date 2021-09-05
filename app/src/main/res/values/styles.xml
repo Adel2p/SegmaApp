@@ -10,10 +10,11 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+
     </style>
 
 
