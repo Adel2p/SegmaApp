@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CountriesListAdapter
@@ -45,24 +46,30 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mActivityBinding =
-            DataBindingUtil.inflate(R.layout.fragment_home, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return mActivityBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val lec=Lecture("computer science","DR mohamed adel","2")
+        val lec = Lecture("computer science", "DR mohamed adel", "2")
+        val lec1 = Lecture("computer science", "DR mohamed adel", "2")
+        listOfLectures.add(lec1)
         listOfLectures.add(lec)
+        initializeRecyclerView()
+        mAdapter.setData(listOfLectures)
     }
+
     private fun initializeRecyclerView() {
         mAdapter = LecturesAdapter()
-        mActivityBinding.recyclerView.apply {
+        mActivityBinding.rvLectures.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = mAdapter
         }
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
