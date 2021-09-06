@@ -9,7 +9,6 @@ import com.noob.apps.mvvmcountries.databinding.ActivitySignUpBinding
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.EmailValidation
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
-import com.noob.apps.mvvmcountries.utils.PasswordValidation
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var fullName: String
@@ -52,7 +51,7 @@ class SignUpActivity : AppCompatActivity() {
             mActivityBinding.etMobileNumber.error = getString(R.string.invalid_mobile_number)
             isValid = false
         }
-        if (!PasswordValidation.isValidPassword(password)) {
+        if (password.isEmpty()) {
             mActivityBinding.etPassword.error = getString(R.string.invalid_password)
             isValid = false
         }

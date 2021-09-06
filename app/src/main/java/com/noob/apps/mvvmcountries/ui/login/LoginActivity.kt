@@ -14,7 +14,6 @@ import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
-import com.noob.apps.mvvmcountries.utils.PasswordValidation
 import com.noob.apps.mvvmcountries.utils.UserPreferences
 import kotlinx.coroutines.launch
 
@@ -70,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
             mActivityBinding.etMobileNumber.error = "Invalid Mobile Number"
             isValid = false
         }
-        if (!PasswordValidation.isValidPassword(password)) {
+        if (password.isEmpty()) {
             mActivityBinding.etPassword.error = "Invalid Password"
             isValid = false
         }

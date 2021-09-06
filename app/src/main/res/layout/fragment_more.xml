@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="15dp"
-    android:layout_marginEnd="15dp"
+    android:layout_marginStart="@dimen/_15sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
     android:background="@color/niceBlue"
     tools:context=".ui.more.MoreFragment">
 
@@ -14,7 +14,7 @@
         android:id="@+id/studentCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="@dimen/_50sdp"
         app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,15 +22,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
 
             >
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/stuImg"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:background="@drawable/round_img"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -39,11 +39,11 @@
                 android:id="@+id/txtStudentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:fontFamily="@font/semibold"
                 android:text="mohamed adel"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_15ssp"
                 app:layout_constraintStart_toEndOf="@+id/stuImg"
                 app:layout_constraintTop_toTopOf="@+id/stuImg" />
 
@@ -54,7 +54,7 @@
                 android:fontFamily="@font/regular"
                 android:text="01016192447"
                 android:textColor="@color/gray_purple"
-                android:textSize="12sp"
+                android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="@+id/txtStudentName"
                 app:layout_constraintTop_toBottomOf="@+id/txtStudentName" />
 
@@ -67,7 +67,7 @@
         android:id="@+id/infoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/_20sdp"
         app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="@+id/studentCard"
         app:layout_constraintTop_toBottomOf="@+id/studentCard">
@@ -75,15 +75,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            >
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/FavoriteLecImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:src="@drawable/ic_fav_lec"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,20 +91,20 @@
                 android:id="@+id/txtFavoriteLec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/semibold"
                 android:text="Favourite Lecture"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/FavoriteLecImg"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/FavoriteLecImg" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/notificationImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_notification"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/FavoriteLecImg" />
@@ -114,23 +113,22 @@
                 android:id="@+id/txtNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/_15sdp"
 
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/semibold"
                 android:text="Notification"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/notificationImg"
-                app:layout_constraintTop_toBottomOf="@+id/txtFavoriteLec" />
+                app:layout_constraintTop_toTopOf="@+id/notificationImg" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/preExamImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_pre_exam"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/notificationImg" />
@@ -139,29 +137,22 @@
                 android:id="@+id/txtPreviousExams"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/_15sdp"
 
-                android:layout_marginTop="20dp"
                 android:fontFamily="@font/semibold"
                 android:text="Previous Exams"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/preExamImg"
-                app:layout_constraintTop_toBottomOf="@+id/txtNotification" />
-
-
-
-
-
-
+                app:layout_constraintTop_toTopOf="@+id/preExamImg" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/paymentImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_payment"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/preExamImg" />
@@ -170,15 +161,13 @@
                 android:id="@+id/txtPayment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/semibold"
                 android:text="Payment Methods"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/paymentImg"
-                app:layout_constraintTop_toBottomOf="@+id/txtPreviousExams" />
+                app:layout_constraintTop_toTopOf="@+id/paymentImg" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -193,12 +182,11 @@
         android:layout_height="wrap_content"
         android:text="Setting"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="@dimen/_16ssp"
         android:fontFamily="@font/bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoCard"
-        android:layout_marginTop="20dp"
-        />
+        android:layout_marginTop="@dimen/_15sdp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -206,109 +194,103 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSetting"
         app:cardCornerRadius="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/_15sdp"
 
         >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            >
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/changeLanguageImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_change_language"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtChangeLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/semibold"
                 android:text="Change Language"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/changeLanguageImg"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/changeLanguageImg"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/notificationSettingImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_notification"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/changeLanguageImg"/>
+                app:layout_constraintTop_toBottomOf="@+id/changeLanguageImg" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtNotificationSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/semibold"
                 android:text="Notification Setting"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/notificationSettingImg"
-                app:layout_constraintTop_toBottomOf="@+id/txtChangeLanguage" />
+                app:layout_constraintTop_toTopOf="@+id/notificationSettingImg" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aboutSegmaImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_about_app"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notificationSettingImg"/>
+                app:layout_constraintTop_toBottomOf="@+id/notificationSettingImg" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtAboutApp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/semibold"
                 android:text="About Segma App"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/aboutSegmaImg"
-                app:layout_constraintTop_toBottomOf="@+id/txtNotificationSetting" />
+                app:layout_constraintTop_toTopOf="@+id/aboutSegmaImg" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/logOutImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:src="@drawable/ic_lock"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/aboutSegmaImg"/>
+                app:layout_constraintTop_toBottomOf="@+id/aboutSegmaImg" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtLogOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/_15sdp"
                 android:fontFamily="@font/semibold"
                 android:text="LogOut"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toEndOf="@+id/logOutImg"
-                app:layout_constraintTop_toBottomOf="@+id/txtAboutApp" />
-
-
-
+                app:layout_constraintTop_toTopOf="@+id/logOutImg" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
