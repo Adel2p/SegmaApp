@@ -34,12 +34,16 @@
         <entry key="..\:/segma/app/src/main/res/drawable/show_password.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_countries_list.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_educational.xml" value="0.4" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_fav_lec.xml" value="0.22239583333333332" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_favourite_lecture.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_forget_password.xml" value="0.4" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_forget_password_reset.xml" value="0.2" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_home.xml" value="0.20833333333333334" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_login2.xml" value="0.10625" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_main.xml" value="0.22239583333333332" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_notification.xml" value="0.20833333333333334" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_previous_exam.xml" value="0.20833333333333334" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_sign_up.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_splash.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_splash2.xml" value="0.22239583333333332" />
@@ -48,6 +52,7 @@
         <entry key="..\:/segma/app/src/main/res/layout/activity_visitor.xml" value="0.264" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_welcome.xml" value="0.2225117248566962" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_welcome2.xml" value="0.22239583333333332" />
+        <entry key="..\:/segma/app/src/main/res/layout/change_language.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/countries_list_item.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/custom_spinner_item.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/fragment_courses.xml" value="0.20833333333333334" />

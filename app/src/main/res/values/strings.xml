@@ -44,7 +44,17 @@
     <string name="course">Course</string>
     <string name="library">Library</string>
     <string name="more">More</string>
+    <string name="favourite_lecture">Favourite Lecture</string>
+    <string name="notification">Notification</string>
+    <string name="previous_exams">Previous Exams</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="setting">Setting</string>
+    <string name="change_language">Change Language</string>
+    <string name="notification_setting">Notification Setting</string>
+    <string name="about_segma">About Segma</string>
+    <string name="log_out">Log Out</string>
     <string name="lecture">Lectures</string>
+
 
     <string-array name="Collages">
         <item>please select collage</item>
