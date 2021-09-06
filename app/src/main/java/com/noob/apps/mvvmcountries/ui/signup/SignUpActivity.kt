@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivitySignUpBinding
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
+import com.noob.apps.mvvmcountries.ui.more.MoreFragment
 import com.noob.apps.mvvmcountries.utils.EmailValidation
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 
@@ -31,6 +32,7 @@ class SignUpActivity : AppCompatActivity() {
           //  if (checkValidation()) {
                 val intent = Intent(this@SignUpActivity, VerifyOtpActivity::class.java)
                 intent.putExtra("MOBILE_NUMBER", mobileNumber)
+              //  intent.putExtra("FULL_NAME",fullName)
                 startActivity(intent)
 
          //   }
