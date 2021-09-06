@@ -9,4 +9,5 @@
     <color name="black">#000000</color>
     <color name="blue">#0277BD</color>
     <color name="niceBlue">#F2F9FB</color>
+    <color name="sepColor">#DBE2EA </color>
 </resources>

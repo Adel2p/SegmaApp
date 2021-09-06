@@ -7,9 +7,9 @@ import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivitySignUpBinding
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
+import com.noob.apps.mvvmcountries.ui.more.MoreFragment
 import com.noob.apps.mvvmcountries.utils.EmailValidation
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
-import com.noob.apps.mvvmcountries.utils.PasswordValidation
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var fullName: String
@@ -32,6 +32,7 @@ class SignUpActivity : AppCompatActivity() {
           //  if (checkValidation()) {
                 val intent = Intent(this@SignUpActivity, VerifyOtpActivity::class.java)
                 intent.putExtra("MOBILE_NUMBER", mobileNumber)
+              //  intent.putExtra("FULL_NAME",fullName)
                 startActivity(intent)
 
          //   }
@@ -52,7 +53,7 @@ class SignUpActivity : AppCompatActivity() {
             mActivityBinding.etMobileNumber.error = getString(R.string.invalid_mobile_number)
             isValid = false
         }
-        if (!PasswordValidation.isValidPassword(password)) {
+        if (password.isEmpty()) {
             mActivityBinding.etPassword.error = getString(R.string.invalid_password)
             isValid = false
         }
