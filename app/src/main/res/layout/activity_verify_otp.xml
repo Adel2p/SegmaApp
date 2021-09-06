@@ -6,14 +6,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/login_bg"
         tools:context=".ui.signup.VerifyOtpActivity">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/ic_app_logo"
+            android:layout_width="@dimen/_62sdp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:background="@drawable/ic_app_logo1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -22,11 +23,11 @@
             android:id="@+id/txtOtp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="@dimen/_80sdp"
             android:fontFamily="@font/semibold"
             android:text="@string/verify_otp"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -35,7 +36,7 @@
             android:id="@+id/layChangeMobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="@+id/txtOtp"
             app:layout_constraintStart_toStartOf="@+id/txtOtp"
             app:layout_constraintTop_toBottomOf="@+id/txtOtp">
@@ -44,11 +45,11 @@
                 android:id="@+id/txtChangeNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:fontFamily="@font/semibold"
                 android:text="@string/change_number"
                 android:textColor="@color/blue"
-                android:textSize="14sp"
+                android:textSize="@dimen/_13ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -56,9 +57,9 @@
                 android:id="@+id/txtMobileNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toEndOf="@+id/txtChangeNumber"
                 app:layout_constraintTop_toTopOf="@+id/txtChangeNumber"
                 tools:text="01016192447" />
@@ -69,7 +70,7 @@
             android:id="@+id/otp_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:focusableInTouchMode="true"
             android:inputType="number"
             android:itemBackground="@drawable/curved_edittext"
@@ -86,16 +87,16 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/confirmButton"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@drawable/curved_butoon_gray"
             android:fontFamily="@font/bold"
             android:gravity="center"
             android:text="@string/confirm"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/otp_view" />
@@ -104,7 +105,7 @@
             android:id="@+id/layRetry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="@+id/confirmButton"
             app:layout_constraintStart_toStartOf="@+id/confirmButton"
             app:layout_constraintTop_toBottomOf="@+id/confirmButton">
@@ -116,18 +117,18 @@
                 android:fontFamily="@font/regular"
                 android:text="@string/not_receive_otp_code"
                 android:textColor="@color/gray_purple"
-                android:textSize="14sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:fontFamily="@font/semibold"
                 android:text="@string/resend"
                 android:textColor="@color/blue"
-                android:textSize="14sp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toEndOf="@+id/txtNotReceiveOtp"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

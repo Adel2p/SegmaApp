@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class SplashActivity : AppCompatActivity() {
     private lateinit var userPreferences: UserPreferences
     private var isSaved = false
-    private var isloggedin=false
+    private var isloggedin = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             delay(TimeUnit.SECONDS.toMillis(3))
             withContext(Dispatchers.Main) {
-                if(isloggedin) {
+                if (isloggedin) {
                     if (isSaved) {
                         val intent = Intent(this@SplashActivity, HomeActivity::class.java)
 
@@ -42,8 +42,7 @@ class SplashActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }
-                }
-                else{
+                } else {
                     val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                     startActivity(intent)
                     finish()

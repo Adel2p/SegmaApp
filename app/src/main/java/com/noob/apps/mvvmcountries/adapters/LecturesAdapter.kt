@@ -18,7 +18,7 @@ class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
 
     fun setData(list: List<Lecture>) {
         mList = list
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0, mList!!.size)
     }
 
     override fun onCreateViewHolder(
