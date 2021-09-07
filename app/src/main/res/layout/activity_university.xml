@@ -42,7 +42,7 @@
             android:fontFamily="@font/regular"
             android:text="@string/collage"
             android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="@+id/txtContinueInfo"
             app:layout_constraintTop_toBottomOf="@+id/txtContinueInfo"
 
@@ -82,7 +82,7 @@
             android:fontFamily="@font/regular"
             android:text="@string/term"
             android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="@+id/txtCollage"
             app:layout_constraintTop_toBottomOf="@+id/collageLay" />
 
@@ -120,7 +120,7 @@
             android:fontFamily="@font/regular"
             android:text="@string/year"
             android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="@+id/txtTerm"
             app:layout_constraintTop_toBottomOf="@+id/termLay" />
 
@@ -158,7 +158,7 @@
             android:fontFamily="@font/regular"
             android:text="@string/department"
             android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_15ssp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="@+id/txtYear"
             app:layout_constraintTop_toBottomOf="@+id/yearLay"
 
@@ -202,7 +202,7 @@
             android:fontFamily="@font/bold"
             android:text="@string/save"
             android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="@+id/depLay"
             app:layout_constraintStart_toStartOf="@+id/depLay"
             app:layout_constraintTop_toBottomOf="@+id/depLay" />

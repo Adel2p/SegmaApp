@@ -39,6 +39,5 @@ class LanguageBottomDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(context,"show",Toast.LENGTH_LONG).show()
     }
 }

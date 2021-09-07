@@ -35,12 +35,10 @@ class SplashActivity : AppCompatActivity() {
                 if (isloggedin) {
                     if (isSaved) {
                         val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-
                         startActivity(intent)
                         finish()
                     } else {
                         val intent = Intent(this@SplashActivity, UniversityActivity::class.java)
-
                         startActivity(intent)
                         finish()
                     }

@@ -8,13 +8,16 @@
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_edittext.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo1.xml" value="0.1" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_favourite_lecture.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_login_success.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_refresh.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_splash_bg.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/navigation_view_colored.xml" value="0.14907407407407408" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/rounded_dialog.xml" value="0.20833333333333334" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/about_segma_dialog.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_countries_list.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_educational.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_favourite_lecture.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_forget_password.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_forget_password_reset.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
@@ -29,6 +32,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/change_language.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/countries_list_item.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/custom_spinner_item.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/favourite_lecture_cell.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_more.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/lecture_item_cell.xml" value="0.1921875" />
