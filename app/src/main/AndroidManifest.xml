@@ -21,7 +21,7 @@
             android:name=".ui.more.NotificationActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.more.FavLecActivity"
+            android:name=".ui.more.FavouriteLectureActivity"
             android:exported="true" />
         <activity
             android:name=".ui.more.FavouriteLectureActivity"

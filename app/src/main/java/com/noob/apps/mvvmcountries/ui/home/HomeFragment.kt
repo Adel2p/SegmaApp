@@ -21,7 +21,7 @@ private const val ARG_PARAM2 = "param2"
 
 class HomeFragment : Fragment() {
     private lateinit var mActivityBinding: FragmentHomeBinding
-    val listOfLectures: MutableList<Lecture> = mutableListOf()
+     private val listOfLectures: MutableList<Lecture> = mutableListOf()
     private lateinit var mAdapter: LecturesAdapter
 
     private var param1: String? = null
