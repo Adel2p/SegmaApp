@@ -2,32 +2,49 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_450sdp"
-    app:cardCornerRadius="@dimen/_8sdp">
-
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/_15sdp">
-
+        android:padding="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvBuyMore"
+            android:id="@+id/txtChangeLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:padding="@dimen/_8sdp"
-            android:text="change Language"
-            android:textColor="#221e20"
-            android:textSize="@dimen/_16ssp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/semibold"
+            android:text="@string/change_language"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtEnglish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/regular"
+            android:text="@string/english"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintStart_toStartOf="@+id/txtChangeLanguage"
+            app:layout_constraintTop_toBottomOf="@+id/txtChangeLanguage" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtArabic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:fontFamily="@font/regular"
+            android:text="@string/arabic"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintStart_toStartOf="@+id/txtChangeLanguage"
+            app:layout_constraintTop_toBottomOf="@+id/txtEnglish" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>
