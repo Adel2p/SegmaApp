@@ -65,9 +65,8 @@ class MoreFragment : Fragment() {
         }
 
         mActivityBinding.txtChangeLanguage.setOnClickListener {
-            LanguageBottomDialog().apply {
-                fragmentManager?.let { it1 -> show(it1, LanguageBottomDialog.TAG) }
-            }
+            val bottomSheetFragment = LanguageBottomDialog()
+            activity?.let { it1 -> bottomSheetFragment.show(it1.supportFragmentManager, bottomSheetFragment.tag) }
         }
     }
 

@@ -54,6 +54,10 @@
     <string name="about_segma">About Segma</string>
     <string name="log_out">Log Out</string>
     <string name="lecture">Lectures</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+
+
 
 
     <string-array name="Collages">
