@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.FragmentMoreBinding
+import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
+import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -44,7 +46,7 @@ class MoreFragment : Fragment() {
 
         mActivityBinding.txtFavoriteLec.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, FavLecActivity::class.java)
+                val intent = Intent(it, FavouriteLectureActivity::class.java)
                 it.startActivity(intent)
             }
 
@@ -67,6 +69,14 @@ class MoreFragment : Fragment() {
         mActivityBinding.txtChangeLanguage.setOnClickListener {
             val bottomSheetFragment = LanguageBottomDialog()
             activity?.let { it1 -> bottomSheetFragment.show(it1.supportFragmentManager, bottomSheetFragment.tag) }
+        }
+        mActivityBinding.txtAboutApp.setOnClickListener {
+            val aboutsegmadialog = AboutSegmaDialog()
+            activity?.let { it1 -> aboutsegmadialog.show(it1.supportFragmentManager, aboutsegmadialog.tag) }
+        }
+        mActivityBinding.txtLogOut.setOnClickListener {
+           startActivity(Intent(requireActivity(),LoginActivity::class.java))
+            activity?.finishAffinity()
         }
     }
 
