@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.noob.apps.mvvmcountries.R
 
-class LanguageBottomDialog : BottomSheetDialogFragment() {
-
+class TestDialog: BottomSheetDialogFragment() {
+    private var fragmentView: View? = null
 
     companion object {
-        const val TAG = "LanguageBottomDialog"
-
         fun newInstance(
-        ): LanguageBottomDialog {
+        ): TestDialog {
             val args = Bundle()
-            val fragment = LanguageBottomDialog()
+            val fragment = TestDialog()
             fragment.arguments = args
             return fragment
         }
@@ -25,8 +22,6 @@ class LanguageBottomDialog : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
     }
 
     override fun onCreateView(
@@ -34,11 +29,7 @@ class LanguageBottomDialog : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.change_language, container, true)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(context,"show",Toast.LENGTH_LONG).show()
+        fragmentView = inflater.inflate(R.layout.test_dialog, container, false)
+        return fragmentView
     }
 }

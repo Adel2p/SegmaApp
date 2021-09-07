@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
+import com.noob.apps.mvvmcountries.ui.dialog.TestDialog
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
@@ -52,6 +54,5 @@ class SplashActivity : AppCompatActivity() {
 
             }
         }
-
     }
 }
