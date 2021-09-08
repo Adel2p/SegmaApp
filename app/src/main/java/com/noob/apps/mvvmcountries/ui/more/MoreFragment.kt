@@ -11,6 +11,7 @@ import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.FragmentMoreBinding
 import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
+import com.noob.apps.mvvmcountries.ui.dialog.NotificationSettingDialog
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 
 private const val ARG_PARAM1 = "param1"
@@ -78,6 +79,11 @@ class MoreFragment : Fragment() {
            startActivity(Intent(requireActivity(),LoginActivity::class.java))
             activity?.finishAffinity()
         }
+        mActivityBinding.txtNotificationSetting.setOnClickListener {
+            val notificationsettingdialog = NotificationSettingDialog()
+            activity?.let { it1 -> notificationsettingdialog.show(it1.supportFragmentManager, notificationsettingdialog.tag) }
+        }
+
     }
 
     companion object {
