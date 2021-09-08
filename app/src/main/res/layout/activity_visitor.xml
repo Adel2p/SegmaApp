@@ -6,14 +6,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/login_bg"
         tools:context=".ui.visitor.VisitorActivity">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/ic_app_logo"
+            android:layout_width="@dimen/_62sdp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_marginTop="@dimen/_80sdp"
+            android:background="@drawable/ic_app_logo1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -22,12 +23,12 @@
             android:id="@+id/txtFullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_35sdp"
             android:fontFamily="@font/regular"
             android:text="@string/full_name"
             android:textColor="@color/gray_purple"
-            android:textSize="18sp"
+            android:textSize="@dimen/_12ssp"
             app:fontFamily="@font/regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -35,10 +36,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputFullName"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/curved_edittext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,13 +47,13 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFullName"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/_45sdp"
                 android:inputType="text"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="30dp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/_18ssp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,12 +61,11 @@
             android:id="@+id/txtMobileNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:fontFamily="@font/regular"
             android:text="@string/mobile_number"
             android:textColor="@color/gray_purple"
-            android:textSize="18sp"
+            android:textSize="@dimen/_12ssp"
             app:fontFamily="@font/regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputFullName" />
@@ -74,10 +73,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputMobileNumber"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/curved_edittext"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtMobileNumber">
@@ -85,14 +83,14 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etMobileNumber"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/_45sdp"
                 android:inputType="number"
                 android:maxLength="11"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="30dp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/_18ssp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,47 +98,53 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/VisitorButton"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="16dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@drawable/curved_button_blue"
             android:fontFamily="@font/bold"
             android:gravity="center"
             android:text="@string/visitor"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="@dimen/_16ssp"
             app:fontFamily="@font/bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputMobileNumber" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txthaveAccount"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/have_account"
-            android:textColor="@color/gray_purple"
-            android:textSize="15sp"
-            app:fontFamily="@font/regular"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/VisitorButton" />
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="@+id/VisitorButton"
+            app:layout_constraintStart_toStartOf="@+id/VisitorButton"
+            app:layout_constraintTop_toBottomOf="@id/VisitorButton">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtlogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/semibold"
-            android:text="@string/login"
-            android:textColor="#0277BD"
-            android:textSize="15sp"
-            app:fontFamily="@font/semibold"
-            app:layout_constraintStart_toEndOf="@+id/txthaveAccount"
-            app:layout_constraintTop_toBottomOf="@+id/VisitorButton" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txthaveAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/have_account"
+                android:textColor="@color/gray_purple"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/regular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/semibold"
+                android:text="@string/login"
+                android:textColor="#0277BD"
+                android:textSize="@dimen/_12ssp"
+                app:fontFamily="@font/semibold"
+                app:layout_constraintStart_toEndOf="@+id/txthaveAccount"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

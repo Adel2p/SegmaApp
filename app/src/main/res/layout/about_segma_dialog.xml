@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_8sdp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
-        android:background="@color/white">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtAboutSegmaApp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/about_segma_app"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold"
-            android:textSize="@dimen/_18ssp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/closeImg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtAboutSegmaApp"
-            android:background="@drawable/ic_close_icon"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtContent"
-            app:layout_constraintStart_toStartOf="@+id/txtAboutSegmaApp"
-            app:layout_constraintEnd_toEndOf="@+id/closeImg"
-            app:layout_constraintTop_toBottomOf="@+id/txtAboutSegmaApp"
-            android:text="@string/about_segma_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:layout_height="wrap_content"/>
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtAboutSegmaApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/semibold"
+                android:text="@string/about_segma_app"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/closeImg"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:background="@drawable/ic_close_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtAboutSegmaApp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:text="@string/about_segma_content"
+                app:layout_constraintEnd_toEndOf="@+id/closeImg"
+                app:layout_constraintStart_toStartOf="@+id/txtAboutSegmaApp"
+                app:layout_constraintTop_toBottomOf="@+id/txtAboutSegmaApp" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </layout>

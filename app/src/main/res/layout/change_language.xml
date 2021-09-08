@@ -1,84 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_8sdp">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
-        android:background="@color/white">
+        app:cardElevation="0dp"
+        app:cardCornerRadius="@dimen/_10sdp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtChangeLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/semibold"
-            android:text="@string/change_language"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_18ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtEnglish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/black"
-            android:text="@string/english"
-            android:textSize="@dimen/_16ssp"
-            app:layout_constraintStart_toStartOf="@+id/txtChangeLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/txtChangeLanguage" />
-
-        <View
-            android:id="@+id/englishSep"
-            app:layout_constraintTop_toBottomOf="@+id/txtEnglish"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@color/sepColor"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_height="@dimen/_1sdp" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/englishImg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtChangeLanguage"
-            app:layout_constraintTop_toTopOf="@+id/txtEnglish"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:background="@drawable/ic_blue_circle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtArabic"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/black"
-            android:text="@string/arabic"
-            android:textSize="@dimen/_16ssp"
-            app:layout_constraintStart_toStartOf="@+id/txtChangeLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/englishSep" />
+            android:padding="@dimen/_10sdp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/grayImg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtArabic"
-            android:background="@drawable/ic_gray_circle"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtChangeLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/semibold"
+                android:text="@string/change_language"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtEnglish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/english"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintStart_toStartOf="@+id/txtChangeLanguage"
+                app:layout_constraintTop_toBottomOf="@+id/txtChangeLanguage" />
+
+            <View
+                android:id="@+id/englishSep"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/sepColor"
+                app:layout_constraintTop_toBottomOf="@+id/txtEnglish" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/englishImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/ic_blue_circle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtChangeLanguage"
+                app:layout_constraintTop_toTopOf="@+id/txtEnglish" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtArabic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/arabic"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintStart_toStartOf="@+id/txtChangeLanguage"
+                app:layout_constraintTop_toBottomOf="@+id/englishSep" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/grayImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:background="@drawable/ic_gray_circle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtArabic" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

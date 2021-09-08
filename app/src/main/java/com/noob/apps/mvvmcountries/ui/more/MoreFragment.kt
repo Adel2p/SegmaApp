@@ -34,7 +34,7 @@ class MoreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         mActivityBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_more, container, false)
@@ -69,14 +69,24 @@ class MoreFragment : Fragment() {
 
         mActivityBinding.txtChangeLanguage.setOnClickListener {
             val bottomSheetFragment = LanguageBottomDialog()
-            activity?.let { it1 -> bottomSheetFragment.show(it1.supportFragmentManager, bottomSheetFragment.tag) }
+            activity?.let { it1 ->
+                bottomSheetFragment.show(
+                    it1.supportFragmentManager,
+                    LanguageBottomDialog.TAG
+                )
+            }
         }
         mActivityBinding.txtAboutApp.setOnClickListener {
-            val aboutsegmadialog = AboutSegmaDialog()
-            activity?.let { it1 -> aboutsegmadialog.show(it1.supportFragmentManager, aboutsegmadialog.tag) }
+            val aboutDialog = AboutSegmaDialog()
+            activity?.let { it1 ->
+                aboutDialog.show(
+                    it1.supportFragmentManager,
+                    AboutSegmaDialog.TAG
+                )
+            }
         }
         mActivityBinding.txtLogOut.setOnClickListener {
-           startActivity(Intent(requireActivity(),LoginActivity::class.java))
+            startActivity(Intent(requireActivity(), LoginActivity::class.java))
             activity?.finishAffinity()
         }
         mActivityBinding.txtNotificationSetting.setOnClickListener {
