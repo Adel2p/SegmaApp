@@ -6,13 +6,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/ic_background"
         tools:context=".ui.more.NotificationActivity">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtNotification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_80sdp"
             android:fontFamily="@font/semibold"
             android:text="@string/notification"
             android:textColor="@color/black"
@@ -22,21 +23,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/arrowImg"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/ic_arrow"
-            app:layout_constraintTop_toTopOf="@+id/txtNotification"
+            android:id="@+id/backImg"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
-            android:layout_height="wrap_content" />
+            android:background="@drawable/ic_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtNotification" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/notificationRec"
-            android:layout_marginTop="@dimen/_20sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtNotification"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtNotification" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

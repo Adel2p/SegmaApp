@@ -8,10 +8,14 @@
             type="com.noob.apps.mvvmcountries.models.Notification" />
     </data>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_5sdp">
@@ -19,7 +23,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/notificationCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/white"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
@@ -64,11 +68,24 @@
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="@+id/txtLecId"
                     app:layout_constraintTop_toBottomOf="@+id/txtLecId" />
+
+                <View
+                    android:id="@+id/notificationSep"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/sepColor"
+                    app:layout_constraintTop_toBottomOf="@+id/txtLecContent"
+
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </layout>

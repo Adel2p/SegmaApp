@@ -5,11 +5,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.adapters.FavouriteLectureAdapter
 import com.noob.apps.mvvmcountries.adapters.NotificationAdapter
-import com.noob.apps.mvvmcountries.databinding.ActivityFavouriteLectureBinding
 import com.noob.apps.mvvmcountries.databinding.ActivityNotificationBinding
-import com.noob.apps.mvvmcountries.models.Lecture
 import com.noob.apps.mvvmcountries.models.Notification
 
 class NotificationActivity : AppCompatActivity() {
@@ -20,7 +17,7 @@ class NotificationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
-            DataBindingUtil.setContentView(this, R.layout.notification_cell)
+            DataBindingUtil.setContentView(this, R.layout.activity_notification)
         val notification1 = Notification("computer science", "Content")
         val notification2 = Notification("computer science", "content")
         val notification3 = Notification("computer science", "content")
@@ -38,6 +35,9 @@ class NotificationActivity : AppCompatActivity() {
         listOfNotifications.add(notification7)
         initializeRecyclerView()
         mAdapter.setData(listOfNotifications)
+        mActivityBinding.backImg.setOnClickListener{
+            finish()
+        }
 
     }
     private fun initializeRecyclerView() {
