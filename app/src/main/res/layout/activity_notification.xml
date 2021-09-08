@@ -7,6 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_background"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
         tools:context=".ui.more.NotificationActivity">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -26,7 +29,6 @@
             android:id="@+id/backImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_15sdp"
             android:background="@drawable/ic_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtNotification" />
