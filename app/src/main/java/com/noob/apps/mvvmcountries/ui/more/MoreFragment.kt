@@ -13,6 +13,7 @@ import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
 import com.noob.apps.mvvmcountries.ui.dialog.NotificationSettingDialog
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
+import com.noob.apps.mvvmcountries.ui.profile.ProfileActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -66,6 +67,14 @@ class MoreFragment : Fragment() {
             }
 
         }
+        mActivityBinding.studentCard.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileActivity::class.java)
+                it.startActivity(intent)
+            }
+
+        }
+
 
         mActivityBinding.txtChangeLanguage.setOnClickListener {
             val bottomSheetFragment = LanguageBottomDialog()
