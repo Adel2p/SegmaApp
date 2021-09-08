@@ -18,5 +18,8 @@ class ProfileActivity : AppCompatActivity() {
         mActivityBinding.txtchangePassword.setOnClickListener {
             startActivity(Intent(this@ProfileActivity, ForgetPasswordActivity::class.java))
         }
+        mActivityBinding.backImg.setOnClickListener {
+            finish()
+        }
     }
 }
