@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
@@ -15,14 +16,18 @@ import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 import com.noob.apps.mvvmcountries.utils.UserPreferences
+import com.noob.apps.mvvmcountries.viewmodels.CountryListViewModel
+import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var userPreferences: UserPreferences
-    private var isSaved=false
+    private var isSaved = false
     private lateinit var mobileNumber: String
     private lateinit var password: String
     private lateinit var mActivityBinding: ActivityLoginBinding
+    private lateinit var mViewModel: LoginViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -38,27 +43,30 @@ class LoginActivity : AppCompatActivity() {
         mActivityBinding.txtCreateNewAccount.setOnClickListener {
             startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
         }
+        mViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+
         mActivityBinding.loginButton.setOnClickListener {
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
+            mViewModel.fetchCountriesFromServer()
 
-            if (checkValidation()) {
-                ////////save user loged in
-                lifecycleScope.launch {
-                    userPreferences.saveUserLogedIn(true)
-                }
-                userPreferences.getUniversityData.asLiveData().observe(this, {
-                    isSaved = it
-                })
-                if (isSaved) {
-                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                    finish()
-                }
-                else{
-                    startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
-                    finish()
-                }
-            }
+//            if (checkValidation()) {
+//                ////////save user loged in
+//                lifecycleScope.launch {
+//                    userPreferences.saveUserLogedIn(true)
+//                }
+//                userPreferences.getUniversityData.asLiveData().observe(this, {
+//                    isSaved = it
+//                })
+//                if (isSaved) {
+//                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+//                    finish()
+//                }
+//                else{
+//                    startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
+//                    finish()
+//                }
+//            }
 
         }
     }

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 class RestClient private constructor() {
     companion object {
-        private const val BASE_URL = "https://restcountries.eu/rest/v2/"
+        private const val BASE_URL = "https://sigma-backend-api.herokuapp.com/api/v1/"
         private lateinit var mApiServices: ApiServices
         private var mInstance: RestClient? = null
         fun getInstance(): RestClient {
@@ -23,6 +23,7 @@ class RestClient private constructor() {
     init {
         val okHttpClient = OkHttpClient().newBuilder().connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(BasicAuthInterceptor("Sigma-Mobile", "123456"))
             .build()
         val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
             .client(okHttpClient)
