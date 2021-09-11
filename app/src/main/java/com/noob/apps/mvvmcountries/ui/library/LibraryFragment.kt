@@ -69,7 +69,7 @@ class LibraryFragment : Fragment() {
         mAdapter = LibraryAdapter()
         mActivityBinding.libRec.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = GridLayoutManager(requireContext(), 1)
 
             adapter = mAdapter
         }
