@@ -3,33 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:background="@color/niceBlue"
+        tools:context=".ui.more.MoreFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtLibrary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:fontFamily="@font/bold"
+            android:text="@string/library"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/libRec"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:background="@color/niceBlue"
-            tools:context=".ui.more.MoreFragment">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtLibrary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/library"
-                android:fontFamily="@font/bold"
-                android:textSize="@dimen/_18ssp"
-                android:textColor="@color/black"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/libRec"
-                app:layout_constraintStart_toStartOf="@+id/txtLibrary"
-                app:layout_constraintTop_toBottomOf="@+id/txtLibrary"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_height="wrap_content"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="@+id/txtLibrary"
+            app:layout_constraintTop_toBottomOf="@+id/txtLibrary" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

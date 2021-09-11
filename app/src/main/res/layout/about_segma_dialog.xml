@@ -42,10 +42,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/closeImg"
                 app:layout_constraintStart_toStartOf="@+id/txtAboutSegmaApp"
                 app:layout_constraintTop_toBottomOf="@+id/txtAboutSegmaApp" />
-
-
+            
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.cardview.widget.CardView>
 </layout>

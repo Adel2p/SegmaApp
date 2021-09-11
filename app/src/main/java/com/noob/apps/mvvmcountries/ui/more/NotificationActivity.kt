@@ -25,6 +25,8 @@ class NotificationActivity : AppCompatActivity() {
         val notification5 = Notification("computer science", "content")
         val notification6 = Notification("computer science", "content")
         val notification7 = Notification("computer science", "content")
+        val notification8 = Notification("computer science", "content")
+
 
         listOfNotifications.add(notification1)
         listOfNotifications.add(notification2)
@@ -33,6 +35,8 @@ class NotificationActivity : AppCompatActivity() {
         listOfNotifications.add(notification5)
         listOfNotifications.add(notification6)
         listOfNotifications.add(notification7)
+        listOfNotifications.add(notification8)
+
         initializeRecyclerView()
         mAdapter.setData(listOfNotifications)
         mActivityBinding.backImg.setOnClickListener{

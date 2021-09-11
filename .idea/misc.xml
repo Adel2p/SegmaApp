@@ -15,6 +15,7 @@
         <entry key="..\:/segma/app/src/main/res/drawable/ic_app_bg.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_app_logo.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_arrow.xml" value="0.23854166666666668" />
+        <entry key="..\:/segma/app/src/main/res/drawable/ic_background.xml" value="0.234375" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_backkk.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_basic_logo.xml" value="0.234375" />
         <entry key="..\:/segma/app/src/main/res/drawable/ic_courses_icon.xml" value="0.23854166666666668" />
@@ -75,7 +76,7 @@
         <entry key="..\:/segma/app/src/main/res/layout/fragment_welcomef.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/lecture_item_cell.xml" value="0.4" />
         <entry key="..\:/segma/app/src/main/res/layout/library_cell.xml" value="0.21822916666666667" />
-        <entry key="..\:/segma/app/src/main/res/layout/notification_cell.xml" value="0.4" />
+        <entry key="..\:/segma/app/src/main/res/layout/notification_cell.xml" value="0.2" />
         <entry key="..\:/segma/app/src/main/res/layout/notification_setting.xml" value="0.21822916666666667" />
         <entry key="..\:/segma/app/src/main/res/layout/spinner_department_item.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/spinner_term_item.xml" value="0.22239583333333332" />
