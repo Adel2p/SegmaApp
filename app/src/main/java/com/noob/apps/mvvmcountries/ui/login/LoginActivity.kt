@@ -2,7 +2,6 @@ package com.noob.apps.mvvmcountries.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -17,16 +16,13 @@ import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
-import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 import com.noob.apps.mvvmcountries.utils.UserPreferences
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 
 class LoginActivity : BaseActivity() {
     private lateinit var userPreferences: UserPreferences
@@ -81,11 +77,11 @@ class LoginActivity : BaseActivity() {
 //            Toast.makeText(this@LoginActivity, kt.size.toString(), Toast.LENGTH_SHORT).show()
 //        })
 
-        roomViewModel.findUser("fafd3ae2-692c-45ed-baef-f9f1ac5e072c")
-            .observe(this, Observer { result ->
-                Toast.makeText(this@LoginActivity, result[0].user_name, Toast.LENGTH_LONG).show()
-
-            })
+//        roomViewModel.findUser("fafd3ae2-692c-45ed-baef-f9f1ac5e072c")
+//            .observe(this, Observer { result ->
+//                Toast.makeText(this@LoginActivity, result[0].user_name, Toast.LENGTH_LONG).show()
+//
+//            })
 
 
         //   }
@@ -164,7 +160,7 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
             finish()
         } else {
-            startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
+            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
             finish()
         }
 
