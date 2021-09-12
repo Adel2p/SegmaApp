@@ -14,6 +14,7 @@ class UniversityViewModel(private val app: Application) : AndroidViewModel(app) 
     val mShowProgressBar = MutableLiveData(true)
     val mShowNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val mShowApiError = MutableLiveData<String>()
+    val mShowResponseError = MutableLiveData<String>()
     private var mRepository = UniversityRepository.getInstance()
 
     fun getUniversity(token: String): MutableLiveData<BoardingResponse> {
@@ -30,9 +31,11 @@ class UniversityViewModel(private val app: Application) : AndroidViewModel(app) 
 
                 override fun onResponseError(message: String) {
                     mShowProgressBar.value = false
+                    mShowResponseError.value = message
                 }
             })
         } else {
+            mShowProgressBar.value = false
             mShowNetworkError.value = true
         }
         return mList

@@ -7,13 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.data.DatabaseBuilder
+import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
+import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.FragmentMoreBinding
 import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
 import com.noob.apps.mvvmcountries.ui.dialog.NotificationSettingDialog
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.ui.profile.ProfileActivity
+import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -21,6 +27,7 @@ private const val ARG_PARAM2 = "param2"
 
 class MoreFragment : Fragment() {
     private lateinit var mActivityBinding: FragmentMoreBinding
+    private lateinit var roomViewModel: RoomViewModel
     private var param1: String? = null
     private var param2: String? = null
 
@@ -45,7 +52,13 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        roomViewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory(
+                requireActivity().application,
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext().applicationContext))
+            )
+        ).get(RoomViewModel::class.java)
         mActivityBinding.txtFavoriteLec.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, FavouriteLectureActivity::class.java)

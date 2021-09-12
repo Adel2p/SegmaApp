@@ -130,15 +130,15 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initializeObservers() {
-        mViewModel.fetchCountriesFromServer(mobileNumber, password).observe(this, Observer { kt ->
+        mViewModel.fetchCountriesFromServer(mobileNumber, password).observe(this, Observer { user ->
             lifecycleScope.launch {
-                kt.user_uuid?.let { userPreferences.saveUserId(it) }
+                user.user_uuid?.let { userPreferences.saveUserId(it) }
             }
             lifecycleScope.launch {
-                userPreferences.saveUserToken("Bearer " + kt.access_token)
+                userPreferences.saveUserToken("Bearer " + user.access_token)
             }
             lifecycleScope.launch {
-                kt.user_on_boarded?.let { checkUserOnBoard(it) }
+                user.user_on_boarded?.let { checkUserOnBoard(it) }
             }
 
         })
