@@ -16,6 +16,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".ui.details.CourseInformationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.details.CourseDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.more.PreviousExamActivity"
             android:exported="true" />
         <activity
@@ -72,7 +81,6 @@
         <activity
             android:name=".ui.CountriesListActivity"
             android:exported="true" />
-
     </application>
 
 </manifest>

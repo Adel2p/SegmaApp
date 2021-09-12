@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.ui.CountriesListActivity
+import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
 import com.noob.apps.mvvmcountries.ui.dialog.TestDialog
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
                         finish()
                     }
                 } else {
-                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                    val intent = Intent(this@SplashActivity, CourseDetailsActivity::class.java)
                     startActivity(intent)
                     finish()
 

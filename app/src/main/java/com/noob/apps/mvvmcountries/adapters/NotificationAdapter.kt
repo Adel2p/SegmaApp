@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.databinding.LectureItemCellBinding
-import com.noob.apps.mvvmcountries.models.Lecture
+import com.noob.apps.mvvmcountries.databinding.NotificationCellBinding
+import com.noob.apps.mvvmcountries.models.Notification
 import kotlinx.android.extensions.LayoutContainer
 
-class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
+class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
-    private var mList: List<Lecture>? = listOf()
+    private var mList: List<Notification>? = listOf()
 
-    fun setData(list: List<Lecture>) {
+    fun setData(list: List<Notification>) {
         mList = list
         notifyItemRangeChanged(0, mList!!.size)
     }
@@ -23,9 +23,9 @@ class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding: LectureItemCellBinding = DataBindingUtil.inflate(
+        val binding: NotificationCellBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.lecture_item_cell,
+            R.layout.notification_cell,
             parent,
             false
         )
@@ -37,10 +37,10 @@ class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemBinding.lecture = mList!![position]
+        holder.itemBinding.notification = mList!![position]
     }
 
-    class ViewHolder(var itemBinding: LectureItemCellBinding) :
+    class ViewHolder(var itemBinding: NotificationCellBinding) :
         RecyclerView.ViewHolder(itemBinding.root), LayoutContainer {
         override val containerView: View?
             get() = itemBinding.root

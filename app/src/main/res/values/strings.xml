@@ -56,10 +56,16 @@
     <string name="lecture">Lectures</string>
     <string name="english">English</string>
     <string name="arabic">Arabic</string>
-    <string name="about_segma_content">App Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Contentvpp Content pp Content pp Content</string>
-    <string name="check_connection">برجاء التأكد من إتصالك بالإنترنت و إعادة المحاولة</string>
-    <string name="retry_connection">إعادة المحاولة</string>
+    <string name="active_notification">Active Notification</string>
+    <string name="close_notification">Close Notification</string>
+    <string name="profile">Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="lectures">Lectures</string>
+    <string name="information">Information</string>
 
+
+    <string name="about_segma_content">App Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Contentvpp Content pp Content pp Content</string>
 
 
     <string-array name="Collages">

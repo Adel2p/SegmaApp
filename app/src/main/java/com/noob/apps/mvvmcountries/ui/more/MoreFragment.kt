@@ -11,7 +11,9 @@ import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.FragmentMoreBinding
 import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
+import com.noob.apps.mvvmcountries.ui.dialog.NotificationSettingDialog
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
+import com.noob.apps.mvvmcountries.ui.profile.ProfileActivity
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -65,6 +67,14 @@ class MoreFragment : Fragment() {
             }
 
         }
+        mActivityBinding.studentCard.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileActivity::class.java)
+                it.startActivity(intent)
+            }
+
+        }
+
 
         mActivityBinding.txtChangeLanguage.setOnClickListener {
             val bottomSheetFragment = LanguageBottomDialog()
@@ -88,6 +98,11 @@ class MoreFragment : Fragment() {
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             activity?.finishAffinity()
         }
+        mActivityBinding.txtNotificationSetting.setOnClickListener {
+            val notificationsettingdialog = NotificationSettingDialog()
+            activity?.let { it1 -> notificationsettingdialog.show(it1.supportFragmentManager, notificationsettingdialog.tag) }
+        }
+
     }
 
     companion object {

@@ -14,8 +14,8 @@ import com.noob.apps.mvvmcountries.models.Lecture
 class FavouriteLectureActivity : AppCompatActivity() {
     private lateinit var mAdapter: FavouriteLectureAdapter
     private val listOfLectures: MutableList<Lecture> = mutableListOf()
-
     private lateinit var mActivityBinding:ActivityFavouriteLectureBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -35,6 +35,7 @@ class FavouriteLectureActivity : AppCompatActivity() {
         listOfLectures.add(lec5)
         listOfLectures.add(lec6)
         listOfLectures.add(lec7)
+
         initializeRecyclerView()
         mAdapter.setData(listOfLectures)
         mActivityBinding.back.setOnClickListener{
