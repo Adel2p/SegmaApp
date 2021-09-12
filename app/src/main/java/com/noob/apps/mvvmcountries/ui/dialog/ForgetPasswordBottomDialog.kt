@@ -9,10 +9,14 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ForgetPasswordBottomDialogBinding
-import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 
 class ForgetPasswordBottomDialog : BottomSheetDialogFragment() {
     private lateinit var mActivityBinding: ForgetPasswordBottomDialogBinding
+    private lateinit var oldPassword: String
+    private lateinit var newPassword: String
+    private lateinit var confirmPassword: String
+
+
 
     companion object {
 
@@ -42,15 +46,13 @@ class ForgetPasswordBottomDialog : BottomSheetDialogFragment() {
             dismiss()
         }
         mActivityBinding.continueButton.setOnClickListener {
-            var oldPassword = mActivityBinding.etOldPassword.text.toString()
-            var newPassword = mActivityBinding.etNewPassword.text.toString()
-            var confirmPassword = mActivityBinding.etConfirmNewPassword.text.toString()
+             oldPassword = mActivityBinding.etOldPassword.text.toString()
+             newPassword = mActivityBinding.etNewPassword.text.toString()
+             confirmPassword = mActivityBinding.etConfirmNewPassword.text.toString()
 
-            if (checkValidation(oldPassword, newPassword, confirmPassword)) {
+            if (checkValidation(oldPassword, newPassword, confirmPassword))
                 Toast.makeText(requireActivity(),"Well Done",Toast.LENGTH_LONG).show()
 
-
-            }
         }
     }
 
