@@ -1,26 +1,27 @@
 package com.noob.apps.mvvmcountries.viewmodels
 
 import android.app.Application
-import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.noob.apps.mvvmcountries.interfaces.NetworkResponseCallback
-import com.noob.apps.mvvmcountries.models.Country
-import com.noob.apps.mvvmcountries.repositories.CountriesRepository
+import com.noob.apps.mvvmcountries.models.RegistrationModel
+import com.noob.apps.mvvmcountries.models.RegistrationResponse
+import com.noob.apps.mvvmcountries.repositories.RegistrationRepository
 import com.noob.apps.mvvmcountries.utils.NetworkHelper
 
-class CountryListViewModel(private val app: Application) : AndroidViewModel(app) {
-    private var mList: MutableLiveData<List<Country>> =
-        MutableLiveData<List<Country>>().apply { value = emptyList() }
+class RegistrationViewModel(private val app: Application) : AndroidViewModel(app) {
+    private var user: MutableLiveData<RegistrationResponse> =
+        MutableLiveData<RegistrationResponse>()
     val mShowProgressBar = MutableLiveData(true)
     val mShowNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val mShowApiError = MutableLiveData<String>()
-    private var mRepository = CountriesRepository.getInstance()
+    val mShowResponseError = MutableLiveData<String>()
+    private var mRepository = RegistrationRepository.getInstance()
 
-    fun fetchCountriesFromServer(forceFetch: Boolean): MutableLiveData<List<Country>> {
+    fun register(registrationModel: RegistrationModel): MutableLiveData<RegistrationResponse> {
         if (NetworkHelper.isOnline(app.baseContext)) {
             mShowProgressBar.value = true
-            mList = mRepository.getCountries(object : NetworkResponseCallback {
+            user = mRepository.register(registrationModel, object : NetworkResponseCallback {
                 override fun onNetworkFailure(th: Throwable) {
                     mShowApiError.value = th.message
                 }
@@ -30,15 +31,16 @@ class CountryListViewModel(private val app: Application) : AndroidViewModel(app)
                 }
 
                 override fun onResponseError(message: String) {
-                    mShowProgressBar.value = false                }
-            }, forceFetch)
+                    mShowProgressBar.value = false
+                    mShowResponseError.value = message
+                }
+
+            })
         } else {
+            mShowProgressBar.value = false
             mShowNetworkError.value = true
         }
-        return mList
+        return user
     }
 
-    fun onRefreshClicked(view: View) {
-        fetchCountriesFromServer(true)
-    }
 }

@@ -2,5 +2,6 @@ package com.noob.apps.mvvmcountries.interfaces
 
 interface NetworkResponseCallback {
     fun onNetworkSuccess()
-    fun onNetworkFailure(th : Throwable)
+    fun onResponseError(message: String)
+    fun onNetworkFailure(th: Throwable)
 }
