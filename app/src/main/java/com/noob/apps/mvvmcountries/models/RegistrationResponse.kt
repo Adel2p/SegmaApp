@@ -2,8 +2,9 @@ package com.noob.apps.mvvmcountries.models
 
 import java.io.Serializable
 
-
-data class LoginResponse(
+data class RegistrationResponse(
+    var status: String,
+    var message: String,
     var isSuccess: Boolean?,
     var error: String?,
     var error_description: String?,
@@ -20,4 +21,4 @@ data class LoginResponse(
     val user_device_id: String?,
     val user_gender: String?,
     val jti: String?
-) : Serializable
+):Serializable

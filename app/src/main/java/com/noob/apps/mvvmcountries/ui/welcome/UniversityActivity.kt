@@ -55,7 +55,7 @@ class UniversityActivity : AppCompatActivity() {
                 if (position != 0)
                     collage = collageList[position]
                 else
-                    collage=""
+                    collage = ""
                 checkValidation()
             }
 
@@ -72,7 +72,7 @@ class UniversityActivity : AppCompatActivity() {
                 if (position != 0)
                     term = termList[position]
                 else
-                    term=""
+                    term = ""
                 checkValidation()
             }
 
@@ -89,7 +89,7 @@ class UniversityActivity : AppCompatActivity() {
                 if (position != 0)
                     year = yearList[position]
                 else
-                    year=""
+                    year = ""
 
                 checkValidation()
             }
@@ -108,7 +108,7 @@ class UniversityActivity : AppCompatActivity() {
                 if (position != 0)
                     dep = depList[position]
                 else
-                    dep=""
+                    dep = ""
                 checkValidation()
             }
 
@@ -116,24 +116,28 @@ class UniversityActivity : AppCompatActivity() {
                 dep = ""
             }
         }
-        mActivityBinding.saveButton.setOnClickListener{
+        mActivityBinding.saveButton.setOnClickListener {
             lifecycleScope.launch {
                 userPreferences.saveUniversityData(true)
             }
-            startActivity(Intent(this@UniversityActivity,WelcomeActivity::class.java))
+            startActivity(Intent(this@UniversityActivity, WelcomeActivity::class.java))
 
         }
         userPreferences = UserPreferences(this)
 
-        val bookmark = "Hello"
-        lifecycleScope.launch {
-            userPreferences.incrementCounter(bookmark)
-        }
-
-
-        userPreferences.exampleCounterFlow.asLiveData().observe(this, {
-            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        userPreferences.getUserToken.asLiveData().observe(this, {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
+
+//        val bookmark = "Hello"
+//        lifecycleScope.launch {
+//            userPreferences.incrementCounter(bookmark)
+//        }
+//
+//
+//        userPreferences.exampleCounterFlow.asLiveData().observe(this, {
+//            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+//        })
 
 
 //        val adapter = ArrayAdapter(this,
@@ -153,17 +157,13 @@ class UniversityActivity : AppCompatActivity() {
     }
 
 
-
-
-
-
     private fun checkValidation() {
         if (collage.isNotEmpty() && term.isNotEmpty() && year.isNotEmpty() && dep.isNotEmpty()) {
             mActivityBinding.saveButton.setBackgroundResource(R.drawable.curved_button_blue)
-            mActivityBinding.saveButton.isEnabled=true
+            mActivityBinding.saveButton.isEnabled = true
         } else {
             mActivityBinding.saveButton.setBackgroundResource(R.drawable.curved_butoon_gray)
-            mActivityBinding.saveButton.isEnabled=false
+            mActivityBinding.saveButton.isEnabled = false
         }
 
     }

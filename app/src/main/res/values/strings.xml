@@ -56,11 +56,9 @@
     <string name="lecture">Lectures</string>
     <string name="english">English</string>
     <string name="arabic">Arabic</string>
-
     <string name="about_segma_content">App Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Contentvpp Content pp Content pp Content</string>
-
-
-
+    <string name="check_connection">برجاء التأكد من إتصالك بالإنترنت و إعادة المحاولة</string>
+    <string name="retry_connection">إعادة المحاولة</string>
 
 
 

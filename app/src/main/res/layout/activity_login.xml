@@ -52,10 +52,11 @@
                 android:inputType="phone"
                 android:maxLength="11"
                 android:paddingStart="@dimen/_10sdp"
+                android:text="01205459010"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_18ssp"
+                android:textSize="@dimen/_16ssp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,10 +90,11 @@
                 android:layout_height="@dimen/_45sdp"
                 android:inputType="textPassword"
                 android:paddingStart="@dimen/_10sdp"
+                android:text="123456"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_18ssp"
+                android:textSize="@dimen/_16ssp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 

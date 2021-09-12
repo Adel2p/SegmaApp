@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " settingpref")
+
 class UserPreferences(
     appContext: Context
 ) {
@@ -19,6 +20,10 @@ class UserPreferences(
     val EXAMPLE_COUNTER = stringPreferencesKey("example_counter")
     val SAVED_USER = booleanPreferencesKey("saved_user")
     val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
+    val user_uuid = stringPreferencesKey("user_uuid")
+    val token = stringPreferencesKey("AuthorizationToken")
+
+
     val exampleCounterFlow: Flow<String> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
@@ -38,6 +43,7 @@ class UserPreferences(
             settings[SAVED_USER] = currentCounterValue
         }
     }
+
     val getUniversityData: Flow<Boolean> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
@@ -50,11 +56,36 @@ class UserPreferences(
             settings[SAVED_LOGEDIN] = currentCounterValue
         }
     }
+
     val savedLogginedFlow: Flow<Boolean> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
             preferences[SAVED_LOGEDIN] ?: false
         }
 
+    suspend fun saveUserId(userId: String) {
+        applicationContext.dataStore.edit { settings ->
+            val currentCounterValue = settings[user_uuid] ?: userId
+            settings[user_uuid] = currentCounterValue
+        }
+    }
 
+    val getUserId: Flow<String> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[user_uuid] ?: ""
+        }
+
+    suspend fun saveUserToken(mtoken: String) {
+        applicationContext.dataStore.edit { settings ->
+            val currentCounterValue = settings[token] ?: mtoken
+            settings[token] = currentCounterValue
+        }
+    }
+
+    val getUserToken: Flow<String> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[token] ?: ""
+        }
 }
