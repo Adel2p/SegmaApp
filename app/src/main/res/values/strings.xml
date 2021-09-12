@@ -65,6 +65,8 @@
     <string name="information">Information</string>
     <string name="cancel">Cancel</string>
     <string name="old_password">Old Password</string>
+    <string name="check_connection">برجاء التأكد من إتصالك بالإنترنت و إعادة المحاولة</string>
+    <string name="retry_connection">إعادة المحاولة</string>‎
 
 
 

@@ -81,11 +81,11 @@ class LoginActivity : BaseActivity() {
 //            Toast.makeText(this@LoginActivity, kt.size.toString(), Toast.LENGTH_SHORT).show()
 //        })
 
-        roomViewModel.findUser("fafd3ae2-692c-45ed-baef-f9f1ac5e072c")
-            .observe(this, Observer { result ->
-                Toast.makeText(this@LoginActivity, result[0].user_name, Toast.LENGTH_LONG).show()
-
-            })
+//        roomViewModel.findUser("fafd3ae2-692c-45ed-baef-f9f1ac5e072c")
+//            .observe(this, Observer { result ->
+//                Toast.makeText(this@LoginActivity, result[0].user_name, Toast.LENGTH_LONG).show()
+//
+//            })
 
 
         //   }
@@ -164,7 +164,7 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
             finish()
         } else {
-            startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
+            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
             finish()
         }
 

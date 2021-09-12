@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ForgetPasswordBottomDialogBinding
+import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 
-class ForgetPasswordBottomDialog: BottomSheetDialogFragment() {
+class ForgetPasswordBottomDialog : BottomSheetDialogFragment() {
     private lateinit var mActivityBinding: ForgetPasswordBottomDialogBinding
 
     companion object {
@@ -39,5 +41,47 @@ class ForgetPasswordBottomDialog: BottomSheetDialogFragment() {
         mActivityBinding.txtCancel.setOnClickListener {
             dismiss()
         }
+        mActivityBinding.continueButton.setOnClickListener {
+            var oldPassword = mActivityBinding.etOldPassword.text.toString()
+            var newPassword = mActivityBinding.etNewPassword.text.toString()
+            var confirmPassword = mActivityBinding.etConfirmNewPassword.text.toString()
+
+            if (checkValidation(oldPassword, newPassword, confirmPassword)) {
+                Toast.makeText(requireActivity(),"Well Done",Toast.LENGTH_LONG).show()
+
+
+            }
+        }
     }
+
+    private fun checkValidation(
+        oldPassword: String,
+        newPassword: String,
+        confirmPassword: String
+    ): Boolean {
+
+        var isValid = true
+
+        if (oldPassword.isEmpty()) {
+            mActivityBinding.etOldPassword.error = "Required Field"
+            isValid = false
+        }
+        if (newPassword.isEmpty()) {
+            mActivityBinding.etNewPassword.error = "Required Field"
+            isValid = false
+        }
+
+        if (confirmPassword.isEmpty()) {
+            mActivityBinding.etConfirmNewPassword.error = "Required Field"
+            isValid = false
+        }
+
+        if (newPassword != confirmPassword) {
+            mActivityBinding.etConfirmNewPassword.error = "Not Confirmed"
+            isValid = false
+        }
+        return isValid
+    }
+
+
 }

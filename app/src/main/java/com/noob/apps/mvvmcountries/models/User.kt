@@ -3,6 +3,7 @@ package com.noob.apps.mvvmcountries.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
 data class User(
@@ -20,4 +21,4 @@ data class User(
     @ColumnInfo(name = "user_device_id") val user_device_id: String?,
     @ColumnInfo(name = "user_gender") val user_gender: String?,
     @ColumnInfo(name = "jti") val jti: String?
-)
+):Serializable
