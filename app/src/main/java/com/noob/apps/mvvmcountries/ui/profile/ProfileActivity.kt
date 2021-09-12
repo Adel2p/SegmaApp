@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityProfileBinding
+import com.noob.apps.mvvmcountries.ui.dialog.ForgetPasswordBottomDialog
+import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
 import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 
@@ -16,7 +18,13 @@ class ProfileActivity : AppCompatActivity() {
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_profile)
         mActivityBinding.txtchangePassword.setOnClickListener {
-            startActivity(Intent(this@ProfileActivity, ForgetPasswordActivity::class.java))
+            val bottomSheetFragment = ForgetPasswordBottomDialog()
+            // activity?.let { it1 ->
+            bottomSheetFragment.show(
+                supportFragmentManager,
+                ForgetPasswordBottomDialog.TAG
+            )
+            // }
         }
         mActivityBinding.backImg.setOnClickListener {
             finish()

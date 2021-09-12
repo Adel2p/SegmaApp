@@ -48,7 +48,7 @@
         <entry key="..\:/segma/app/src/main/res/layout/activity_educational.xml" value="0.4" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_fav_lec.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_favourite_lecture.xml" value="0.22239583333333332" />
-        <entry key="..\:/segma/app/src/main/res/layout/activity_forget_password.xml" value="0.4" />
+        <entry key="..\:/segma/app/src/main/res/layout/activity_forget_password.xml" value="0.176" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_forget_password_reset.xml" value="0.2" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_home.xml" value="0.20833333333333334" />
         <entry key="..\:/segma/app/src/main/res/layout/activity_login.xml" value="0.264" />
@@ -70,6 +70,7 @@
         <entry key="..\:/segma/app/src/main/res/layout/custom_spinner_item.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/favourite_lecture_cell.xml" value="0.4" />
         <entry key="..\:/segma/app/src/main/res/layout/favourite_lecture_item.xml" value="0.21822916666666667" />
+        <entry key="..\:/segma/app/src/main/res/layout/forget_password_bottom_dialog.xml" value="0.21822916666666667" />
         <entry key="..\:/segma/app/src/main/res/layout/fragment_courses.xml" value="0.20833333333333334" />
         <entry key="..\:/segma/app/src/main/res/layout/fragment_home.xml" value="0.22239583333333332" />
         <entry key="..\:/segma/app/src/main/res/layout/fragment_library.xml" value="0.20833333333333334" />
