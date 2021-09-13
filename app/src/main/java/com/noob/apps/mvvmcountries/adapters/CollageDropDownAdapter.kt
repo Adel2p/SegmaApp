@@ -1,17 +1,19 @@
 package com.noob.apps.mvvmcountries.adapters
+
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.TextView
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.models.Collage
 
-class CustomDropDownAdapter(val context: Context, var dataSource: List<String>) : BaseAdapter() {
+class CollageDropDownAdapter(val context: Context, var dataSource: List<Collage>) : BaseAdapter() {
 
-    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -25,10 +27,10 @@ class CustomDropDownAdapter(val context: Context, var dataSource: List<String>) 
             view = convertView
             vh = view.tag as ItemHolder
         }
-        if(position==0)
+        if (position == 0)
             vh.label.setTextColor(Color.GRAY)
 
-        vh.label.text = dataSource.get(position)
+        vh.label.text = dataSource.get(position).name
 
 
         return view

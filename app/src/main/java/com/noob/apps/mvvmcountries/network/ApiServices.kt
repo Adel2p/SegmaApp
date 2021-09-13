@@ -26,4 +26,22 @@ interface ApiServices {
     @GET("category/UNIVERSITY/fields")
     fun getUNIVERSITY(@Header("Authorization") Authorization: String?): Call<BoardingResponse>
 
+    @GET("fields/{id}/levels")
+    fun getLevels(
+        @Header("Authorization") Authorization: String?,
+        @Path("id") id: String
+    ): Call<BoardingResponse>
+
+    @GET("levels/{id}/departments")
+    fun getDepartments(
+        @Header("Authorization") Authorization: String?,
+        @Path("id") id: String
+    ): Call<BoardingResponse>
+
+
+    @POST("students/onboard")
+    fun postBoardingData(  @Header("Authorization") Authorization: String?,
+        @Body boardingRequest: BoardingRequest
+    ): Call<BoardingResponse>
+
 }

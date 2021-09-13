@@ -56,23 +56,22 @@ class LoginRepository private constructor() {
                     val internalMessage = jsonObject.getString("error_description")
                     mCallback.onResponseError(internalMessage)
                 } else {
-                    loginResponse.value = response.body()
                     val user =
-                        loginResponse.value?.user_uuid?.let {
+                        response.body()?.user_uuid?.let {
                             User(
                                 it,
-                                loginResponse.value?.access_token,
-                                loginResponse.value?.token_type,
-                                loginResponse.value?.refresh_token,
-                                loginResponse.value?.expires_in,
-                                loginResponse.value?.scope,
-                                loginResponse.value?.user_email,
-                                loginResponse.value?.user_on_boarded,
-                                loginResponse.value?.user_name,
-                                loginResponse.value?.user_mobile_number,
-                                loginResponse.value?.user_device_id,
-                                loginResponse.value!!.user_gender,
-                                loginResponse.value!!.jti
+                                response.body()?.access_token,
+                                response.body()?.token_type,
+                                response.body()?.refresh_token,
+                                response.body()?.expires_in,
+                                response.body()?.scope,
+                                response.body()?.user_email,
+                                response.body()?.user_on_boarded,
+                                response.body()?.user_name,
+                                response.body()?.user_mobile_number,
+                                response.body()?.user_device_id,
+                                response.body()!!.user_gender,
+                                response.body()!!.jti
                             )
                         }
                     if (user != null) {
@@ -85,7 +84,7 @@ class LoginRepository private constructor() {
                         }
 
                     }
-
+                    loginResponse.value = response.body()
                     mCallback.onNetworkSuccess()
                 }
             }

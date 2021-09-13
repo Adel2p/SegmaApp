@@ -10,7 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " settingpref")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " setting_pref")
 
 class UserPreferences(
     appContext: Context
@@ -21,7 +21,7 @@ class UserPreferences(
     val SAVED_USER = booleanPreferencesKey("saved_user")
     val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
     val user_uuid = stringPreferencesKey("user_uuid")
-    val token = stringPreferencesKey("AuthorizationToken")
+    val token = stringPreferencesKey("refresh_token")
 
 
     val exampleCounterFlow: Flow<String> = appContext.dataStore.data
@@ -76,14 +76,14 @@ class UserPreferences(
             preferences[user_uuid] ?: ""
         }
 
-    suspend fun saveUserToken(mtoken: String) {
+    suspend fun saveRefreshToken(mToken: String) {
         applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[token] ?: mtoken
+            val currentCounterValue = settings[token] ?: mToken
             settings[token] = currentCounterValue
         }
     }
 
-    val getUserToken: Flow<String> = appContext.dataStore.data
+    val getRefreshToken: Flow<String> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
             preferences[token] ?: ""

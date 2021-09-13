@@ -30,7 +30,7 @@
             android:fontFamily="@font/semibold"
             android:text="@string/continue_university_information"
             android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="@+id/txtUniversityInfo"
             app:layout_constraintTop_toBottomOf="@+id/txtUniversityInfo" />
 
@@ -121,6 +121,7 @@
             android:text="@string/year"
             android:textColor="@color/gray_purple"
             android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/txtTerm"
             app:layout_constraintTop_toBottomOf="@+id/termLay" />
 
@@ -128,6 +129,7 @@
             android:id="@+id/yearLay"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/txtYear"
             app:layout_constraintTop_toBottomOf="@+id/txtYear">
 

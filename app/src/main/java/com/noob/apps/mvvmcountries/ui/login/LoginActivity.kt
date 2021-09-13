@@ -16,13 +16,17 @@ import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.signup.SignUpActivity
 import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
+import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
 import com.noob.apps.mvvmcountries.utils.UserPreferences
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : BaseActivity() {
     private lateinit var userPreferences: UserPreferences
@@ -127,16 +131,14 @@ class LoginActivity : BaseActivity() {
 
     private fun initializeObservers() {
         mViewModel.fetchCountriesFromServer(mobileNumber, password).observe(this, Observer { user ->
-            lifecycleScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
                 user.user_uuid?.let { userPreferences.saveUserId(it) }
-            }
-            lifecycleScope.launch {
-                userPreferences.saveUserToken("Bearer " + user.access_token)
-            }
-            lifecycleScope.launch {
-                user.user_on_boarded?.let { checkUserOnBoard(it) }
-            }
 
+            }
+            GlobalScope.launch(Dispatchers.IO) {
+                userPreferences.saveRefreshToken("Bearer " + user.access_token)
+            }
+            user.user_on_boarded?.let { checkUserOnBoard(it) }
         })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()
@@ -160,7 +162,7 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
             finish()
         } else {
-            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+            startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
             finish()
         }
 

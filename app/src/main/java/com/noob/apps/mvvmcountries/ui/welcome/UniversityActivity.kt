@@ -1,50 +1,66 @@
 package com.noob.apps.mvvmcountries.ui.welcome
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.adapters.CustomDropDownAdapter
+import com.noob.apps.mvvmcountries.adapters.CollageDropDownAdapter
 import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.adapters.DapartmentAdapter
 import com.noob.apps.mvvmcountries.adapters.yearAdapter
+import com.noob.apps.mvvmcountries.data.DatabaseBuilder
+import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
+import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.ActivityUniversityBinding
+import com.noob.apps.mvvmcountries.models.BoardingRequest
+import com.noob.apps.mvvmcountries.models.Collage
+import com.noob.apps.mvvmcountries.ui.base.BaseActivity
+import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
+import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.UserPreferences
+import com.noob.apps.mvvmcountries.utils.ViewModelFactory
+import com.noob.apps.mvvmcountries.viewmodels.UniversityViewModel
 import kotlinx.coroutines.launch
 
-class UniversityActivity : AppCompatActivity() {
+class UniversityActivity : BaseActivity() {
     private lateinit var userPreferences: UserPreferences
     private lateinit var mActivityBinding: ActivityUniversityBinding
-    private var collage = ""
-    private var term = ""
-    private var year = ""
-    private var dep = ""
+    private lateinit var mViewModel: UniversityViewModel
+    private lateinit var colleges: MutableList<Collage>
+    private lateinit var levels: MutableList<Collage>
+    private lateinit var departments: MutableList<Collage>
+    private lateinit var roomViewModel: RoomViewModel
+    private var collageId = ""
+    private var levelId = ""
+    private var depId = ""
+    private var token = ""
+    private var userId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_university)
-        val collageList = resources.getStringArray(R.array.Collages)
-        val termList = resources.getStringArray(R.array.Term)
-        val depList = resources.getStringArray(R.array.Department)
-        val yearList = resources.getStringArray(R.array.Year)
-
-        val customDropDownAdapter = CustomDropDownAdapter(this, collageList.toList())
-        mActivityBinding.collageSp.adapter = customDropDownAdapter
-
-        val termAdapter = TermAdapter(this, termList.toList())
-        mActivityBinding.termSp.adapter = termAdapter
-
-        val departmentAdapter = DapartmentAdapter(this, depList.toList())
-        mActivityBinding.depSp.adapter = departmentAdapter
-
-        val yearAdapter = yearAdapter(this, yearList.toList())
-        mActivityBinding.yearSp.adapter = yearAdapter
+        userPreferences = UserPreferences(this)
+        mViewModel = ViewModelProviders.of(this).get(UniversityViewModel::class.java)
+        roomViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                application,
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
+            )
+        ).get(RoomViewModel::class.java)
+        userPreferences.getUserId.asLiveData().observe(this, Observer {
+            userId = it
+            roomViewModel.findUser(userId)
+                .observe(this, Observer { result ->
+                    token = "Bearer "+result[0].access_token.toString()
+                    initCollegesObservers()
+                })
+        })
 
         mActivityBinding.collageSp.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -52,15 +68,16 @@ class UniversityActivity : AppCompatActivity() {
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-                if (position != 0)
-                    collage = collageList[position]
-                else
-                    collage = ""
+                if (position != 0) {
+                    collageId = colleges[position].uuid
+                    initLevelsObservers()
+                } else
+                    collageId = ""
                 checkValidation()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                collage = ""
+                collageId = ""
             }
         }
         mActivityBinding.termSp.onItemSelectedListener = object :
@@ -69,36 +86,18 @@ class UniversityActivity : AppCompatActivity() {
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-                if (position != 0)
-                    term = termList[position]
-                else
-                    term = ""
+                if (position != 0) {
+                    levelId = levels[position].uuid
+                    initDepartmentObservers()
+                } else
+                    levelId = ""
                 checkValidation()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                term = ""
+                levelId = ""
             }
         }
-        mActivityBinding.yearSp.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                if (position != 0)
-                    year = yearList[position]
-                else
-                    year = ""
-
-                checkValidation()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                year = ""
-            }
-        }
-
         mActivityBinding.depSp.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -106,59 +105,122 @@ class UniversityActivity : AppCompatActivity() {
                 view: View, position: Int, id: Long
             ) {
                 if (position != 0)
-                    dep = depList[position]
+                    depId = departments[position].uuid
                 else
-                    dep = ""
+                    depId = ""
                 checkValidation()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                dep = ""
+                depId = ""
             }
         }
         mActivityBinding.saveButton.setOnClickListener {
-            lifecycleScope.launch {
-                userPreferences.saveUniversityData(true)
-            }
-            startActivity(Intent(this@UniversityActivity, WelcomeActivity::class.java))
 
+            initBoardingObservers()
         }
-        userPreferences = UserPreferences(this)
 
-        userPreferences.getUserToken.asLiveData().observe(this, {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-        })
-
-//        val bookmark = "Hello"
-//        lifecycleScope.launch {
-//            userPreferences.incrementCounter(bookmark)
-//        }
-//
-//
-//        userPreferences.exampleCounterFlow.asLiveData().observe(this, {
-//            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-//        })
-
-
-//        val adapter = ArrayAdapter(this,
-//            android.R.layout.simple_spinner_item, collages)
-//        mActivityBinding.collageSp.adapter = adapter
-//
-//        mActivityBinding.collageSp.onItemSelectedListener = object :
-//            AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>,
-//                                        view: View, position: Int, id: Long) {
-//               Toast.makeText(this@UniversityActivity,collages[position],Toast.LENGTH_LONG).show()
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//                // write code to perform some action
-//           }
     }
 
+    private fun initCollegesObservers() {
+        mViewModel.getUniversity(token).observe(this,Observer { collage ->
+            colleges = collage.data.toMutableList()
+            colleges.add(0, Collage("0", "please select"))
+            val customDropDownAdapter = CollageDropDownAdapter(this, colleges)
+            mActivityBinding.collageSp.adapter = customDropDownAdapter
+        })
+        mViewModel.mShowResponseError.observe(this, Observer {
+            AlertDialog.Builder(this).setMessage(it).show()
+        })
+        mViewModel.mShowProgressBar.observe(this, Observer { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+        })
+        mViewModel.mShowNetworkError.observe(this, Observer {
+            ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                .show(supportFragmentManager, ConnectionDialogFragment.TAG)
+
+        })
+    }
+
+    private fun initLevelsObservers() {
+        mViewModel.getLevels(token, collageId).observe(this,Observer { collage ->
+            levels = collage.data.toMutableList()
+            levels.add(0, Collage("0", "please select"))
+            val termAdapter = TermAdapter(this, levels)
+            mActivityBinding.termSp.adapter = termAdapter
+        })
+        mViewModel.mShowResponseError.observe(this, Observer {
+            AlertDialog.Builder(this).setMessage(it).show()
+        })
+        mViewModel.mShowProgressBar.observe(this, Observer { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+        })
+        mViewModel.mShowNetworkError.observe(this, Observer {
+            ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                .show(supportFragmentManager, ConnectionDialogFragment.TAG)
+
+        })
+    }
+
+    private fun initDepartmentObservers() {
+        mViewModel.getDepartments(token, levelId).observe(this,Observer { collage ->
+            departments = collage.data.toMutableList()
+            departments.add(0, Collage("0", "please select"))
+            val departmentAdapter = DapartmentAdapter(this, departments)
+            mActivityBinding.depSp.adapter = departmentAdapter
+        })
+        mViewModel.mShowResponseError.observe(this, Observer {
+            AlertDialog.Builder(this).setMessage(it).show()
+        })
+        mViewModel.mShowProgressBar.observe(this, Observer { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+        })
+        mViewModel.mShowNetworkError.observe(this, Observer {
+            ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                .show(supportFragmentManager, ConnectionDialogFragment.TAG)
+
+        })
+    }
+
+    private fun initBoardingObservers() {
+        mViewModel.postUserUniversity(token, BoardingRequest(collageId, levelId, depId))
+            .observe(this, Observer{ collage ->
+                lifecycleScope.launch {
+                    userPreferences.saveUniversityData(true)
+                }
+                startActivity(Intent(this@UniversityActivity, WelcomeActivity::class.java))
+            })
+        mViewModel.mShowResponseError.observe(this, Observer {
+            AlertDialog.Builder(this).setMessage(it).show()
+        })
+        mViewModel.mShowProgressBar.observe(this, Observer { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+        })
+        mViewModel.mShowNetworkError.observe(this, Observer {
+            ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                .show(supportFragmentManager, ConnectionDialogFragment.TAG)
+
+        })
+    }
 
     private fun checkValidation() {
-        if (collage.isNotEmpty() && term.isNotEmpty() && year.isNotEmpty() && dep.isNotEmpty()) {
+        if (collageId.isNotEmpty() && levelId.isNotEmpty() && depId.isNotEmpty()) {
             mActivityBinding.saveButton.setBackgroundResource(R.drawable.curved_button_blue)
             mActivityBinding.saveButton.isEnabled = true
         } else {

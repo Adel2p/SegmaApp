@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.models.Collage
 
-class DapartmentAdapter(val context: Context, var dataSource: List<String>) : BaseAdapter() {
+class DapartmentAdapter(val context: Context, var dataSource: List<Collage>) : BaseAdapter() {
 
-    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -25,9 +27,9 @@ class DapartmentAdapter(val context: Context, var dataSource: List<String>) : Ba
             view = convertView
             vh = view.tag as ItemHolder
         }
-        if(position ==0)
+        if (position == 0)
             vh.label.setTextColor(Color.GRAY)
-        vh.label.text = dataSource.get(position)
+        vh.label.text = dataSource.get(position).name
 
 
         return view

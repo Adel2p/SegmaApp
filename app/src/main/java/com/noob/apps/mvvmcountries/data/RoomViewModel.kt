@@ -27,6 +27,16 @@ class RoomViewModel(private val dbHelper: DatabaseHelper) :
         return users
     }
 
+    fun updateUserToken(
+        userId: String
+    ) {
+        var usersToInsertInDB: MutableList<User>
+        CoroutineScope(IO).launch {
+            usersToInsertInDB = dbHelper.getUsers() as MutableList<User>
+        }
+
+    }
+
     fun findUser(
         userId: String
     ): MutableLiveData<MutableList<User>> {
