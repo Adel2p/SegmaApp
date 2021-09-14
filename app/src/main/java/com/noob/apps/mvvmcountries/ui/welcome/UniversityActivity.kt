@@ -9,9 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CollageDropDownAdapter
-import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.adapters.DapartmentAdapter
-import com.noob.apps.mvvmcountries.adapters.yearAdapter
+import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.data.RoomViewModel
@@ -21,13 +20,12 @@ import com.noob.apps.mvvmcountries.models.Collage
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.utils.Constant
-import com.noob.apps.mvvmcountries.utils.UserPreferences
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
+import com.noob.apps.mvvmcountries.viewmodels.RegistrationViewModel
 import com.noob.apps.mvvmcountries.viewmodels.UniversityViewModel
 import kotlinx.coroutines.launch
 
 class UniversityActivity : BaseActivity() {
-    private lateinit var userPreferences: UserPreferences
     private lateinit var mActivityBinding: ActivityUniversityBinding
     private lateinit var mViewModel: UniversityViewModel
     private lateinit var colleges: MutableList<Collage>
@@ -44,8 +42,8 @@ class UniversityActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_university)
-        userPreferences = UserPreferences(this)
-        mViewModel = ViewModelProviders.of(this).get(UniversityViewModel::class.java)
+        mViewModel = ViewModelProvider(this).get(UniversityViewModel::class.java)
+
         roomViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
@@ -53,14 +51,6 @@ class UniversityActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(RoomViewModel::class.java)
-        userPreferences.getUserId.asLiveData().observe(this, Observer {
-            userId = it
-            roomViewModel.findUser(userId)
-                .observe(this, Observer { result ->
-                    token = "Bearer "+result[0].access_token.toString()
-                    initCollegesObservers()
-                })
-        })
 
         mActivityBinding.collageSp.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
@@ -119,12 +109,21 @@ class UniversityActivity : BaseActivity() {
 
             initBoardingObservers()
         }
+        userPreferences.getUserId.asLiveData().observe(this, Observer {
+            userId = it
+            roomViewModel.findUser(userId)
+                .observe(this, Observer { result ->
+                    token = "Bearer " + result[0].access_token.toString()
+                    initCollegesObservers()
+                })
+        })
 
     }
 
+
     private fun initCollegesObservers() {
-        mViewModel.getUniversity(token).observe(this,Observer { collage ->
-            colleges = collage.data.toMutableList()
+        mViewModel.getUniversity(token).observe(this, Observer { response ->
+            colleges = response.data.toMutableList()
             colleges.add(0, Collage("0", "please select"))
             val customDropDownAdapter = CollageDropDownAdapter(this, colleges)
             mActivityBinding.collageSp.adapter = customDropDownAdapter
@@ -147,7 +146,7 @@ class UniversityActivity : BaseActivity() {
     }
 
     private fun initLevelsObservers() {
-        mViewModel.getLevels(token, collageId).observe(this,Observer { collage ->
+        mViewModel.getLevels(token, collageId).observe(this, Observer { collage ->
             levels = collage.data.toMutableList()
             levels.add(0, Collage("0", "please select"))
             val termAdapter = TermAdapter(this, levels)
@@ -171,7 +170,7 @@ class UniversityActivity : BaseActivity() {
     }
 
     private fun initDepartmentObservers() {
-        mViewModel.getDepartments(token, levelId).observe(this,Observer { collage ->
+        mViewModel.getDepartments(token, levelId).observe(this, Observer { collage ->
             departments = collage.data.toMutableList()
             departments.add(0, Collage("0", "please select"))
             val departmentAdapter = DapartmentAdapter(this, departments)
@@ -195,15 +194,18 @@ class UniversityActivity : BaseActivity() {
     }
 
     private fun initBoardingObservers() {
-        mViewModel.postUserUniversity(token, BoardingRequest(collageId, levelId, depId))
-            .observe(this, Observer{ collage ->
+        mViewModel.postUserUniversity(token, BoardingRequest(collageId, levelId, depId, userId))
+            .observe(this, Observer { collage ->
                 lifecycleScope.launch {
                     userPreferences.saveUniversityData(true)
                 }
                 startActivity(Intent(this@UniversityActivity, WelcomeActivity::class.java))
             })
         mViewModel.mShowResponseError.observe(this, Observer {
-            AlertDialog.Builder(this).setMessage(it).show()
+            if (it.isNotEmpty())
+                AlertDialog.Builder(this).setMessage(it).show()
+            else
+                AlertDialog.Builder(this).setMessage(getString(R.string.un_expected_error)).show()
         })
         mViewModel.mShowProgressBar.observe(this, Observer { bt ->
             if (bt) {

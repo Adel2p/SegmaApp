@@ -1,10 +1,7 @@
 package com.noob.apps.mvvmcountries.models
 
-data class BoardingResponse(
-
+data class OtpResponse(
     val status: String,
     val message: String,
-    val errors: String,
-    val data: List<Collage>
+    val errors: List<String>
 )
-

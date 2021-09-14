@@ -30,30 +30,27 @@ class CollageDropDownAdapter(val context: Context, var dataSource: List<Collage>
         if (position == 0)
             vh.label.setTextColor(Color.GRAY)
 
-        vh.label.text = dataSource.get(position).name
+        vh.label.text = dataSource[position].name
 
 
         return view
     }
 
-    override fun getItem(position: Int): Any? {
-        return dataSource[position];
+    override fun getItem(position: Int): Any {
+        return dataSource[position]
     }
 
     override fun getCount(): Int {
-        return dataSource.size;
+        return dataSource.size
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong();
+        return position.toLong()
     }
 
     private class ItemHolder(row: View?) {
-        val label: TextView
+        val label: TextView = row?.findViewById(R.id.txtCollageItem) as TextView
 
-        init {
-            label = row?.findViewById(R.id.txtCollageItem) as TextView
-        }
     }
 
 }

@@ -7,13 +7,17 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.kaopiz.kprogresshud.KProgressHUD
+import com.noob.apps.mvvmcountries.utils.UserPreferences
 
 open class BaseActivity : AppCompatActivity() {
-    lateinit var id: String
+    lateinit var deviceId: String
     private var dialog: KProgressHUD? = null
+    lateinit var userPreferences: UserPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        id = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+        deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+        userPreferences = UserPreferences(this)
 
     }
 

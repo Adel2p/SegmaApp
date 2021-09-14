@@ -18,11 +18,6 @@ interface ApiServices {
         @Field("password") password: String?
     ): Call<LoginResponse>
 
-    @POST("students/signu")
-    fun userSignUp(
-        @Body registrationModel: RegistrationModel
-    ): Call<RegistrationResponse>
-
     @GET("category/UNIVERSITY/fields")
     fun getUNIVERSITY(@Header("Authorization") Authorization: String?): Call<BoardingResponse>
 
@@ -40,8 +35,26 @@ interface ApiServices {
 
 
     @POST("students/onboard")
-    fun postBoardingData(  @Header("Authorization") Authorization: String?,
+    fun postBoardingData(
+        @Header("Authorization") Authorization: String?,
         @Body boardingRequest: BoardingRequest
     ): Call<BoardingResponse>
 
+    @POST("students/signup")
+    fun userSignUp(
+        @Body registrationModel: RegistrationModel
+    ): Call<RegistrationResponse>
+
+    @POST("students/verifyOtp")
+    fun verifyOtp(
+        @Body otpModel: OtpModel
+    ): Call<OtpResponse>
+
+    @POST("students/resendOtp")
+    fun resendOtp(
+        @Body resendModel: ResendModel
+    ): Call<OtpResponse>
+
+    @GET("departments/courses")
+    fun getDepartmentCourses(@Header("Authorization") Authorization: String?): Call<DepartmentCourseResponse>
 }

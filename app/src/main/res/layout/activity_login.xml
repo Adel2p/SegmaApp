@@ -52,7 +52,7 @@
                 android:inputType="phone"
                 android:maxLength="11"
                 android:paddingStart="@dimen/_10sdp"
-                android:text="01205459010"
+                android:text="01025529187"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"

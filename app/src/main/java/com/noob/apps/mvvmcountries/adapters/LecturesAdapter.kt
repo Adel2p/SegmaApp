@@ -7,16 +7,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.LectureItemCellBinding
-import com.noob.apps.mvvmcountries.models.Lecture
+import com.noob.apps.mvvmcountries.models.Course
 import kotlinx.android.extensions.LayoutContainer
 
 class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
 
-    private var mList: List<Lecture>? = listOf()
+    private var mList: List<Course>? = listOf()
 
-    fun setData(list: List<Lecture>) {
+    fun setData(list: List<Course>) {
         mList = list
-        notifyItemRangeChanged(0, mList!!.size)
+       notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -42,7 +42,7 @@ class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
 
     class ViewHolder(var itemBinding: LectureItemCellBinding) :
         RecyclerView.ViewHolder(itemBinding.root), LayoutContainer {
-        override val containerView: View?
+        override val containerView: View
             get() = itemBinding.root
     }
 

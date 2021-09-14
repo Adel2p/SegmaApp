@@ -28,7 +28,10 @@ class CountriesRepository private constructor() {
 
     private lateinit var mCountryCall: Call<List<Country>>
 
-    fun getCountries(callback: NetworkResponseCallback, forceFetch : Boolean): MutableLiveData<List<Country>> {
+    fun getCountries(
+        callback: NetworkResponseCallback,
+        forceFetch: Boolean
+    ): MutableLiveData<List<Country>> {
         mCallback = callback
         if (mCountryList.value!!.isNotEmpty() && !forceFetch) {
             mCallback.onNetworkSuccess()

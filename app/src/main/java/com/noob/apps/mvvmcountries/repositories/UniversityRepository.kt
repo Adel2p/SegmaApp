@@ -146,15 +146,17 @@ class UniversityRepository private constructor() {
                 call: Call<BoardingResponse>,
                 response: Response<BoardingResponse>
             ) {
-                if (response.code() != 200) {
+                if (response.code() == 401) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
                     val userMessage = jsonObject.getString("error")
                     val internalMessage = jsonObject.getString("error_description")
                     mCallback.onResponseError(internalMessage)
-                } else {
+                } else if (response.code() == 200) {
                     mmBoardingList.value = response.body()
                     mCallback.onNetworkSuccess()
+                } else {
+                    mCallback.onResponseError("")
                 }
             }
 

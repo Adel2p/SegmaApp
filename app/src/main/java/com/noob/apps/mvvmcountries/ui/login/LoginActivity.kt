@@ -26,10 +26,8 @@ import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class LoginActivity : BaseActivity() {
-    private lateinit var userPreferences: UserPreferences
     private var isSaved = false
     private lateinit var mobileNumber: String
     private lateinit var password: String
@@ -131,11 +129,13 @@ class LoginActivity : BaseActivity() {
 
     private fun initializeObservers() {
         mViewModel.fetchCountriesFromServer(mobileNumber, password).observe(this, Observer { user ->
-            GlobalScope.launch(Dispatchers.IO) {
+            lifecycleScope.launch {
                 user.user_uuid?.let { userPreferences.saveUserId(it) }
-
             }
-            GlobalScope.launch(Dispatchers.IO) {
+            lifecycleScope.launch {
+                userPreferences.saveUserLogedIn(true)
+            }
+            lifecycleScope.launch {
                 userPreferences.saveRefreshToken("Bearer " + user.access_token)
             }
             user.user_on_boarded?.let { checkUserOnBoard(it) }

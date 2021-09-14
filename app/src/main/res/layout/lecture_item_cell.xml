@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-   >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="lecture"
-            type="com.noob.apps.mvvmcountries.models.Lecture" />
+            type="com.noob.apps.mvvmcountries.models.Course" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,8 +29,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               >
+                android:layout_height="match_parent">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/lecImg"
@@ -47,10 +45,10 @@
                     android:id="@+id/txtLecName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/bold"
-                    android:text="@{lecture.lectureName}"
+                    android:text="@{lecture.name}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toStartOf="@+id/lecImg"
@@ -63,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
-                    android:text="@{lecture.doctorName}"
+                    android:text="@{lecture.professor.name}"
                     android:textColor="@color/gray_purple"
                     android:textSize="@dimen/_11ssp"
                     app:layout_constraintStart_toStartOf="@+id/txtLecName"
@@ -76,14 +74,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
-                    android:text="@{lecture.numberOfLectures}"
+                    android:text="@{String.valueOf(lecture.lectures.size())}"
                     android:textColor="@color/gray_purple"
                     android:textSize="@dimen/_11ssp"
                     app:layout_constraintStart_toStartOf="@+id/txtDoctorName"
                     app:layout_constraintTop_toBottomOf="@+id/txtDoctorName"
-                    tools:text="num of lec"
-
-                    />
+                    tools:text="num of lec" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"

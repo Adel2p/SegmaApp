@@ -53,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_45sdp"
                 android:inputType="text"
+                android:text="Mohamed Adel"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
@@ -89,6 +90,7 @@
                 android:layout_height="@dimen/_45sdp"
                 android:inputType="textEmailAddress"
                 android:paddingStart="@dimen/_10sdp"
+                android:text="mohmmed.adel99@gmail.com"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
                 android:textColor="@color/black"
@@ -123,6 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_45sdp"
                 android:inputType="number"
+                android:text="01143075905"
                 android:maxLength="11"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
@@ -163,6 +166,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_20sdp"
+                android:text="123456"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15ssp" />
         </com.google.android.material.textfield.TextInputLayout>
