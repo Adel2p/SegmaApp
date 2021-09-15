@@ -1,15 +1,12 @@
 package com.noob.apps.mvvmcountries.ui.signup
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.provider.FontsContractCompat.Columns.RESULT_CODE
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.ActivitySignUpBinding
 import com.noob.apps.mvvmcountries.models.RegistrationModel
 import com.noob.apps.mvvmcountries.models.RegistrationResponse
@@ -114,7 +111,7 @@ class SignUpActivity : BaseActivity() {
         val intent = Intent(this@SignUpActivity, VerifyOtpActivity::class.java)
         intent.putExtra(Constant.MOBILE_NUMBER, mobileNumber)
         intent.putExtra(Constant.USER_ID, response.data.uuid)
-        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
+        startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
