@@ -1,6 +1,5 @@
 package com.noob.apps.mvvmcountries.models
 
-import java.util.*
 
 data class RegistrationModel(
     val name: String,
@@ -10,5 +9,5 @@ data class RegistrationModel(
     val gender: String,
     val os: String = "ANDROID",
     val deviceId: String,
-    val language: String =  Locale.getDefault().displayLanguage.uppercase()
+    val language: String,
 )

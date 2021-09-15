@@ -80,7 +80,7 @@ class SignUpActivity : BaseActivity() {
                 mobileNumber,
                 password,
                 "MALE", "ANDROID",
-                deviceId,
+                deviceId, appLanguage
             )
         ).observe(this, { kt ->
             if (kt != null)
@@ -124,7 +124,6 @@ class SignUpActivity : BaseActivity() {
             }
         }
     }
-
 
 
 }

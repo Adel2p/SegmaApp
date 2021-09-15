@@ -87,13 +87,15 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                 userId = it
                 courseViewModel.findUser(userId)
                     .observeOnce(viewLifecycleOwner, { result ->
-                        if (result != null) {
+                        if (result != null && result.size > 0) {
                             token = "Bearer " + result[0].access_token.toString()
                             refreshToken = result[0].refresh_token.toString()
                             lifecycleScope.launch {
                                 userPreferences.saveRefreshToken(refreshToken)
                             }
                             initializeObservers()
+                        } else {
+                            logOut()
                         }
 
                     })
@@ -177,9 +179,7 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
             }
         })
         courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finishAffinity()
+            logOut()
         })
         courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
             if (bt) {
@@ -196,6 +196,12 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
             }
 
         })
+    }
+
+    private fun logOut() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finishAffinity()
     }
 
     private fun initFCMTokenObservers() {

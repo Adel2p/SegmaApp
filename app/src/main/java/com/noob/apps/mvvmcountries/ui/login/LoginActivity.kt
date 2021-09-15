@@ -93,7 +93,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initializeObservers() {
-        mViewModel.fetchCountriesFromServer(mobileNumber, password).observe(this, Observer { user ->
+        mViewModel.fetchCountriesFromServer(mobileNumber, password).observeOnce(this, Observer { user ->
             if (user != null) {
                 lifecycleScope.launch {
                     user.user_uuid?.let { userPreferences.saveUserId(it) }

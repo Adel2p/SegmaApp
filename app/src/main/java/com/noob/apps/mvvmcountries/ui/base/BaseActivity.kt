@@ -1,6 +1,8 @@
 package com.noob.apps.mvvmcountries.ui.base
 
 import android.app.Activity
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
@@ -11,18 +13,41 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.noob.apps.mvvmcountries.data.UserPreferences
+import androidx.lifecycle.asLiveData
+import java.util.*
+
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var deviceId: String
     private var dialog: KProgressHUD? = null
     lateinit var userPreferences: UserPreferences
-
+    var appLanguage = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         userPreferences = UserPreferences(this)
+        userPreferences.getAppLanguage.asLiveData().observeOnce(this, {
+            val config = resources.configuration
+            var lang = "ar"
+            appLanguage = it
+            lang = if (appLanguage == "ARABIC")
+                "ar"
+            else
+                "en"
+            val locale = Locale(lang)
+            Locale.setDefault(locale)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                config.setLocale(locale)
+            else
+                config.locale = locale
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                createConfigurationContext(config)
+            resources.updateConfiguration(config, resources.displayMetrics)
+        })
 
     }
+
 
     fun hideKeyboard() {
         val imm: InputMethodManager =
@@ -50,6 +75,7 @@ open class BaseActivity : AppCompatActivity() {
     fun hideLoader() {
         dialog?.dismiss()
     }
+
     fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
         observe(lifecycleOwner, object : Observer<T> {
             override fun onChanged(t: T?) {

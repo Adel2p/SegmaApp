@@ -8,6 +8,8 @@ object  Constant {
     const val DIMMED = "DIMMED"
     const val SELECTED_COURSE = "SELECTED_COURSE"
     const val REFRESH_TOKEN = "refresh_token"
+    const val ARABIC = "ARABIC"
+    const val ENGLISH = "ENGLISH"
 
 
 }

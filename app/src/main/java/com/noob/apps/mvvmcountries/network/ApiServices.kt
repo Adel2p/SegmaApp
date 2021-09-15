@@ -66,7 +66,7 @@ interface ApiServices {
     fun updateToken(
         @Header("Authorization") Authorization: String?,
         @Field("grant_type") grant_type: String?,
-        @Field("refresh_token") refresh_token: String?,
+        @Field("refresh_token") refresh_token: String?
     ): Call<LoginResponse>
 
     @POST("students/changeFirebaseToken")

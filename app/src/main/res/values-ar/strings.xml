@@ -50,13 +50,13 @@
     <string name="previous_exams">Previous Exams</string>
     <string name="payment_method">Payment Method</string>
     <string name="setting">Setting</string>
-    <string name="change_language">Change Language</string>
+    <string name="change_language">تغيير اللغة</string>
     <string name="notification_setting">Notification Setting</string>
     <string name="about_segma_app">About Segma App</string>
-    <string name="log_out">Log Out</string>
+    <string name="log_out">تسجيل الخروج</string>
     <string name="lecture">Lectures</string>
-    <string name="english">English</string>
-    <string name="arabic">Arabic</string>
+    <string name="english">الانجليزية</string>
+    <string name="arabic">العربية</string>
     <string name="active_notification">Active Notification</string>
     <string name="close_notification">Close Notification</string>
     <string name="profile">Profile</string>

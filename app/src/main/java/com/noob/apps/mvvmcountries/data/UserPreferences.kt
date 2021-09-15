@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.noob.apps.mvvmcountries.utils.Constant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -22,12 +23,12 @@ class UserPreferences(
     private val user_uuid = stringPreferencesKey("user_uuid")
     private val token = stringPreferencesKey("refresh_token")
     private val fcmToken = stringPreferencesKey("fcmToken")
+    private val appLanguage = stringPreferencesKey("app_Language")
 
 
     suspend fun saveUniversityData(isSaved: Boolean) {
         applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[SAVED_USER] ?: isSaved
-            settings[SAVED_USER] = currentCounterValue
+            settings[SAVED_USER] = isSaved
         }
     }
 
@@ -39,8 +40,7 @@ class UserPreferences(
 
     suspend fun saveUserLogedIn(islogedin: Boolean) {
         applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[SAVED_LOGEDIN] ?: islogedin
-            settings[SAVED_LOGEDIN] = currentCounterValue
+            settings[SAVED_LOGEDIN] = islogedin
         }
     }
 
@@ -52,8 +52,7 @@ class UserPreferences(
 
     suspend fun saveUserId(userId: String) {
         applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[user_uuid] ?: userId
-            settings[user_uuid] = currentCounterValue
+            settings[user_uuid] = userId
         }
     }
 
@@ -65,8 +64,7 @@ class UserPreferences(
 
     suspend fun saveRefreshToken(mToken: String) {
         applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[token] ?: mToken
-            settings[token] = currentCounterValue
+            settings[token] = mToken
         }
     }
 
@@ -78,8 +76,7 @@ class UserPreferences(
 
     suspend fun saveFCMToken(mToken: String) {
         applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[fcmToken] ?: mToken
-            settings[fcmToken] = currentCounterValue
+            settings[fcmToken] = mToken
         }
     }
 
@@ -87,6 +84,18 @@ class UserPreferences(
         .map { preferences ->
             // No type safety.
             preferences[fcmToken] ?: ""
+        }
+
+    suspend fun saveLanguage(language: String) {
+        applicationContext.dataStore.edit { preferences ->
+            preferences[appLanguage] = language
+        }
+    }
+
+    val getAppLanguage: Flow<String> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[appLanguage] ?: Constant.ENGLISH
         }
 
     suspend fun clear() {
