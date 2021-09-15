@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -63,7 +62,7 @@ class MoreFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userPreferences.getUserId.asLiveData().observe(requireActivity(), {
+        userPreferences.getUserId.asLiveData().observeOnce(requireActivity(), {
             userId = it
         })
         roomViewModel = ViewModelProvider(
@@ -133,6 +132,7 @@ class MoreFragment : BaseFragment() {
             lifecycleScope.launch {
                 userPreferences.clear()
             }
+            roomViewModel.clearData()
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             activity?.finishAffinity()
         }

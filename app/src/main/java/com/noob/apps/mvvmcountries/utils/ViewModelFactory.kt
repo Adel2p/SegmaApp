@@ -7,6 +7,7 @@ import com.noob.apps.mvvmcountries.data.DatabaseHelper
 import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
+import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 
 
 class ViewModelFactory(private val app: Application, private val dbHelper: DatabaseHelper) :
@@ -15,6 +16,9 @@ class ViewModelFactory(private val app: Application, private val dbHelper: Datab
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
 
+        if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
+            return SplashViewModel(app, dbHelper) as T
+        }
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(app, dbHelper) as T
         }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CourseAdapter
@@ -25,6 +26,7 @@ import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
+import kotlinx.coroutines.launch
 
 
 private const val ARG_PARAM1 = "param1"
@@ -72,10 +74,11 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
         ).get(CourseViewModel::class.java)
         initializeRecyclerView()
         getData()
-        userPreferences.getFCMToken.asLiveData().observe(viewLifecycleOwner, {
+        userPreferences.getFCMToken.asLiveData().observeOnce(viewLifecycleOwner, {
             fcmToken = it
 
         })
+
     }
 
     private fun getData() {
@@ -87,6 +90,9 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                         if (result != null) {
                             token = "Bearer " + result[0].access_token.toString()
                             refreshToken = result[0].refresh_token.toString()
+                            lifecycleScope.launch {
+                                userPreferences.saveRefreshToken(refreshToken)
+                            }
                             initializeObservers()
                         }
 
@@ -112,7 +118,6 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                 courses.addAll(kt.data.toMutableList())
                 mAdapter.setData(courses)
                 initInfoObservers()
-
             }
         })
         courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {

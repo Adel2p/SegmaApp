@@ -72,6 +72,9 @@
     <string name="about_segma_content">App Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Contentvpp Content pp Content pp Content</string>
     <string name="send_successfully">send successfully</string>
     <string name="un_expected_error">UnExpected Error</string>
+    <string name="empty_cources">نعتذر .. لم تقم بالإشتراك في أي دورة</string>
+    <string name="my_cources">دوراتي</string>
+    <string name="title_cources">الدورات الحالية التي تم التسجيل بها</string>
 
 
     <string-array name="Collages">

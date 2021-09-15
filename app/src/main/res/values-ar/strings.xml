@@ -71,45 +71,9 @@
     <string name="retry_connection">إعادة المحاولة</string>
     <string name="send_successfully">تم الإرسال</string>
     <string name="un_expected_error">UnExpected Error</string>
-
-
-    <string-array name="Collages">
-        <item>please select collage</item>
-        <item>Kotlin</item>
-        <item>Swift</item>
-        <item>Python</item>
-        <item>Scala</item>
-        <item>Java</item>
-        <item>Kotlin</item>
-        <item>Swift</item>
-        <item>Python</item>
-        <item>Java</item>
-        <item>Kotlin</item>
-        <item>Swift</item>
-        <item>Python</item>
-        <item>Perl</item>
-    </string-array>
-    <string-array name="Term">
-        <item>please select term</item>
-        <item>one</item>
-        <item>two</item>
-        <item>three</item>
-        <item>four</item>
-    </string-array>
-    <string-array name="Year">
-        <item>please select year</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-    <string-array name="Department">
-        <item>please select department</item>
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-    </string-array>
-
+    <string name="empty_cources">نعتذر .. لم تقم بالإشتراك في أي دورة</string>
+    <string name="my_cources">دوراتي</string>
+    <string name="title_cources">الدورات الحالية التي تم التسجيل بها</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -108,7 +108,7 @@ class UniversityActivity : BaseActivity() {
 
             initBoardingObservers()
         }
-        userPreferences.getUserId.asLiveData().observe(this, Observer {
+        userPreferences.getUserId.asLiveData().observeOnce(this, Observer {
             userId = it
             roomViewModel.findUser(userId)
                 .observe(this, Observer { result ->

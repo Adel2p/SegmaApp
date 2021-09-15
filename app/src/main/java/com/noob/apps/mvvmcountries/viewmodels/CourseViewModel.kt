@@ -35,7 +35,7 @@ class CourseViewModel(
     fun findUser(
         userId: String
     ): MutableLiveData<MutableList<User>> {
-        var usersToInsertInDB: MutableList<User>? = null
+        var usersToInsertInDB: MutableList<User>?
         CoroutineScope(Dispatchers.IO).launch {
             usersToInsertInDB = dbHelper.findByUserId(userId) as MutableList<User>
             user.postValue(usersToInsertInDB!!)

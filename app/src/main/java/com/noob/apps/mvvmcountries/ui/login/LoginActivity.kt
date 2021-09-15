@@ -102,7 +102,7 @@ class LoginActivity : BaseActivity() {
                     userPreferences.saveUserLogedIn(true)
                 }
                 lifecycleScope.launch {
-                    userPreferences.saveRefreshToken("Bearer " + user.access_token)
+                    user.refresh_token?.let { userPreferences.saveRefreshToken(it) }
                 }
                 CoroutineScope(Dispatchers.IO).launch {
                     delay(TimeUnit.SECONDS.toMillis(1))

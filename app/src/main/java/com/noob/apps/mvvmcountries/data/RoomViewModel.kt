@@ -51,40 +51,15 @@ class RoomViewModel(private val dbHelper: DatabaseHelper) :
             user.postValue(usersToInsertInDB!!)
         }
 
-
-
         return user
     }
-//
-//    fun insertUser(
-//        response: RegistrationResponse
-//    ): MutableLiveData<Boolean> {
-//        val user =
-//            response.user_uuid?.let {
-//                User(
-//                    it,
-//                    response.access_token,
-//                    response.token_type,
-//                    response.refresh_token,
-//                    response.expires_in,
-//                    response.scope,
-//                    response.user_email,
-//                    response.user_on_boarded,
-//                    response.user_name,
-//                    response.user_mobile_number,
-//                    response.user_device_id,
-//                    response!!.user_gender,
-//                    response!!.jti
-//                )
-//            }
-//        if (user != null) {
-//            usersToInsertInDB.add(user)
-//            CoroutineScope(IO).launch {
-//                dbHelper.insertAll(usersToInsertInDB)
-//            }
-//            inInserted.postValue(true)
-//        }
-//        return inInserted
-//    }
+
+    fun clearData(
+    ) {
+        CoroutineScope(IO).launch {
+            dbHelper.deleteAll()
+        }
+    }
+
 }
 

@@ -8,6 +8,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_edittext.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo1.xml" value="0.1" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_empty_couces.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_favourite_lecture.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_login_success.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_refresh.xml" value="0.1537037037037037" />
@@ -37,6 +38,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/countries_list_item.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/custom_spinner_item.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/favourite_lecture_cell.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_courses.xml" value="0.18931159420289856" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_more.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/lecture_item_cell.xml" value="0.1921875" />

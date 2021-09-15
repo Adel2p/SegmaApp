@@ -17,26 +17,12 @@ class UserPreferences(
 ) {
     private val applicationContext = appContext.applicationContext
 
-    val EXAMPLE_COUNTER = stringPreferencesKey("example_counter")
-    val SAVED_USER = booleanPreferencesKey("saved_user")
-    val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
-    val user_uuid = stringPreferencesKey("user_uuid")
-    val token = stringPreferencesKey("refresh_token")
-    val fcmToken = stringPreferencesKey("fcmToken")
+    private val SAVED_USER = booleanPreferencesKey("saved_user")
+    private val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
+    private val user_uuid = stringPreferencesKey("user_uuid")
+    private val token = stringPreferencesKey("refresh_token")
+    private val fcmToken = stringPreferencesKey("fcmToken")
 
-
-    val exampleCounterFlow: Flow<String> = appContext.dataStore.data
-        .map { preferences ->
-            // No type safety.
-            preferences[EXAMPLE_COUNTER] ?: ""
-        }
-
-    suspend fun incrementCounter(bookmark: String) {
-        applicationContext.dataStore.edit { settings ->
-            val currentCounterValue = settings[EXAMPLE_COUNTER] ?: bookmark
-            settings[EXAMPLE_COUNTER] = currentCounterValue
-        }
-    }
 
     suspend fun saveUniversityData(isSaved: Boolean) {
         applicationContext.dataStore.edit { settings ->
