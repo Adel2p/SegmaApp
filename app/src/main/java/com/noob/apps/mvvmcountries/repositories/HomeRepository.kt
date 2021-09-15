@@ -21,9 +21,13 @@ class HomeRepository private constructor() {
         MutableLiveData<UserInfoResponse?>()
     var updateTokenResponse: MutableLiveData<LoginResponse?> =
         MutableLiveData<LoginResponse?>()
+    var fcmResponse: MutableLiveData<BaseResponse?> =
+        MutableLiveData<BaseResponse?>()
     private lateinit var mUserCall: Call<DepartmentCourseResponse>
     private lateinit var mInfoCall: Call<UserInfoResponse>
     private lateinit var mTokenCall: Call<LoginResponse>
+    private lateinit var fcmTokenCall: Call<BaseResponse>
+
     var usersToInsertInDB = mutableListOf<User>()
 
     companion object {
@@ -177,5 +181,44 @@ class HomeRepository private constructor() {
 
         })
         return updateTokenResponse
+    }
+
+    fun updateFCMToken(
+        token: String, fcmToken: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<BaseResponse?> {
+        mCallback = callback
+        if (fcmResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            fcmResponse = MutableLiveData()
+        }
+        fcmTokenCall = RestClient.getInstance().getApiService()
+            .updateFCMToken(
+                token,
+                FcmTokenModel(fcmToken)
+            )
+        fcmTokenCall.enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(
+                call: Call<BaseResponse>,
+                response: Response<BaseResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    fcmResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return fcmResponse
     }
 }

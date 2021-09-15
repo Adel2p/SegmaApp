@@ -2,11 +2,9 @@ package com.noob.apps.mvvmcountries.ui.more
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,13 +16,13 @@ import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.FragmentMoreBinding
 import com.noob.apps.mvvmcountries.models.User
+import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
 import com.noob.apps.mvvmcountries.ui.dialog.NotificationSettingDialog
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.ui.profile.ProfileActivity
 import com.noob.apps.mvvmcountries.utils.Constant
-import com.noob.apps.mvvmcountries.utils.UserPreferences
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 
@@ -32,10 +30,9 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class MoreFragment : Fragment() {
+class MoreFragment : BaseFragment() {
     private lateinit var mActivityBinding: FragmentMoreBinding
     private lateinit var roomViewModel: RoomViewModel
-    private lateinit var userPreferences: UserPreferences
     private var userId = ""
     private lateinit var user: User
 
@@ -65,7 +62,6 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userPreferences = UserPreferences(requireActivity())
 
         userPreferences.getUserId.asLiveData().observe(requireActivity(), {
             userId = it
@@ -78,7 +74,7 @@ class MoreFragment : Fragment() {
             )
         ).get(RoomViewModel::class.java)
         roomViewModel.findUser(userId)
-            .observe(requireActivity(), Observer { result ->
+            .observe(requireActivity(), { result ->
                 user = result[0]
                 mActivityBinding.txtStudentName.text = user.user_name
                 mActivityBinding.txtStudentNumber.text = user.user_mobile_number

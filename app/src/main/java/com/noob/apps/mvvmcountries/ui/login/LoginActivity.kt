@@ -2,7 +2,6 @@ package com.noob.apps.mvvmcountries.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -20,16 +19,13 @@ import com.noob.apps.mvvmcountries.ui.visitor.VisitorActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.MobileNumberValidator
-import com.noob.apps.mvvmcountries.utils.UserPreferences
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : BaseActivity() {
-    private var isSaved = false
     private lateinit var mobileNumber: String
     private lateinit var password: String
     private lateinit var mActivityBinding: ActivityLoginBinding
@@ -41,7 +37,6 @@ class LoginActivity : BaseActivity() {
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        userPreferences = UserPreferences(this)
 
         mActivityBinding.txtVisitor.setOnClickListener {
             startActivity(Intent(this@LoginActivity, VisitorActivity::class.java))
@@ -109,7 +104,12 @@ class LoginActivity : BaseActivity() {
                 lifecycleScope.launch {
                     userPreferences.saveRefreshToken("Bearer " + user.access_token)
                 }
-                user.user_on_boarded?.let { checkUserOnBoard(it) }
+                CoroutineScope(Dispatchers.IO).launch {
+                    delay(TimeUnit.SECONDS.toMillis(1))
+                    withContext(Dispatchers.Main) {
+                        user.user_on_boarded?.let { checkUserOnBoard(it) }
+                    }
+                }
             }
         })
         mViewModel.mShowResponseError.observe(this, Observer {

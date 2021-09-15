@@ -24,6 +24,8 @@ class CourseViewModel(
         MutableLiveData<UserInfoResponse?>()
     var updateTokenResponse: MutableLiveData<LoginResponse?> =
         MutableLiveData<LoginResponse?>()
+    var fcmResponse: MutableLiveData<BaseResponse?> =
+        MutableLiveData<BaseResponse?>()
     val mShowProgressBar = MutableLiveData(true)
     val mShowNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val mShowApiError = MutableLiveData<String>()
@@ -98,6 +100,33 @@ class CourseViewModel(
                 mRepository.updateTokenResponse(
                     dbHelper,
                     refreshTokenModel,
+                    object : NetworkResponseCallback {
+                        override fun onNetworkFailure(th: Throwable) {
+                            mShowApiError.value = th.message
+                        }
+
+                        override fun onNetworkSuccess() {
+                            mShowProgressBar.value = false
+                        }
+
+                        override fun onResponseError(message: String) {
+                            mShowProgressBar.value = false
+                            mShowResponseError.value = message
+                        }
+
+                    })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
+
+    fun updateFCMToken(token: String, fcmToken: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            fcmResponse =
+                mRepository.updateFCMToken(token,
+                    fcmToken,
                     object : NetworkResponseCallback {
                         override fun onNetworkFailure(th: Throwable) {
                             mShowApiError.value = th.message

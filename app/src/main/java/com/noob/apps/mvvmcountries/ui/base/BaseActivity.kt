@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.kaopiz.kprogresshud.KProgressHUD
-import com.noob.apps.mvvmcountries.utils.UserPreferences
+import com.noob.apps.mvvmcountries.data.UserPreferences
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var deviceId: String

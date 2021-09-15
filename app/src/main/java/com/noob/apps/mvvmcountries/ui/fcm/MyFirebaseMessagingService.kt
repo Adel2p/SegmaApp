@@ -9,14 +9,19 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.data.UserPreferences
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+    lateinit var userPreferences: UserPreferences
 
     /**
      * Called when message is received.
@@ -104,8 +109,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param token The new token.
      */
     private fun sendRegistrationToServer(token: String?) {
-        // TODO: Implement this method to send token to your app server.
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
+        userPreferences = UserPreferences(this)
+        GlobalScope.launch {
+            if (token != null) {
+                userPreferences.saveFCMToken(token)
+            }
+        }
+
     }
 
     /**

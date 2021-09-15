@@ -60,9 +60,18 @@ interface ApiServices {
 
     @GET("students/info")
     fun getStudentInfo(@Header("Authorization") Authorization: String?): Call<UserInfoResponse>
+
     @FormUrlEncoded
     @POST("oauth/token")
-    fun updateToken( @Header("Authorization") Authorization: String?,
-                     @Field("grant_type") grant_type: String?,
-                     @Field("refresh_token") refresh_token: String?,): Call<LoginResponse>
+    fun updateToken(
+        @Header("Authorization") Authorization: String?,
+        @Field("grant_type") grant_type: String?,
+        @Field("refresh_token") refresh_token: String?,
+    ): Call<LoginResponse>
+
+    @POST("students/changeFirebaseToken")
+    fun updateFCMToken(
+        @Header("Authorization") Authorization: String?,
+        @Body otpModel: FcmTokenModel,
+    ): Call<BaseResponse>
 }

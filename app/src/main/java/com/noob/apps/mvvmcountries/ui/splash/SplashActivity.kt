@@ -2,24 +2,21 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
-import com.noob.apps.mvvmcountries.utils.UserPreferences
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
-class SplashActivity : AppCompatActivity() {
-    private lateinit var userPreferences: UserPreferences
+class SplashActivity : BaseActivity() {
     private var isSaved = false
     private var isloggedin = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
-        userPreferences = UserPreferences(this)
         userPreferences.getUniversityData.asLiveData().observe(this, {
             isSaved = it
         })

@@ -1,4 +1,4 @@
-package com.noob.apps.mvvmcountries.utils
+package com.noob.apps.mvvmcountries.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -22,6 +22,7 @@ class UserPreferences(
     val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
     val user_uuid = stringPreferencesKey("user_uuid")
     val token = stringPreferencesKey("refresh_token")
+    val fcmToken = stringPreferencesKey("fcmToken")
 
 
     val exampleCounterFlow: Flow<String> = appContext.dataStore.data
@@ -88,6 +89,20 @@ class UserPreferences(
             // No type safety.
             preferences[token] ?: ""
         }
+
+    suspend fun saveFCMToken(mToken: String) {
+        applicationContext.dataStore.edit { settings ->
+            val currentCounterValue = settings[fcmToken] ?: mToken
+            settings[fcmToken] = currentCounterValue
+        }
+    }
+
+    val getFCMToken: Flow<String> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[fcmToken] ?: ""
+        }
+
     suspend fun clear() {
         applicationContext.dataStore.edit { preferences ->
             preferences.clear()

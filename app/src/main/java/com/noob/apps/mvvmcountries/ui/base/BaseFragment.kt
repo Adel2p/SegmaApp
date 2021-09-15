@@ -7,9 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.asLiveData
 import com.kaopiz.kprogresshud.KProgressHUD
-import com.noob.apps.mvvmcountries.utils.UserPreferences
+import com.noob.apps.mvvmcountries.data.UserPreferences
 
 open class BaseFragment : Fragment() {
     lateinit var userPreferences: UserPreferences

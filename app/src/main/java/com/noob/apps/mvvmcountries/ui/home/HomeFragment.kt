@@ -38,6 +38,7 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
     private var param2: String? = null
     private var userId = ""
     private var token = ""
+    private var fcmToken = ""
     private var refreshToken = ""
     private lateinit var courseViewModel: CourseViewModel
 
@@ -71,6 +72,10 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
         ).get(CourseViewModel::class.java)
         initializeRecyclerView()
         getData()
+        userPreferences.getFCMToken.asLiveData().observe(viewLifecycleOwner, {
+            fcmToken = it
+
+        })
     }
 
     private fun getData() {
@@ -95,7 +100,6 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
         mActivityBinding.rvLectures.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(requireContext(), 2)
-
             adapter = mAdapter
         }
     }
@@ -136,8 +140,8 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
             if (kt != null) {
                 mActivityBinding.txtFaculty.text = kt.data.studyFieldName
                 mActivityBinding.txtDepartment.text = kt.data.departmentName
-
-
+                if (fcmToken.isNotEmpty())
+                    initFCMTokenObservers()
             }
         })
         courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
@@ -171,6 +175,30 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
             requireActivity().finishAffinity()
+        })
+        courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
+
+        })
+    }
+
+    private fun initFCMTokenObservers() {
+        courseViewModel.updateFCMToken(token, fcmToken)
+        courseViewModel.fcmResponse.observeOnce(viewLifecycleOwner, { kt ->
+
+        })
+        courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
         })
         courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
             if (bt) {
