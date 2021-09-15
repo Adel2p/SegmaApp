@@ -17,7 +17,8 @@ interface UserDao {
 
     @Query("SELECT * FROM user WHERE user_uuid LIKE :user_uuid")
     fun findByUserId(user_uuid: String): List<User>
-
+    @Query("DELETE FROM User")
+    fun deleteAll()
 //    @Query("UPDATE orders SET order_amount = :amount, price = :price WHERE order_id =:id")
 //    fun updateUserToken(user_uuid: String, token: String): List<User>
 }

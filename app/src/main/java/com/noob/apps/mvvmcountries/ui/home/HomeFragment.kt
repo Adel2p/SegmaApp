@@ -1,5 +1,6 @@
 package com.noob.apps.mvvmcountries.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,35 +11,35 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.adapters.LecturesAdapter
+import com.noob.apps.mvvmcountries.adapters.CourseAdapter
+import com.noob.apps.mvvmcountries.adapters.RecyclerViewClickListener
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
-import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.FragmentHomeBinding
 import com.noob.apps.mvvmcountries.models.Course
-import com.noob.apps.mvvmcountries.models.Lecture
+import com.noob.apps.mvvmcountries.models.RefreshTokenModel
 import com.noob.apps.mvvmcountries.ui.base.BaseFragment
+import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
+import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
-import com.noob.apps.mvvmcountries.viewmodels.HomeViewModel
+import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
 
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), RecyclerViewClickListener {
     private lateinit var mActivityBinding: FragmentHomeBinding
-    private val listOfLectures: MutableList<Lecture> = mutableListOf()
     private val courses: MutableList<Course> = mutableListOf()
-
-    private lateinit var mAdapter: LecturesAdapter
-    private lateinit var mViewModel: HomeViewModel
+    private lateinit var mAdapter: CourseAdapter
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var roomViewModel: RoomViewModel
     private var userId = ""
     private var token = ""
+    private var refreshToken = ""
+    private lateinit var courseViewModel: CourseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class HomeFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mActivityBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         // Inflate the layout for this fragment
@@ -60,27 +61,37 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel = ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
-        roomViewModel = ViewModelProvider(
-            requireActivity(),
+        token = ""
+        courseViewModel = ViewModelProvider(
+            this,
             ViewModelFactory(
                 requireActivity().application,
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(requireActivity()))
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext()))
             )
-        ).get(RoomViewModel::class.java)
+        ).get(CourseViewModel::class.java)
         initializeRecyclerView()
-        userPreferences.getUserId.asLiveData().observe(viewLifecycleOwner, {
-            userId = it
-            roomViewModel.findUser(userId)
-                .observe(viewLifecycleOwner, { result ->
-                    token = "Bearer " + result[0].access_token.toString()
-                    initializeObservers()
-                })
+        getData()
+    }
+
+    private fun getData() {
+        userPreferences.getUserId.asLiveData().observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                userId = it
+                courseViewModel.findUser(userId)
+                    .observeOnce(viewLifecycleOwner, { result ->
+                        if (result != null) {
+                            token = "Bearer " + result[0].access_token.toString()
+                            refreshToken = result[0].refresh_token.toString()
+                            initializeObservers()
+                        }
+
+                    })
+            }
         })
     }
 
     private fun initializeRecyclerView() {
-        mAdapter = LecturesAdapter()
+        mAdapter = CourseAdapter(this)
         mActivityBinding.rvLectures.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -90,25 +101,90 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initializeObservers() {
-        mViewModel.getDepartmentCourses(
-            token
-        ).observe(viewLifecycleOwner, { kt ->
-            courses.addAll(kt.data.toMutableList())
-            mAdapter.setData(courses)
+        courseViewModel.getDepartmentCourses(token)
+        courseViewModel.depResponse.observeOnce(viewLifecycleOwner, { kt ->
+            if (kt != null) {
+                courses.clear()
+                courses.addAll(kt.data.toMutableList())
+                mAdapter.setData(courses)
+                initInfoObservers()
+
+            }
         })
-        mViewModel.mShowResponseError.observe(viewLifecycleOwner, {
-            AlertDialog.Builder(requireActivity()).setMessage(it).show()
+        courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
+            initTokenObservers()
         })
-        mViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
+        courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
             if (bt) {
                 showLoader()
             } else {
                 hideLoader()
             }
         })
-        mViewModel.mShowNetworkError.observe(viewLifecycleOwner, {
-            ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
-                .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+        courseViewModel.mShowNetworkError.observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
+
+        })
+    }
+
+    private fun initInfoObservers() {
+        courseViewModel.getStudentInfo(token)
+        courseViewModel.infoResponse.observeOnce(viewLifecycleOwner, { kt ->
+            if (kt != null) {
+                mActivityBinding.txtFaculty.text = kt.data.studyFieldName
+                mActivityBinding.txtDepartment.text = kt.data.departmentName
+
+
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
+            AlertDialog.Builder(requireActivity()).setMessage(it).show()
+        })
+        courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
+
+        })
+    }
+
+    private fun initTokenObservers() {
+        courseViewModel.updateToken(RefreshTokenModel(Constant.REFRESH_TOKEN, refreshToken))
+        courseViewModel.updateTokenResponse.observeOnce(viewLifecycleOwner, { kt ->
+            if (kt != null) {
+                getData()
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finishAffinity()
+        })
+        courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
 
         })
     }
@@ -121,5 +197,11 @@ class HomeFragment : BaseFragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onRecyclerViewItemClick(position: Int) {
+        val intent = Intent(requireContext(), CourseDetailsActivity::class.java)
+        intent.putExtra(Constant.SELECTED_COURSE, courses[position])
+        startActivity(intent)
     }
 }

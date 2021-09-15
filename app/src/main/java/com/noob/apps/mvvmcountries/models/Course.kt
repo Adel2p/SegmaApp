@@ -1,5 +1,7 @@
 package com.noob.apps.mvvmcountries.models
 
+import java.io.Serializable
+
 data class Course(
     val uuid: String,
     val name: String,
@@ -7,4 +9,4 @@ data class Course(
     val price: Int,
     val professor: Professor,
     val lectures: List<Lectures>
-)
+) : Serializable

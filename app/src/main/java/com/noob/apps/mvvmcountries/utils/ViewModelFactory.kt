@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.noob.apps.mvvmcountries.data.DatabaseHelper
 import com.noob.apps.mvvmcountries.data.RoomViewModel
+import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 
 
@@ -16,6 +17,9 @@ class ViewModelFactory(private val app: Application, private val dbHelper: Datab
 
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(app, dbHelper) as T
+        }
+        if (modelClass.isAssignableFrom(CourseViewModel::class.java)) {
+            return CourseViewModel(app, dbHelper) as T
         }
         if (modelClass.isAssignableFrom(RoomViewModel::class.java)) {
             return RoomViewModel(dbHelper) as T

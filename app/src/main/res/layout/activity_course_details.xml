@@ -9,13 +9,22 @@
         android:background="@drawable/ic_background"
         tools:context=".ui.details.CourseDetailsActivity">
 
-        <VideoView
+        <com.ct7ct7ct7.androidvimeoplayer.view.VimeoPlayerView
             android:id="@+id/lecVv"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_height="wrap_content"
+            app:autoPlay="false"
+            app:backgroundColor="#00FFFF"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:loop="false"
+            app:muted="false"
+            app:showFullscreenOption="false"
+            app:showMenuOption="false"
+            app:showOriginalControls="false"
+            app:showTitle="true"
+            app:topicColor="#FFFF00" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLecId"
@@ -24,9 +33,8 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/bold"
-            android:text="data structure"
             android:textColor="@color/black"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lecVv" />
 
@@ -35,9 +43,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/gray_purple"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toStartOf="@id/lectures"
+            app:layout_constraintTop_toBottomOf="@+id/lecVv"
+            tools:text="10" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lectures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:fontFamily="@font/regular"
-            android:text="10 Lectures"
+            android:text="@string/lectures"
             android:textColor="@color/gray_purple"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +99,6 @@
             android:id="@+id/lectureLay"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
-            android:background="@color/black"
             android:padding="@dimen/_15sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtLectures">
@@ -103,8 +123,8 @@
             android:id="@+id/infoLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:padding="@dimen/_15sdp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtLectures">
 
@@ -118,9 +138,9 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:padding="@dimen/_20sdp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_20sdp">
 
 
                     <androidx.appcompat.widget.AppCompatImageView

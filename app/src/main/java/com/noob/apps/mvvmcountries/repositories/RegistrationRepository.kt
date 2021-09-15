@@ -37,6 +37,10 @@ class RegistrationRepository private constructor() {
         callback: NetworkResponseCallback,
     ): MutableLiveData<RegistrationResponse> {
         mCallback = callback
+        if (registrationResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            registrationResponse = MutableLiveData()
+        }
         mUserCall = RestClient.getInstance().getApiService()
             .userSignUp(registrationModel)
         mUserCall.enqueue(object : Callback<RegistrationResponse> {
@@ -69,6 +73,10 @@ class RegistrationRepository private constructor() {
         callback: NetworkResponseCallback,
     ): MutableLiveData<OtpResponse> {
         mCallback = callback
+        if (otpResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            otpResponse = MutableLiveData()
+        }
         mOtpCall = RestClient.getInstance().getApiService()
             .verifyOtp(otpModel)
         mOtpCall.enqueue(object : Callback<OtpResponse> {
@@ -102,6 +110,10 @@ class RegistrationRepository private constructor() {
         callback: NetworkResponseCallback,
     ): MutableLiveData<OtpResponse> {
         mCallback = callback
+        if (otpResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            otpResponse = MutableLiveData()
+        }
         mOtpCall = RestClient.getInstance().getApiService()
             .resendOtp(otpModel)
         mOtpCall.enqueue(object : Callback<OtpResponse> {

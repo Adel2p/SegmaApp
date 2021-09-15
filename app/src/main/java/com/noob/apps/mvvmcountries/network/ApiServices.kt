@@ -57,4 +57,12 @@ interface ApiServices {
 
     @GET("departments/courses")
     fun getDepartmentCourses(@Header("Authorization") Authorization: String?): Call<DepartmentCourseResponse>
+
+    @GET("students/info")
+    fun getStudentInfo(@Header("Authorization") Authorization: String?): Call<UserInfoResponse>
+    @FormUrlEncoded
+    @POST("oauth/token")
+    fun updateToken( @Header("Authorization") Authorization: String?,
+                     @Field("grant_type") grant_type: String?,
+                     @Field("refresh_token") refresh_token: String?,): Call<LoginResponse>
 }

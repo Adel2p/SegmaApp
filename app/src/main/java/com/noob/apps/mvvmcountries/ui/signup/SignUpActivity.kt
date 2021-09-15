@@ -84,9 +84,10 @@ class SignUpActivity : BaseActivity() {
                 deviceId,
             )
         ).observe(this, { kt ->
-            insertUser(kt)
+            if (kt != null)
+                insertUser(kt)
         })
-        mViewModel.mShowResponseError.observe(this, {
+        mViewModel.mShowResponseError.observeOnce(this, {
             AlertDialog.Builder(this).setMessage(it).show()
         })
         mViewModel.mShowProgressBar.observe(this, { bt ->

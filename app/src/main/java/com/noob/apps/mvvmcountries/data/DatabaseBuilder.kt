@@ -20,7 +20,7 @@ object DatabaseBuilder {
         Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            "com.noob.apps.mvvmcountriess"
+            "com.sigma.app"
         ).build()
 
 }

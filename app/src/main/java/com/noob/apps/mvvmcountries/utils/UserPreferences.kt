@@ -88,4 +88,9 @@ class UserPreferences(
             // No type safety.
             preferences[token] ?: ""
         }
+    suspend fun clear() {
+        applicationContext.dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 }

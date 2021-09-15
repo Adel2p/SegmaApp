@@ -43,6 +43,10 @@ class UniversityRepository private constructor() {
         callback: NetworkResponseCallback
     ): MutableLiveData<BoardingResponse> {
         mCallback = callback
+        if (mmUniversityList.value != null) {
+            mCallback.onNetworkSuccess()
+            mmUniversityList = MutableLiveData()
+        }
         mUniversityCall = RestClient.getInstance().getApiService().getUNIVERSITY(token)
         mUniversityCall.enqueue(object : Callback<BoardingResponse> {
 
@@ -75,6 +79,10 @@ class UniversityRepository private constructor() {
         callback: NetworkResponseCallback
     ): MutableLiveData<BoardingResponse> {
         mCallback = callback
+        if (mLevelList.value != null) {
+            mCallback.onNetworkSuccess()
+            mLevelList = MutableLiveData()
+        }
         mLevelCall = RestClient.getInstance().getApiService().getLevels(token, collageId)
         mLevelCall.enqueue(object : Callback<BoardingResponse> {
 
@@ -107,6 +115,10 @@ class UniversityRepository private constructor() {
         callback: NetworkResponseCallback
     ): MutableLiveData<BoardingResponse> {
         mCallback = callback
+        if (mDepartmentList.value != null) {
+            mCallback.onNetworkSuccess()
+            mDepartmentList = MutableLiveData()
+        }
         mDepartmentCall = RestClient.getInstance().getApiService().getDepartments(token, collageId)
         mDepartmentCall.enqueue(object : Callback<BoardingResponse> {
 
@@ -139,6 +151,10 @@ class UniversityRepository private constructor() {
         callback: NetworkResponseCallback
     ): MutableLiveData<BoardingResponse> {
         mCallback = callback
+        if (mmBoardingList.value != null) {
+            mCallback.onNetworkSuccess()
+            mmBoardingList = MutableLiveData()
+        }
         mBoardingCall = RestClient.getInstance().getApiService().postBoardingData(token, model)
         mBoardingCall.enqueue(object : Callback<BoardingResponse> {
 

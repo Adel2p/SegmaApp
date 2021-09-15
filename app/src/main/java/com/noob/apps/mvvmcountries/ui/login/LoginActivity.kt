@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -35,8 +36,6 @@ class LoginActivity : BaseActivity() {
     private lateinit var mViewModel: LoginViewModel
     private lateinit var roomViewModel: RoomViewModel
     private lateinit var sharedViewModel: SharedViewModel
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -74,41 +73,12 @@ class LoginActivity : BaseActivity() {
             if (it == Constant.RETRY_LOGIN)
                 initializeObservers()
         })
-
-//        roomViewModel.getUsers().observe(this, Observer { kt ->
-//            Toast.makeText(this@LoginActivity, kt.size.toString(), Toast.LENGTH_SHORT).show()
-//        })
-
-//        roomViewModel.findUser("fafd3ae2-692c-45ed-baef-f9f1ac5e072c")
-//            .observe(this, Observer { result ->
-//                Toast.makeText(this@LoginActivity, result[0].user_name, Toast.LENGTH_LONG).show()
-//
-//            })
-
-
-        //   }
-
-
         mActivityBinding.loginButton.setOnClickListener {
             hideKeyboard()
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
             if (checkValidation()) {
                 initializeObservers()
-//                lifecycleScope.launch {
-//                    userPreferences.saveUserLogedIn(true)
-//                }
-//                userPreferences.getUniversityData.asLiveData().observe(this, {
-//                    isSaved = it
-//                })
-//                if (isSaved) {
-//                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-//                    finish()
-//                }
-//                else{
-//                    startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
-//                    finish()
-//                }
             }
 
         }
@@ -129,16 +99,18 @@ class LoginActivity : BaseActivity() {
 
     private fun initializeObservers() {
         mViewModel.fetchCountriesFromServer(mobileNumber, password).observe(this, Observer { user ->
-            lifecycleScope.launch {
-                user.user_uuid?.let { userPreferences.saveUserId(it) }
+            if (user != null) {
+                lifecycleScope.launch {
+                    user.user_uuid?.let { userPreferences.saveUserId(it) }
+                }
+                lifecycleScope.launch {
+                    userPreferences.saveUserLogedIn(true)
+                }
+                lifecycleScope.launch {
+                    userPreferences.saveRefreshToken("Bearer " + user.access_token)
+                }
+                user.user_on_boarded?.let { checkUserOnBoard(it) }
             }
-            lifecycleScope.launch {
-                userPreferences.saveUserLogedIn(true)
-            }
-            lifecycleScope.launch {
-                userPreferences.saveRefreshToken("Bearer " + user.access_token)
-            }
-            user.user_on_boarded?.let { checkUserOnBoard(it) }
         })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()

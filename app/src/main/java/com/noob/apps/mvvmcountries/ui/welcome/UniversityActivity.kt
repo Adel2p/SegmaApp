@@ -21,7 +21,6 @@ import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
-import com.noob.apps.mvvmcountries.viewmodels.RegistrationViewModel
 import com.noob.apps.mvvmcountries.viewmodels.UniversityViewModel
 import kotlinx.coroutines.launch
 
@@ -94,10 +93,10 @@ class UniversityActivity : BaseActivity() {
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-                if (position != 0)
-                    depId = departments[position].uuid
+                depId = if (position != 0)
+                    departments[position].uuid
                 else
-                    depId = ""
+                    ""
                 checkValidation()
             }
 
@@ -123,10 +122,12 @@ class UniversityActivity : BaseActivity() {
 
     private fun initCollegesObservers() {
         mViewModel.getUniversity(token).observe(this, Observer { response ->
-            colleges = response.data.toMutableList()
-            colleges.add(0, Collage("0", "please select"))
-            val customDropDownAdapter = CollageDropDownAdapter(this, colleges)
-            mActivityBinding.collageSp.adapter = customDropDownAdapter
+            if (response != null) {
+                colleges = response.data.toMutableList()
+                colleges.add(0, Collage("0", "please select"))
+                val customDropDownAdapter = CollageDropDownAdapter(this, colleges)
+                mActivityBinding.collageSp.adapter = customDropDownAdapter
+            }
         })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()
@@ -147,10 +148,12 @@ class UniversityActivity : BaseActivity() {
 
     private fun initLevelsObservers() {
         mViewModel.getLevels(token, collageId).observe(this, Observer { collage ->
-            levels = collage.data.toMutableList()
-            levels.add(0, Collage("0", "please select"))
-            val termAdapter = TermAdapter(this, levels)
-            mActivityBinding.termSp.adapter = termAdapter
+            if (collage != null) {
+                levels = collage.data.toMutableList()
+                levels.add(0, Collage("0", "please select"))
+                val termAdapter = TermAdapter(this, levels)
+                mActivityBinding.termSp.adapter = termAdapter
+            }
         })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()
@@ -171,10 +174,12 @@ class UniversityActivity : BaseActivity() {
 
     private fun initDepartmentObservers() {
         mViewModel.getDepartments(token, levelId).observe(this, Observer { collage ->
-            departments = collage.data.toMutableList()
-            departments.add(0, Collage("0", "please select"))
-            val departmentAdapter = DapartmentAdapter(this, departments)
-            mActivityBinding.depSp.adapter = departmentAdapter
+            if (collage != null) {
+                departments = collage.data.toMutableList()
+                departments.add(0, Collage("0", "please select"))
+                val departmentAdapter = DapartmentAdapter(this, departments)
+                mActivityBinding.depSp.adapter = departmentAdapter
+            }
         })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()
@@ -196,10 +201,12 @@ class UniversityActivity : BaseActivity() {
     private fun initBoardingObservers() {
         mViewModel.postUserUniversity(token, BoardingRequest(collageId, levelId, depId, userId))
             .observe(this, Observer { collage ->
-                lifecycleScope.launch {
-                    userPreferences.saveUniversityData(true)
+                if (collage != null) {
+                    lifecycleScope.launch {
+                        userPreferences.saveUniversityData(true)
+                    }
+                    startActivity(Intent(this@UniversityActivity, WelcomeActivity::class.java))
                 }
-                startActivity(Intent(this@UniversityActivity, WelcomeActivity::class.java))
             })
         mViewModel.mShowResponseError.observe(this, Observer {
             if (it.isNotEmpty())

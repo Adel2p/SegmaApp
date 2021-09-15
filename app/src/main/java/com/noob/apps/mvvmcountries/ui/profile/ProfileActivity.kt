@@ -1,17 +1,13 @@
 package com.noob.apps.mvvmcountries.ui.profile
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityProfileBinding
 import com.noob.apps.mvvmcountries.models.User
 import com.noob.apps.mvvmcountries.ui.dialog.ForgetPasswordBottomDialog
-import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
-import com.noob.apps.mvvmcountries.ui.forgetpassword.ForgetPasswordActivity
-import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 
 class ProfileActivity : AppCompatActivity() {

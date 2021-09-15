@@ -15,7 +15,6 @@ import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.viewmodels.RegistrationViewModel
-import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
 
 
 class VerifyOtpActivity : BaseActivity() {
@@ -31,11 +30,11 @@ class VerifyOtpActivity : BaseActivity() {
         mobileNumber = intent.getStringExtra(Constant.MOBILE_NUMBER).toString()
         userId = intent.getStringExtra(Constant.USER_ID).toString()
         mViewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
-        mActivityBinding.txtMobileNumber.text = mobileNumber.toString()
+        mActivityBinding.txtMobileNumber.text = mobileNumber
         mActivityBinding.txtChangeNumber.setOnClickListener {
             val returnIntent = Intent()
             setResult(RESULT_CANCELED, returnIntent)
-            finish();
+            finish()
         }
         mActivityBinding.otpView.setOtpCompletionListener {
             mActivityBinding.confirmButton.setBackgroundResource(R.drawable.curved_button_blue)
@@ -57,9 +56,11 @@ class VerifyOtpActivity : BaseActivity() {
                 userId,
                 otp
             )
-        ).observe(this, { kt ->
-            startActivity(Intent(this@VerifyOtpActivity, LoginActivity::class.java))
-            finishAffinity()
+        ).observeOnce(this, { kt ->
+            if (kt != null) {
+                startActivity(Intent(this@VerifyOtpActivity, LoginActivity::class.java))
+                finishAffinity()
+            }
         })
         mViewModel.mShowResponseError.observe(this, {
             AlertDialog.Builder(this).setMessage(it).show()
@@ -83,8 +84,11 @@ class VerifyOtpActivity : BaseActivity() {
             ResendModel(
                 userId
             )
-        ).observe(this, { kt ->
-            Toast.makeText(this, getString(R.string.send_successfully), Toast.LENGTH_LONG).show()
+        ).observeOnce(this, { kt ->
+            if (kt != null) {
+                Toast.makeText(this, getString(R.string.send_successfully), Toast.LENGTH_LONG)
+                    .show()
+            }
         })
         mViewModel.mShowResponseError.observe(this, {
             AlertDialog.Builder(this).setMessage(it).show()

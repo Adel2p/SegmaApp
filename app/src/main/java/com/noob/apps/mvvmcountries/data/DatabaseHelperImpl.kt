@@ -10,4 +10,7 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
 
     override suspend fun findByUserId(userId: String) = appDatabase.userDao().findByUserId(userId)
 
+    override suspend fun deleteAll() = appDatabase.userDao().deleteAll()
+
+
 }

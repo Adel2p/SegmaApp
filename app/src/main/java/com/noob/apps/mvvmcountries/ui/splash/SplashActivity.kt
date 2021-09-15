@@ -31,11 +31,11 @@ class SplashActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 if (isloggedin) {
                     if (isSaved) {
-                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
-                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        val intent = Intent(this@SplashActivity, UniversityActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

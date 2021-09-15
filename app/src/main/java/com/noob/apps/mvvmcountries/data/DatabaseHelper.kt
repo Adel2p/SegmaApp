@@ -9,5 +9,7 @@ interface DatabaseHelper {
     suspend fun insertAll(users: List<User>)
 
     suspend fun findByUserId(userId: String): List<User>
+
+    suspend fun deleteAll()
 }
 

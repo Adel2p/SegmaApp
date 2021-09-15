@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
@@ -25,6 +26,7 @@ import com.noob.apps.mvvmcountries.ui.profile.ProfileActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.UserPreferences
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
+import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -34,7 +36,7 @@ class MoreFragment : Fragment() {
     private lateinit var mActivityBinding: FragmentMoreBinding
     private lateinit var roomViewModel: RoomViewModel
     private lateinit var userPreferences: UserPreferences
-    private  var userId=""
+    private var userId = ""
     private lateinit var user: User
 
     private var param1: String? = null
@@ -77,9 +79,9 @@ class MoreFragment : Fragment() {
         ).get(RoomViewModel::class.java)
         roomViewModel.findUser(userId)
             .observe(requireActivity(), Observer { result ->
-                user=result[0]
-               mActivityBinding.txtStudentName.text=user.user_name
-                mActivityBinding.txtStudentNumber.text=user.user_mobile_number
+                user = result[0]
+                mActivityBinding.txtStudentName.text = user.user_name
+                mActivityBinding.txtStudentNumber.text = user.user_mobile_number
             })
 
         mActivityBinding.txtFavoriteLec.setOnClickListener {
@@ -107,8 +109,6 @@ class MoreFragment : Fragment() {
             activity?.let {
                 val intent = Intent(it, ProfileActivity::class.java)
                 intent.putExtra(Constant.USER_DATA, user)
-
-
                 it.startActivity(intent)
             }
 
@@ -134,12 +134,20 @@ class MoreFragment : Fragment() {
             }
         }
         mActivityBinding.txtLogOut.setOnClickListener {
+            lifecycleScope.launch {
+                userPreferences.clear()
+            }
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             activity?.finishAffinity()
         }
         mActivityBinding.txtNotificationSetting.setOnClickListener {
             val notificationsettingdialog = NotificationSettingDialog()
-            activity?.let { it1 -> notificationsettingdialog.show(it1.supportFragmentManager, notificationsettingdialog.tag) }
+            activity?.let { it1 ->
+                notificationsettingdialog.show(
+                    it1.supportFragmentManager,
+                    notificationsettingdialog.tag
+                )
+            }
         }
 
     }

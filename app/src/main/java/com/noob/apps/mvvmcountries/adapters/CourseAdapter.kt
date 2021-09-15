@@ -10,7 +10,8 @@ import com.noob.apps.mvvmcountries.databinding.LectureItemCellBinding
 import com.noob.apps.mvvmcountries.models.Course
 import kotlinx.android.extensions.LayoutContainer
 
-class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
+class CourseAdapter(    private val listener: RecyclerViewClickListener
+) : RecyclerView.Adapter<CourseAdapter.ViewHolder>() {
 
     private var mList: List<Course>? = listOf()
 
@@ -38,6 +39,12 @@ class LecturesAdapter : RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemBinding.lecture = mList!![position]
+        holder.itemBinding.container.setOnClickListener {
+            listener.onRecyclerViewItemClick(
+                position
+            )
+
+        }
     }
 
     class ViewHolder(var itemBinding: LectureItemCellBinding) :

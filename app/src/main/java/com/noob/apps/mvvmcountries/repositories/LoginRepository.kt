@@ -9,11 +9,10 @@ import com.noob.apps.mvvmcountries.network.RestClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import org.json.JSONObject
 
 
 class LoginRepository private constructor() {
@@ -44,6 +43,10 @@ class LoginRepository private constructor() {
         callback: NetworkResponseCallback,
     ): MutableLiveData<LoginResponse> {
         mCallback = callback
+        if (loginResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            loginResponse = MutableLiveData()
+        }
         mUserCall = RestClient.getInstance().getApiService()
             .userLogin("Basic U2lnbWEtTW9iaWxlOjEyMzQ1Ng==", "password", mobile, password)
         mUserCall.enqueue(object : Callback<LoginResponse> {

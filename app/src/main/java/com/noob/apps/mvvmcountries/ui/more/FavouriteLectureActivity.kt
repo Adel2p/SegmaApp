@@ -2,12 +2,10 @@ package com.noob.apps.mvvmcountries.ui.more
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.FavouriteLectureAdapter
-import com.noob.apps.mvvmcountries.adapters.LecturesAdapter
 import com.noob.apps.mvvmcountries.databinding.ActivityFavouriteLectureBinding
 import com.noob.apps.mvvmcountries.models.Lecture
 
