@@ -1,6 +1,5 @@
 package com.noob.apps.mvvmcountries.ui.signup
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -34,7 +33,7 @@ class VerifyOtpActivity : BaseActivity() {
         mActivityBinding.txtMobileNumber.text = mobileNumber
         mActivityBinding.txtChangeNumber.setOnClickListener {
             val returnIntent = Intent()
-            setResult(RESULT_OK, returnIntent);
+            setResult(RESULT_OK, returnIntent)
             finish()
         }
         mActivityBinding.otpView.setOtpCompletionListener {
@@ -110,7 +109,7 @@ class VerifyOtpActivity : BaseActivity() {
 
     override fun onBackPressed() {
         val returnIntent = Intent()
-        setResult(RESULT_CANCELED, returnIntent);
+        setResult(RESULT_CANCELED, returnIntent)
         finish()
         super.onBackPressed()
 
