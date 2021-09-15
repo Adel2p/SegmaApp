@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit
 
 class LanguageBottomDialog : BottomSheetDialogFragment() {
     private lateinit var mActivityBinding: ChangeLanguageBinding
-    lateinit var locale: Locale
     private lateinit var userPreferences: UserPreferences
 
     companion object {

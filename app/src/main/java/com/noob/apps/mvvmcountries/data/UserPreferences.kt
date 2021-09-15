@@ -11,55 +11,56 @@ import com.noob.apps.mvvmcountries.utils.Constant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = " setting_pref")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = Constant.SECURE_PREF)
 
 class UserPreferences(
     appContext: Context
 ) {
     private val applicationContext = appContext.applicationContext
 
-    private val SAVED_USER = booleanPreferencesKey("saved_user")
-    private val SAVED_LOGEDIN = booleanPreferencesKey("saved_logedin")
-    private val user_uuid = stringPreferencesKey("user_uuid")
-    private val token = stringPreferencesKey("refresh_token")
-    private val fcmToken = stringPreferencesKey("fcmToken")
-    private val appLanguage = stringPreferencesKey("app_Language")
+    private val saveUser = booleanPreferencesKey(Constant.SAVED_USER)
+    private val saveLogin = booleanPreferencesKey(Constant.SAVED_LOGIN)
+    private val userId = stringPreferencesKey(Constant.USER_ID)
+    private val token = stringPreferencesKey(Constant.REFRESH_TOKEN)
+    private val fcmToken = stringPreferencesKey(Constant.FCM_TOKEN)
+    private val appLanguage = stringPreferencesKey(Constant.APP_LANGUAGE)
+    private val notificationEnabled = booleanPreferencesKey(Constant.NOTIFICATION_ENABLED)
 
 
     suspend fun saveUniversityData(isSaved: Boolean) {
         applicationContext.dataStore.edit { settings ->
-            settings[SAVED_USER] = isSaved
+            settings[saveUser] = isSaved
         }
     }
 
     val getUniversityData: Flow<Boolean> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
-            preferences[SAVED_USER] ?: false
+            preferences[saveUser] ?: false
         }
 
     suspend fun saveUserLogedIn(islogedin: Boolean) {
         applicationContext.dataStore.edit { settings ->
-            settings[SAVED_LOGEDIN] = islogedin
+            settings[saveLogin] = islogedin
         }
     }
 
     val savedLogginedFlow: Flow<Boolean> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
-            preferences[SAVED_LOGEDIN] ?: false
+            preferences[saveLogin] ?: false
         }
 
     suspend fun saveUserId(userId: String) {
         applicationContext.dataStore.edit { settings ->
-            settings[user_uuid] = userId
+            settings[this.userId] = userId
         }
     }
 
     val getUserId: Flow<String> = appContext.dataStore.data
         .map { preferences ->
             // No type safety.
-            preferences[user_uuid] ?: ""
+            preferences[userId] ?: ""
         }
 
     suspend fun saveRefreshToken(mToken: String) {
@@ -96,6 +97,18 @@ class UserPreferences(
         .map { preferences ->
             // No type safety.
             preferences[appLanguage] ?: Constant.ENGLISH
+        }
+
+    suspend fun enableFirebase(enable: Boolean) {
+        applicationContext.dataStore.edit { preferences ->
+            preferences[notificationEnabled] = enable
+        }
+    }
+
+    val getFirebaseEnabled: Flow<Boolean> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[notificationEnabled] ?: true
         }
 
     suspend fun clear() {

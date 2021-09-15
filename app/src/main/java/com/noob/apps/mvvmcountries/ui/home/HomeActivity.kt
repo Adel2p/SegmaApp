@@ -3,6 +3,7 @@ package com.noob.apps.mvvmcountries.ui.home
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityHomeBinding
@@ -11,6 +12,9 @@ import com.noob.apps.mvvmcountries.ui.course.CoursesFragment
 import com.noob.apps.mvvmcountries.ui.library.LibraryFragment
 import com.noob.apps.mvvmcountries.ui.more.MoreFragment
 import kotlinx.coroutines.launch
+import android.content.Intent
+import com.noob.apps.mvvmcountries.ui.fcm.MyFirebaseMessagingService
+
 
 class HomeActivity : BaseActivity() {
     private lateinit var mActivityBinding: ActivityHomeBinding
@@ -21,6 +25,16 @@ class HomeActivity : BaseActivity() {
         lifecycleScope.launch {
             userPreferences.saveUniversityData(true)
         }
+        userPreferences.getFirebaseEnabled.asLiveData().observeOnce(this, {
+            if (it) {
+                val myService = Intent(this@HomeActivity, MyFirebaseMessagingService::class.java)
+                startService(myService)
+            } else {
+                val myService = Intent(this@HomeActivity, MyFirebaseMessagingService::class.java)
+                stopService(myService)
+            }
+
+        })
         val homeFragment = HomeFragment()
         val coursesFragment = CoursesFragment()
         val libraryFragment = LibraryFragment()

@@ -102,14 +102,9 @@ class SplashActivity : BaseActivity() {
             withContext(Dispatchers.Main) {
                 if (isloggedin) {
                     if (isSaved) {
-                        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        openHome()
                     } else {
-                        val intent =
-                            Intent(this@SplashActivity, UniversityActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        openUniversity()
                     }
                 } else {
                     openLogin()
@@ -119,6 +114,19 @@ class SplashActivity : BaseActivity() {
 
             }
         }
+    }
+
+    private fun openHome() {
+        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun openUniversity() {
+        val intent =
+            Intent(this@SplashActivity, UniversityActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun openLogin() {
