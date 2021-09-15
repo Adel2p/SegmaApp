@@ -1,8 +1,10 @@
 package com.noob.apps.mvvmcountries.ui.signup
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.provider.FontsContractCompat.Columns.RESULT_CODE
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -117,8 +119,8 @@ class SignUpActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == LAUNCH_SECOND_ACTIVITY) {
-            if (resultCode == RESULT_CANCELED) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
                 mActivityBinding.etFullName.isEnabled = false
                 mActivityBinding.etEmail.isEnabled = false
                 mActivityBinding.etPassword.isEnabled = false
