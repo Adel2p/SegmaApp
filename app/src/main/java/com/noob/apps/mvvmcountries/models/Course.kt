@@ -8,5 +8,5 @@ data class Course(
     val introUrl: String,
     val price: Int,
     val professor: Professor,
-    val lectures: List<Lectures>
+    val lectures: List<Lectures>, val eligibleToWatch: Boolean
 ) : Serializable

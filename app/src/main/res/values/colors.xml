@@ -9,8 +9,10 @@
     <color name="black">#000000</color>
     <color name="blue">#0277BD</color>
     <color name="niceBlue">#F2F9FB</color>
-    <color name="sepColor">#DBE2EA </color>
+    <color name="sepColor">#DBE2EA</color>
     <color name="color_preloader_start">#000000</color>
     <color name="color_preloader_center">#000000</color>
     <color name="color_preloader_end">#ff56a9c7</color>
+    <color name="cell_bg_color">#A5CCDF</color>
+
 </resources>

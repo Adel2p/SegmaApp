@@ -9,21 +9,16 @@
         android:background="@drawable/ic_background"
         tools:context=".ui.details.CourseDetailsActivity">
 
-        <com.ct7ct7ct7.androidvimeoplayer.view.VimeoPlayerView
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/lecVv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:autoPlay="false"
-            app:backgroundColor="#00FFFF"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="300dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loop="false"
-            app:muted="false"
-            app:showFullscreenOption="false"
-            app:showMenuOption="false"
-            app:showOriginalControls="false"
-            app:showTitle="true"
-            app:topicColor="#FFFF00" />
+            app:show_buffering="when_playing"
+            app:show_shuffle_button="true"
+            app:use_controller="true" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -98,19 +93,22 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/lectureLay"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="0dp"
             android:padding="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtLectures">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="0dp"
+                app:cardCornerRadius="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lectureRec"
+                    android:id="@+id/lectureRv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
