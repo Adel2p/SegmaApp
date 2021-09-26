@@ -48,7 +48,7 @@ class ConnectionDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mActivityBinding =
             DataBindingUtil.inflate(inflater, R.layout.connection_dialog, container, false)
         // Inflate the layout for this fragment
@@ -57,16 +57,11 @@ class ConnectionDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView(view)
         sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
         mActivityBinding.retry.setOnClickListener {
             sharedViewModel.sendOperation(operation)
             dismiss()
         }
-    }
-
-
-    private fun setupView(view: View) {
     }
 
 

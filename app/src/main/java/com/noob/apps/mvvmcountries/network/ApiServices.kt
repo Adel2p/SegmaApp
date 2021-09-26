@@ -74,4 +74,16 @@ interface ApiServices {
         @Header("Authorization") Authorization: String?,
         @Body otpModel: FcmTokenModel,
     ): Call<BaseResponse>
+
+    @GET("lectures/{id}")
+    fun getLectureInfo(
+        @Header("Authorization") Authorization: String?,
+        @Path("id") id: String
+    ): Call<LectureDetailsResponse>
+
+    @POST("lectures")
+    fun addSession(
+        @Header("Authorization") Authorization: String?,
+        @Body otpModel: SessionModel,
+    ): Call<SessionResponse>
 }

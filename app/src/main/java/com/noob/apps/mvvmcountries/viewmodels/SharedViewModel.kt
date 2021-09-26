@@ -16,4 +16,10 @@ class SharedViewModel : ViewModel() {
     fun setDimmed(isDimmed: String) {
         Dimmed.value = isDimmed
     }
+
+    val isStarted = MutableLiveData<Boolean>()
+
+    fun setStart(isDimmed: Boolean) {
+        isStarted.value = isDimmed
+    }
 }

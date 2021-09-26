@@ -23,10 +23,16 @@ class HomeRepository private constructor() {
         MutableLiveData<LoginResponse?>()
     var fcmResponse: MutableLiveData<BaseResponse?> =
         MutableLiveData<BaseResponse?>()
+    var lectureResponse: MutableLiveData<LectureDetailsResponse?> =
+        MutableLiveData<LectureDetailsResponse?>()
+    var sessionResponse: MutableLiveData<SessionResponse?> =
+        MutableLiveData<SessionResponse?>()
     private lateinit var mUserCall: Call<DepartmentCourseResponse>
     private lateinit var mInfoCall: Call<UserInfoResponse>
     private lateinit var mTokenCall: Call<LoginResponse>
     private lateinit var fcmTokenCall: Call<BaseResponse>
+    private lateinit var lecInfoCall: Call<LectureDetailsResponse>
+    private lateinit var addSessionCall: Call<SessionResponse>
 
     var usersToInsertInDB = mutableListOf<User>()
 
@@ -62,7 +68,6 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
                     val internalMessage = jsonObject.getString("error_description")
                     mCallback.onResponseError(internalMessage)
                 } else {
@@ -220,5 +225,83 @@ class HomeRepository private constructor() {
 
         })
         return fcmResponse
+    }
+
+    fun getLectureInfo(
+        token: String, lecId: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<LectureDetailsResponse?> {
+        mCallback = callback
+        if (fcmResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            lectureResponse = MutableLiveData()
+        }
+        lecInfoCall = RestClient.getInstance().getApiService()
+            .getLectureInfo(
+                token,
+                lecId
+            )
+        lecInfoCall.enqueue(object : Callback<LectureDetailsResponse> {
+            override fun onResponse(
+                call: Call<LectureDetailsResponse>,
+                response: Response<LectureDetailsResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    lectureResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<LectureDetailsResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return lectureResponse
+    }
+
+    fun addSession(
+        token: String, lecId: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<SessionResponse?> {
+        mCallback = callback
+        if (fcmResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            sessionResponse = MutableLiveData()
+        }
+        addSessionCall = RestClient.getInstance().getApiService()
+            .addSession(
+                token,
+                SessionModel(lecId)
+            )
+        addSessionCall.enqueue(object : Callback<SessionResponse> {
+            override fun onResponse(
+                call: Call<SessionResponse>,
+                response: Response<SessionResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    sessionResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<SessionResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return sessionResponse
     }
 }

@@ -26,6 +26,10 @@ class CourseViewModel(
         MutableLiveData<LoginResponse?>()
     var fcmResponse: MutableLiveData<BaseResponse?> =
         MutableLiveData<BaseResponse?>()
+    var lectureResponse: MutableLiveData<LectureDetailsResponse?> =
+        MutableLiveData<LectureDetailsResponse?>()
+    var sessionResponse: MutableLiveData<SessionResponse?> =
+        MutableLiveData<SessionResponse?>()
     val mShowProgressBar = MutableLiveData(true)
     val mShowNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val mShowApiError = MutableLiveData<String>()
@@ -127,6 +131,60 @@ class CourseViewModel(
             fcmResponse =
                 mRepository.updateFCMToken(token,
                     fcmToken,
+                    object : NetworkResponseCallback {
+                        override fun onNetworkFailure(th: Throwable) {
+                            mShowApiError.value = th.message
+                        }
+
+                        override fun onNetworkSuccess() {
+                            mShowProgressBar.value = false
+                        }
+
+                        override fun onResponseError(message: String) {
+                            mShowProgressBar.value = false
+                            mShowResponseError.value = message
+                        }
+
+                    })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
+
+    fun getLectureInfo(token: String, lecId: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            lectureResponse =
+                mRepository.getLectureInfo(token,
+                    lecId,
+                    object : NetworkResponseCallback {
+                        override fun onNetworkFailure(th: Throwable) {
+                            mShowApiError.value = th.message
+                        }
+
+                        override fun onNetworkSuccess() {
+                            mShowProgressBar.value = false
+                        }
+
+                        override fun onResponseError(message: String) {
+                            mShowProgressBar.value = false
+                            mShowResponseError.value = message
+                        }
+
+                    })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
+
+    fun addSession(token: String, lecId: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            sessionResponse =
+                mRepository.addSession(token,
+                    lecId,
                     object : NetworkResponseCallback {
                         override fun onNetworkFailure(th: Throwable) {
                             mShowApiError.value = th.message

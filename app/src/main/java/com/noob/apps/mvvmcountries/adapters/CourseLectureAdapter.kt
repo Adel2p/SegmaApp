@@ -1,23 +1,29 @@
 package com.noob.apps.mvvmcountries.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.LecturesCourseCellBinding
 import com.noob.apps.mvvmcountries.models.Lectures
 import kotlinx.android.extensions.LayoutContainer
+import org.json.JSONObject
+import java.time.Duration
 
 class CourseLectureAdapter(
     context: Context,
     private val listener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<CourseLectureAdapter.ViewHolder>() {
     private var mList: List<Lectures>? = listOf()
-    private var lastPosition = 0
+    private var lastPosition = -1
     private var mContext: Context = context
 
     fun setData(list: List<Lectures>) {
@@ -42,10 +48,13 @@ class CourseLectureAdapter(
         return mList!!.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.itemBinding.lecture = mList!![position]
         val number = position + 1
         holder.itemBinding.container.setOnClickListener {
+            lastPosition = position
+            notifyDataSetChanged()
             listener.onRecyclerViewItemClick(
                 position
             )
@@ -60,8 +69,29 @@ class CourseLectureAdapter(
                 )
             )
 
+            holder.itemBinding.number.typeface = (ResourcesCompat.getFont(mContext, R.font.bold))
+            holder.itemBinding.name.typeface = (ResourcesCompat.getFont(mContext, R.font.bold))
+
+
+        } else {
+            holder.itemBinding.number.typeface = (ResourcesCompat.getFont(mContext, R.font.regular))
+            holder.itemBinding.name.typeface = (ResourcesCompat.getFont(mContext, R.font.regular))
+            holder.itemBinding.container.setBackgroundColor(
+                ContextCompat.getColor(
+                    mContext,
+                    R.color.white
+                )
+            )
+
         }
         holder.itemBinding.number.text = number.toString() + "_"
+        val jsonObject: JSONObject?
+        jsonObject = JSONObject(mList!![position].resolutions)
+        val duration = jsonObject?.getString("duration")
+        val minutes: Long = (duration.toLong() / 60)
+        holder.itemBinding.duration.text =
+            minutes.toString() + " " + mContext.resources.getString(R.string.mintes)
+
 
     }
 

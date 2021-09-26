@@ -241,6 +241,7 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
     override fun onRecyclerViewItemClick(position: Int) {
         val intent = Intent(requireContext(), CourseDetailsActivity::class.java)
         intent.putExtra(Constant.SELECTED_COURSE, courses[position])
+        intent.putExtra(Constant.ELIGIBLE_TO_WATCH, courses[position].eligibleToWatch)
         startActivity(intent)
     }
 }

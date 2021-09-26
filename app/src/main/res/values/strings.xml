@@ -75,7 +75,14 @@
     <string name="empty_cources">نعتذر .. لم تقم بالإشتراك في أي دورة</string>
     <string name="my_cources">دوراتي</string>
     <string name="title_cources">الدورات الحالية التي تم التسجيل بها</string>
-
+    <string name="num_available_watch">Available watches</string>
+    <string name="num_watch">Rest of watches</string>
+    <string name="watches">watch</string>
+    <string name="start_from">start from</string>
+    <string name="end_from">end in</string>
+    <string name="start_watch">نعم إبدأ المشاهدة</string>
+    <string name="watch_letter">لا  - المشاهدة وقت لاحق</string>
+    <string name="mintes">Minutes</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

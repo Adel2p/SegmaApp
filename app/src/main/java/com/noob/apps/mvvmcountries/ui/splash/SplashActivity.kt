@@ -50,7 +50,7 @@ class SplashActivity : BaseActivity() {
 
     private fun readToken() {
         userPreferences.getRefreshToken.asLiveData().observeOnce(this, {
-          //  refreshToken = it
+            refreshToken = it
             if (refreshToken.isNotEmpty())
                 initTokenObservers()
             else
