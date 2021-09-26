@@ -271,14 +271,14 @@ class HomeRepository private constructor() {
         callback: NetworkResponseCallback,
     ): MutableLiveData<SessionResponse?> {
         mCallback = callback
-        if (fcmResponse.value != null) {
+        if (sessionResponse.value != null) {
             mCallback.onNetworkSuccess()
             sessionResponse = MutableLiveData()
         }
         addSessionCall = RestClient.getInstance().getApiService()
             .addSession(
                 token,
-                SessionModel(lecId)
+                lecId
             )
         addSessionCall.enqueue(object : Callback<SessionResponse> {
             override fun onResponse(

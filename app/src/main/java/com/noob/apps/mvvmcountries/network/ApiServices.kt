@@ -81,9 +81,11 @@ interface ApiServices {
         @Path("id") id: String
     ): Call<LectureDetailsResponse>
 
-    @POST("lectures")
+    @POST("lectures/{id}/sessions")
     fun addSession(
         @Header("Authorization") Authorization: String?,
-        @Body otpModel: SessionModel,
+        @Path("id") id: String,
     ): Call<SessionResponse>
+
+
 }

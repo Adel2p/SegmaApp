@@ -3,6 +3,7 @@ package com.noob.apps.mvvmcountries.ui.dialog
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +13,7 @@ import androidx.fragment.app.DialogFragment
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.LectureWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.LectureDetails
-import android.graphics.drawable.ColorDrawable
-import androidx.lifecycle.ViewModelProvider
-import com.noob.apps.mvvmcountries.utils.Constant
-import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
-import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
+import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,7 +21,6 @@ import java.util.*
 class LectureWatchDialog : DialogFragment() {
     private lateinit var mLectureDetails: LectureDetails
     private lateinit var mActivityBinding: LectureWatchDialogBinding
-    private lateinit var sharedViewModel: SharedViewModel
 
     companion object {
 
@@ -77,7 +73,6 @@ class LectureWatchDialog : DialogFragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
         mActivityBinding.availableWatches.text =
             mLectureDetails.allowedSessions.toString() + " " + context?.resources?.getString(R.string.watches)
         mActivityBinding.restWatches.text =
@@ -88,7 +83,7 @@ class LectureWatchDialog : DialogFragment() {
             dismiss()
         }
         mActivityBinding.startWatch.setOnClickListener {
-            sharedViewModel.setStart(true)
+            (activity as CourseDetailsActivity?)?.onStartWatchClicked()
             dismiss()
         }
 

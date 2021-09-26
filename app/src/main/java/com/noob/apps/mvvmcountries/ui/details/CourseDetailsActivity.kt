@@ -1,6 +1,7 @@
 package com.noob.apps.mvvmcountries.ui.details
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -20,15 +21,17 @@ import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
 import com.noob.apps.mvvmcountries.models.Course
 import com.noob.apps.mvvmcountries.models.Files
 import com.noob.apps.mvvmcountries.models.LectureDetails
+import com.noob.apps.mvvmcountries.models.LectureDetailsResponse
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
-import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
     private lateinit var mActivityBinding: ActivityCourseDetailsBinding
@@ -42,10 +45,14 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
     private val resolutions: MutableList<Files> = mutableListOf()
     private lateinit var lectureResponse: LectureDetails
     private lateinit var courseViewModel: CourseViewModel
-    private lateinit var sharedViewModel: SharedViewModel
     private var userId = ""
     private var token = ""
     private var selectedLectureId = ""
+    private var startTime = ""
+    private var endTime = ""
+    private var sessionTimeout = 0
+    private var countDownTimer: CountDownTimer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -75,7 +82,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
             mActivityBinding.lectureLay.visibility = View.VISIBLE
             mActivityBinding.infoLay.visibility = View.GONE
 
-
         }
         mActivityBinding.txtInfo.setOnClickListener {
             mActivityBinding.txtLectures.setTextColor(
@@ -102,14 +108,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
                     })
             }
         })
-        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        sharedViewModel.isStarted.observe(this, {
-            if (it) {
-                initAddSession(selectedLectureId)
-            }
-
-        })
-
     }
 
     private fun initializeRecyclerView() {
@@ -127,13 +125,179 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
         player!!.playWhenReady = playWhenReady
         player!!.seekTo(currentWindow, playbackPosition)
         player!!.prepare()
-        createMediaItem(course.introUrl)
 
     }
 
     private fun createMediaItem(url: String) {
         val mediaItem = MediaItem.fromUri(url)
         player!!.setMediaItem(mediaItem)
+    }
+
+
+    override fun onRecyclerViewItemClick(position: Int) {
+        resolutions.clear()
+        if (!eligibleToWatch) {
+            course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
+        } else
+            Toast.makeText(this, "pay first", Toast.LENGTH_LONG).show()
+
+
+    }
+
+    fun onStartWatchClicked() {
+        startTime = getStartDate()
+        endTime = getStartDate(sessionTimeout)
+        initAddSession(selectedLectureId)
+    }
+
+    private fun initLectureInfo(lecId: String) {
+        selectedLectureId = lecId
+        courseViewModel.getLectureInfo(token, lecId)
+        courseViewModel.lectureResponse.observeOnce(this, { kt ->
+            if (kt != null) {
+                getResolutions(kt)
+                sessionTimeout = lectureResponse.sessionTimeout
+                checkVideoSession()
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(this, {
+        })
+        courseViewModel.mShowProgressBar.observe(this, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(this, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(
+                        supportFragmentManager,
+                        ConnectionDialogFragment.TAG
+                    )
+            }
+
+        })
+    }
+
+    private fun checkVideoSession() {
+        if (lectureResponse.studentSessions.isEmpty())
+            LectureWatchDialog.newInstance(lectureResponse)
+                .show(
+                    supportFragmentManager,
+                    LectureWatchDialog.TAG
+                )
+        else if (!lectureResponse.studentSessions[0].expired) {
+            releasePlayer()
+            initializePlayer()
+            clearTimer()
+            startTime = getStartDate()
+            endTime = lectureResponse.studentSessions[0].expiredAt
+            printDifferenceDateForHours(startTime, endTime)
+            createMediaItem(resolutions[0].link)
+        } else {
+            Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun getResolutions(kt: LectureDetailsResponse) {
+        resolutions.clear()
+        lectureResponse = kt.data
+        val jsonObject: JSONObject?
+        jsonObject = JSONObject(kt.data.resolutions)
+        jsonObject.getString("duration")
+        val files: JSONArray = jsonObject.getJSONArray("files")
+        for (i in 0 until files.length()) {
+            val winspeed = files.getString(i)
+            val jsonObject: JSONObject?
+            jsonObject = JSONObject(winspeed)
+            resolutions.add(
+                i,
+                Files(jsonObject.getString("quality"), jsonObject.getString("link"))
+            )
+        }
+    }
+
+    private fun initAddSession(lecId: String) {
+        courseViewModel.addSession(token, lecId)
+        courseViewModel.sessionResponse.observeOnce(this, { kt ->
+            if (kt != null) {
+                initializePlayer()
+                printDifferenceDateForHours(startTime, endTime)
+                createMediaItem(resolutions[0].link)
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(this, {
+        })
+        courseViewModel.mShowProgressBar.observe(this, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(this, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(
+                        supportFragmentManager,
+                        ConnectionDialogFragment.TAG
+                    )
+            }
+
+        })
+    }
+
+    private fun getStartDate(hours: Int): String {
+        val c = Calendar.getInstance(Locale.ENGLISH).time
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm a", Locale.getDefault())
+        val formattedDate: String = df.format(c)
+        val d = df.parse(formattedDate)
+        val cal = Calendar.getInstance(Locale.ENGLISH)
+        cal.time = d
+        cal.add(Calendar.HOUR_OF_DAY, hours)
+        return df.format(cal.time)
+    }
+
+
+    private fun getStartDate(): String {
+        val c = Calendar.getInstance(Locale.ENGLISH).time
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val formattedDate: String = df.format(c)
+        val d = df.parse(formattedDate)
+        val cal = Calendar.getInstance(Locale.ENGLISH)
+        cal.time = d
+        return df.format(cal.time)
+    }
+
+    private fun printDifferenceDateForHours(strTime: String?, endTime: String?) {
+        val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val currentTime = format1.parse(strTime)
+        val endDate = format1.parse(endTime)
+        var different = endDate.time - currentTime.time
+        countDownTimer = object : CountDownTimer(different, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                var diff = millisUntilFinished
+                val secondsInMilli: Long = 1000
+                val minutesInMilli = secondsInMilli * 60
+                minutesInMilli * 60
+
+            }
+
+            override fun onFinish() {
+                releasePlayer()
+                Toast.makeText(this@CourseDetailsActivity, "session end", Toast.LENGTH_LONG).show()
+
+            }
+        }.start()
+    }
+
+    private fun clearTimer() {
+        countDownTimer?.cancel()
     }
 
     private fun hideSystemUi() {
@@ -186,96 +350,4 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
             player = null
         }
     }
-
-    override fun onRecyclerViewItemClick(position: Int) {
-        resolutions.clear()
-        if (!eligibleToWatch) {
-            course.lectures?.get(position)?.let { initLectureInfo(it?.uuid) }
-        } else
-            Toast.makeText(this, "pay first", Toast.LENGTH_LONG).show()
-
-
-    }
-
-    private fun initLectureInfo(lecId: String) {
-        selectedLectureId = lecId
-        courseViewModel.getLectureInfo(token, lecId)
-        courseViewModel.lectureResponse.observeOnce(this, { kt ->
-            if (kt != null) {
-                resolutions.clear()
-                lectureResponse = kt.data
-                val jsonObject: JSONObject?
-                jsonObject = JSONObject(kt.data.resolutions)
-                jsonObject.getString("duration")
-                val files: JSONArray = jsonObject.getJSONArray("files")
-                for (i in 0 until files.length()) {
-                    val winspeed = files.getString(i)
-                    val jsonObject: JSONObject?
-                    jsonObject = JSONObject(winspeed)
-                    resolutions.add(
-                        i,
-                        Files(jsonObject.getString("quality"), jsonObject.getString("link"))
-                    )
-                }
-                if (lectureResponse.studentSessions.isEmpty())
-                    LectureWatchDialog.newInstance(lectureResponse)
-                        .show(
-                            supportFragmentManager,
-                            LectureWatchDialog.TAG
-                        )
-                else
-                    createMediaItem(resolutions[0].link)
-            }
-        })
-        courseViewModel.mShowResponseError.observeOnce(this, {
-        })
-        courseViewModel.mShowProgressBar.observe(this, { bt ->
-            if (bt) {
-                showLoader()
-            } else {
-                hideLoader()
-            }
-
-        })
-        courseViewModel.mShowNetworkError.observeOnce(this, {
-            if (it != null) {
-                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
-                    .show(
-                        supportFragmentManager,
-                        ConnectionDialogFragment.TAG
-                    )
-            }
-
-        })
-    }
-
-    private fun initAddSession(lecId: String) {
-        courseViewModel.addSession(token, lecId)
-        courseViewModel.sessionResponse.observeOnce(this, { kt ->
-            if (kt != null) {
-                createMediaItem(resolutions[0].link)
-            }
-        })
-        courseViewModel.mShowResponseError.observeOnce(this, {
-        })
-        courseViewModel.mShowProgressBar.observe(this, { bt ->
-            if (bt) {
-                showLoader()
-            } else {
-                hideLoader()
-            }
-
-        })
-        courseViewModel.mShowNetworkError.observeOnce(this, {
-            if (it != null) {
-                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
-                    .show(
-                        supportFragmentManager,
-                        ConnectionDialogFragment.TAG
-                    )
-            }
-
-        })
-    }
-
 }

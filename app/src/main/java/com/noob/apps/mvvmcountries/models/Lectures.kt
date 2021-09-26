@@ -10,9 +10,6 @@ data class Lectures(
     val allowedSessions: Int,
     val allowedWatches: Int,
     val resolutions: String,
-    val actualWatches: Int,
-    val totalWatches: Int,
-    val actualSessions: Int,
     val publicWatch: Boolean,
-    val studentSessions: List<String>
+    val studentSessions: List<StudentSessions>
 ) : Serializable

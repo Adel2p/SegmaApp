@@ -6,9 +6,11 @@ data class Course(
     val uuid: String,
     val name: String,
     val introUrl: String,
-    val image : String,
+    val image: String,
     val price: Int,
     val professor: Professor,
     val lectures: List<Lectures>?,
-    val eligibleToWatch: Boolean
+    val eligibleToWatch: Boolean,
+    val firstPhone: String,
+    val secondPhone: String
 ) : Serializable
