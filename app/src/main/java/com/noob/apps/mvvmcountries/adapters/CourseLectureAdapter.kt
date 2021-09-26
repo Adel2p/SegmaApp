@@ -16,7 +16,6 @@ import com.noob.apps.mvvmcountries.databinding.LecturesCourseCellBinding
 import com.noob.apps.mvvmcountries.models.Lectures
 import kotlinx.android.extensions.LayoutContainer
 import org.json.JSONObject
-import java.time.Duration
 
 class CourseLectureAdapter(
     context: Context,
@@ -71,9 +70,11 @@ class CourseLectureAdapter(
 
             holder.itemBinding.number.typeface = (ResourcesCompat.getFont(mContext, R.font.bold))
             holder.itemBinding.name.typeface = (ResourcesCompat.getFont(mContext, R.font.bold))
+            holder.itemBinding.play.visibility = View.VISIBLE
 
 
         } else {
+            holder.itemBinding.play.visibility = View.INVISIBLE
             holder.itemBinding.number.typeface = (ResourcesCompat.getFont(mContext, R.font.regular))
             holder.itemBinding.name.typeface = (ResourcesCompat.getFont(mContext, R.font.regular))
             holder.itemBinding.container.setBackgroundColor(
@@ -87,7 +88,7 @@ class CourseLectureAdapter(
         holder.itemBinding.number.text = number.toString() + "_"
         val jsonObject: JSONObject?
         jsonObject = JSONObject(mList!![position].resolutions)
-        val duration = jsonObject?.getString("duration")
+        val duration = jsonObject.getString("duration")
         val minutes: Long = (duration.toLong() / 60)
         holder.itemBinding.duration.text =
             minutes.toString() + " " + mContext.resources.getString(R.string.mintes)

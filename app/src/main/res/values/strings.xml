@@ -83,6 +83,7 @@
     <string name="start_watch">نعم إبدأ المشاهدة</string>
     <string name="watch_letter">لا  - المشاهدة وقت لاحق</string>
     <string name="mintes">Minutes</string>
+    <string name="pound">L.E</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

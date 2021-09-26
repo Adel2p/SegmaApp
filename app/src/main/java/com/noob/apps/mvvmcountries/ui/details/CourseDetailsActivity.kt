@@ -1,5 +1,6 @@
 package com.noob.apps.mvvmcountries.ui.details
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.Util
 import com.noob.apps.mvvmcountries.R
@@ -30,8 +32,14 @@ import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.reflect.Array.get
+import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.*
+import android.media.PlaybackParams
+import android.os.Build
+import androidx.annotation.RequiresApi
+
 
 class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
     private lateinit var mActivityBinding: ActivityCourseDetailsBinding
@@ -69,6 +77,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
         eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
         mActivityBinding.txtLecId.text = course.name
         mActivityBinding.txtLecNum.text = course.lectures!!.size.toString()
+        mActivityBinding.price.text = course.price.toString() + " " + getString(R.string.pound)
         mActivityBinding.txtLectures.setTextColor(
             ContextCompat.getColor(this, R.color.blue)
         )
@@ -131,6 +140,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
     private fun createMediaItem(url: String) {
         val mediaItem = MediaItem.fromUri(url)
         player!!.setMediaItem(mediaItem)
+
     }
 
 
@@ -300,15 +310,14 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
         countDownTimer?.cancel()
     }
 
+    @SuppressLint("InlinedApi")
     private fun hideSystemUi() {
-        mActivityBinding.lecVv.setSystemUiVisibility(
-            View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    or View.SYSTEM_UI_FLAG_FULLSCREEN
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        )
+        mActivityBinding.lecVv.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
     }
 
     override fun onStart() {

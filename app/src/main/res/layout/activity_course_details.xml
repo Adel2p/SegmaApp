@@ -33,6 +33,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lecVv" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:src="@drawable/ic_price_icon"
+            app:layout_constraintStart_toStartOf="@id/txtLecId"
+            app:layout_constraintTop_toBottomOf="@id/txtLecId" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toEndOf="@id/imgPrice"
+            app:layout_constraintTop_toBottomOf="@id/txtLecId" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLecNum"
             android:layout_width="wrap_content"
@@ -65,7 +85,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtLecId" />
+            app:layout_constraintTop_toBottomOf="@+id/imgPrice" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLectures"
@@ -155,11 +175,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:fontFamily="@font/semibold"
-                        android:text="About Course"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toEndOf="@+id/heartImg"
-                        app:layout_constraintTop_toTopOf="@+id/heartImg" />
+                        app:layout_constraintTop_toTopOf="@+id/heartImg"
+                        tools:text="About Course" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/arrowImg"
@@ -193,11 +213,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/semibold"
-                        android:text="Folders"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp"
                         app:layout_constraintStart_toStartOf="@+id/aboutCourseSep"
-                        app:layout_constraintTop_toTopOf="@+id/folderImg" />
+                        app:layout_constraintTop_toTopOf="@+id/folderImg"
+                        tools:text="Folders" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"

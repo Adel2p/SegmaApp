@@ -23,10 +23,10 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/regular"
-            tools:text="10"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"
@@ -36,6 +36,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/regular"
             android:text="@{lecture.name}"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@id/number"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,11 +47,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
-            tools:text="30 mins"
             android:textColor="@color/gray_purple"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="@id/number"
-            app:layout_constraintTop_toBottomOf="@id/number" />
+            app:layout_constraintTop_toBottomOf="@id/number"
+            tools:text="30 mins" />
 
         <View
             android:id="@+id/sep"
@@ -60,6 +61,16 @@
             android:background="@color/sepColor"
             app:layout_constraintStart_toStartOf="@id/number"
             app:layout_constraintTop_toBottomOf="@id/duration" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/ic_play_video"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
