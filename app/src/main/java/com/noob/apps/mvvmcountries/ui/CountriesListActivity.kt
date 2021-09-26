@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ahmadrosid.svgloader.SvgLoader
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CountriesListAdapter
 import com.noob.apps.mvvmcountries.databinding.ActivityCountriesListBinding
@@ -65,6 +64,5 @@ class CountriesListActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        SvgLoader.pluck().close()
     }
 }

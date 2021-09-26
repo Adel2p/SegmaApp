@@ -14,36 +14,39 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
         android:background="@android:color/transparent">
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/regular"
-            android:text="10"
+            tools:text="10"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/regular"
-            tools:text="test"
             android:text="@{lecture.name}"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toEndOf="@id/number"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="test" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
-            android:text="30 mins"
+            tools:text="30 mins"
             android:textColor="@color/gray_purple"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="@id/number"
