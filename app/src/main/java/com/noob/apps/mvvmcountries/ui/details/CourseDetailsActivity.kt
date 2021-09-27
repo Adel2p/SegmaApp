@@ -1,18 +1,23 @@
 package com.noob.apps.mvvmcountries.ui.details
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.Util
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.CourseLectureAdapter
@@ -32,16 +37,14 @@ import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import java.lang.reflect.Array.get
-import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.*
-import android.media.PlaybackParams
-import android.os.Build
-import androidx.annotation.RequiresApi
+import com.google.android.exoplayer2.ui.StyledPlayerControlView
+import com.google.android.exoplayer2.ui.StyledPlayerView
 
 
-class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
+class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
+    StyledPlayerControlView.VisibilityListener {
     private lateinit var mActivityBinding: ActivityCourseDetailsBinding
     private var player: SimpleExoPlayer? = null
     private var playWhenReady = false
@@ -116,7 +119,12 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
                         }
                     })
             }
+
         })
+        mActivityBinding.playerView.setControllerVisibilityListener(this)
+        mActivityBinding.playerView.requestFocus()
+        //   createMediaItem(course.introUrl)
+
     }
 
     private fun initializeRecyclerView() {
@@ -130,10 +138,11 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
 
     private fun initializePlayer() {
         player = SimpleExoPlayer.Builder(this).build()
-        mActivityBinding.lecVv.player = player
         player!!.playWhenReady = playWhenReady
         player!!.seekTo(currentWindow, playbackPosition)
-        player!!.prepare()
+        //   player!!.preparePlayer(mActivityBinding.playerView, true)
+        mActivityBinding.playerView.player = player
+
 
     }
 
@@ -263,7 +272,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
 
     private fun getStartDate(hours: Int): String {
         val c = Calendar.getInstance(Locale.ENGLISH).time
-        val df = SimpleDateFormat("yyyy-MM-dd HH:mm a", Locale.getDefault())
+        val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val formattedDate: String = df.format(c)
         val d = df.parse(formattedDate)
         val cal = Calendar.getInstance(Locale.ENGLISH)
@@ -312,7 +321,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
 
     @SuppressLint("InlinedApi")
     private fun hideSystemUi() {
-        mActivityBinding.lecVv.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
+        mActivityBinding.playerView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -324,6 +333,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
         super.onStart()
         if (Util.SDK_INT >= 24) {
             initializePlayer()
+            createMediaItem(course.introUrl)
         }
     }
 
@@ -359,4 +369,82 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener {
             player = null
         }
     }
+
+    override fun onVisibilityChange(visibility: Int) {
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    private fun SimpleExoPlayer.preparePlayer(
+        styledPlayerView: StyledPlayerView,
+        forceLandscape: Boolean = false
+    ) {
+        (styledPlayerView.context as AppCompatActivity).apply {
+            val playerViewFullscreen = StyledPlayerView(this)
+            val layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            playerViewFullscreen.layoutParams = layoutParams
+            playerViewFullscreen.visibility = View.GONE
+            playerViewFullscreen.setBackgroundColor(Color.BLACK)
+            (styledPlayerView.rootView as ViewGroup).apply {
+                addView(
+                    playerViewFullscreen,
+                    childCount
+                )
+            }
+            val fullScreenButton: AppCompatImageView =
+                styledPlayerView.findViewById(R.id.exo_fullscreen_icon)
+            val normalScreenButton: AppCompatImageView =
+                playerViewFullscreen.findViewById(R.id.exo_fullscreen_icon)
+            fullScreenButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_fullscreen_open
+                )
+            )
+            normalScreenButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_fullscreen_close
+                )
+            )
+            fullScreenButton.setOnClickListener {
+                window.decorView.systemUiVisibility =
+                    (View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+                supportActionBar?.hide()
+                if (forceLandscape)
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                styledPlayerView.visibility = View.GONE
+                playerViewFullscreen.visibility = View.VISIBLE
+                StyledPlayerView.switchTargetView(
+                    this@preparePlayer,
+                    styledPlayerView,
+                    playerViewFullscreen
+                )
+            }
+            normalScreenButton.setOnClickListener {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                supportActionBar?.show()
+                if (forceLandscape)
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                normalScreenButton.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_fullscreen_close
+                    )
+                )
+                styledPlayerView.visibility = View.VISIBLE
+                playerViewFullscreen.visibility = View.GONE
+                StyledPlayerView.switchTargetView(
+                    this@preparePlayer,
+                    playerViewFullscreen,
+                    styledPlayerView
+                )
+            }
+            styledPlayerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT
+            styledPlayerView.player = this@preparePlayer
+        }
+    }
+
 }

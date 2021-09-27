@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
@@ -18,6 +19,8 @@ import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
+import com.scottyab.rootbeer.RootBeer
+
 
 class SplashActivity : BaseActivity() {
     private var isSaved = false
@@ -35,22 +38,27 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
+        val rootBeer = RootBeer(this)
+        if (rootBeer.isRooted) {
+            Toast.makeText(this, "you cannot use App", Toast.LENGTH_LONG).show()
+            finish()
+        } else {
+            userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
+                isloggedin = it
+                if (isloggedin)
+                    readISSaved()
+                else
+                    openLogin()
 
-        userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
-            isloggedin = it
-            if (isloggedin)
-                readISSaved()
-            else
-                openLogin()
-
-        })
+            })
+        }
 
 
     }
 
     private fun readToken() {
         userPreferences.getRefreshToken.asLiveData().observeOnce(this, {
-       //     refreshToken = it
+            //     refreshToken = it
             if (refreshToken.isNotEmpty())
                 initTokenObservers()
             else
