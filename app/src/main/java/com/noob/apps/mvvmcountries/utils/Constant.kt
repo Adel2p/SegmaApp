@@ -16,6 +16,7 @@ object Constant {
     const val SECURE_PREF = "SECURE_PREF"
     const val NOTIFICATION_ENABLED = "NOTIFICATION_ENABLED"
     const val ELIGIBLE_TO_WATCH = "ELIGIBLE_TO_WATCH"
+    const val USER_TOKEN = "USER_TOKEN"
 
 
 

@@ -95,6 +95,9 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                             token = "Bearer " + result[0].access_token.toString()
                             refreshToken = result[0].refresh_token.toString()
                             lifecycleScope.launch {
+                                userPreferences.saveUserToken(token)
+                            }
+                            lifecycleScope.launch {
                                 userPreferences.saveRefreshToken(refreshToken)
                             }
                             initializeObservers()

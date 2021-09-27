@@ -25,6 +25,7 @@ class UserPreferences(
     private val fcmToken = stringPreferencesKey(Constant.FCM_TOKEN)
     private val appLanguage = stringPreferencesKey(Constant.APP_LANGUAGE)
     private val notificationEnabled = booleanPreferencesKey(Constant.NOTIFICATION_ENABLED)
+    private val userToken = stringPreferencesKey(Constant.USER_TOKEN)
 
 
     suspend fun saveUniversityData(isSaved: Boolean) {
@@ -61,6 +62,17 @@ class UserPreferences(
         .map { preferences ->
             // No type safety.
             preferences[userId] ?: ""
+        }
+    suspend fun saveUserToken(Token: String) {
+        applicationContext.dataStore.edit { settings ->
+            settings[userToken] = Token
+        }
+    }
+
+    val getUserToken: Flow<String> = appContext.dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[userToken] ?: ""
         }
 
     suspend fun saveRefreshToken(mToken: String) {

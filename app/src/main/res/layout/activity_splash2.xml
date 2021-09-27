@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/logo"
-        android:layout_width="@dimen/_125sdp"
-        android:layout_height="@dimen/_211sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_170sdp"
         android:src="@drawable/ic_splash_img1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -38,27 +38,27 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
-//        val rootBeer = RootBeer(this)
-//        if (rootBeer.isRooted) {
-//            Toast.makeText(this, "you cannot use App", Toast.LENGTH_LONG).show()
-//            finish()
-//        } else {
-        userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
-            isloggedin = it
-            if (isloggedin)
-                readISSaved()
-            else
-                openLogin()
+        val rootBeer = RootBeer(this)
+        if (rootBeer.isRooted) {
+            Toast.makeText(this, "you cannot use App", Toast.LENGTH_LONG).show()
+            finish()
+        } else {
+            userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
+                isloggedin = it
+                if (isloggedin)
+                    readISSaved()
+                else
+                    openLogin()
 
-        })
-        //    }
+            })
+        }
 
 
     }
 
     private fun readToken() {
         userPreferences.getRefreshToken.asLiveData().observeOnce(this, {
-       //     refreshToken = it
+            //     refreshToken = it
             if (refreshToken.isNotEmpty())
                 initTokenObservers()
             else

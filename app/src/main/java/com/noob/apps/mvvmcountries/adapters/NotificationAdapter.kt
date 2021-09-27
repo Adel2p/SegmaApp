@@ -16,7 +16,7 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.ViewHolder>(
 
     fun setData(list: List<Notification>) {
         mList = list
-        notifyItemRangeChanged(0, mList!!.size)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
@@ -42,7 +42,7 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.ViewHolder>(
 
     class ViewHolder(var itemBinding: NotificationCellBinding) :
         RecyclerView.ViewHolder(itemBinding.root), LayoutContainer {
-        override val containerView: View?
+        override val containerView: View
             get() = itemBinding.root
     }
 

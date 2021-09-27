@@ -37,7 +37,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:fontFamily="@font/semibold"
-                android:text="@{notification.notificationId}"
+                android:text="@{notification.title}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toEndOf="@+id/notificationImg"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
-                android:text="@{notification.notificationContent}"
+                android:text="@{notification.content}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp"
                 app:layout_constraintStart_toStartOf="@+id/txtLecId"
@@ -61,8 +61,7 @@
                 android:layout_marginStart="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/sepColor"
-                app:layout_constraintTop_toBottomOf="@+id/txtLecContent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/txtLecContent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -91,5 +91,7 @@ interface ApiServices {
         @Path("id") id: String,
     ): Call<SessionResponse>
 
+    @GET("notifications")
+    fun getNotifications(@Header("Authorization") Authorization: String?): Call<NotificationResponse>
 
 }
