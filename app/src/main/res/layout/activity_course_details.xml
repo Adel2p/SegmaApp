@@ -13,21 +13,20 @@
             android:id="@+id/playerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_280sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:show_buffering="when_playing"
-            app:show_shuffle_button="true"
-            app:show_subtitle_button="true"
             app:use_controller="true" />
-        <com.tomer.fadingtextview.FadingTextView
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/video_quality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/playerView"
-            app:layout_constraintBottom_toBottomOf="@id/playerView"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/curved_spinner"
+            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="01143075905" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <androidx.appcompat.widget.AppCompatTextView

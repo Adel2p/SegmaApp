@@ -38,11 +38,11 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
-        val rootBeer = RootBeer(this)
-        if (rootBeer.isRooted) {
-            Toast.makeText(this, "you cannot use App", Toast.LENGTH_LONG).show()
-            finish()
-        } else {
+//        val rootBeer = RootBeer(this)
+//        if (rootBeer.isRooted) {
+//            Toast.makeText(this, "you cannot use App", Toast.LENGTH_LONG).show()
+//            finish()
+//        } else {
             userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
                 isloggedin = it
                 if (isloggedin)
@@ -51,7 +51,7 @@ class SplashActivity : BaseActivity() {
                     openLogin()
 
             })
-        }
+    //    }
 
 
     }

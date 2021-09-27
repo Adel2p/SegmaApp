@@ -3,10 +3,12 @@ package com.noob.apps.mvvmcountries.ui.details
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
@@ -17,6 +19,7 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.util.Util
 import com.noob.apps.mvvmcountries.R
@@ -41,6 +44,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.noob.apps.mvvmcountries.adapters.CollageDropDownAdapter
+import com.noob.apps.mvvmcountries.adapters.ResolutionAdapter
 
 
 class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
@@ -63,7 +68,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private var endTime = ""
     private var sessionTimeout = 0
     private var countDownTimer: CountDownTimer? = null
-
+    private var trackSelector: DefaultTrackSelector? = null
+    private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
+    private var link = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -121,10 +128,28 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             }
 
         })
+        val builder = DefaultTrackSelector.ParametersBuilder( /* context= */this)
+        trackSelectorParameters = builder.build()
         mActivityBinding.playerView.setControllerVisibilityListener(this)
         mActivityBinding.playerView.requestFocus()
         //   createMediaItem(course.introUrl)
+        mActivityBinding.videoQuality.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                link = resolutions[position].link
+                val time = player!!.currentPosition
+                createMediaItem(link)
+                player!!.seekTo(0, time)
 
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                link = ""
+            }
+        }
     }
 
     private fun initializeRecyclerView() {
@@ -137,7 +162,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     }
 
     private fun initializePlayer() {
-        player = SimpleExoPlayer.Builder(this).build()
+        trackSelector = DefaultTrackSelector( /* context= */this)
+        trackSelector!!.parameters = trackSelectorParameters!!
+        player = SimpleExoPlayer.Builder(this)
+            .setTrackSelector(trackSelector!!).build()
         player!!.playWhenReady = playWhenReady
         player!!.seekTo(currentWindow, playbackPosition)
         //   player!!.preparePlayer(mActivityBinding.playerView, true)
@@ -215,6 +243,8 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             startTime = getStartDate()
             endTime = lectureResponse.studentSessions[0].expiredAt
             printDifferenceDateForHours(startTime, endTime)
+            val resolutionAdapter = ResolutionAdapter(this, resolutions)
+            mActivityBinding.videoQuality.adapter = resolutionAdapter
             createMediaItem(resolutions[0].link)
         } else {
             Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()

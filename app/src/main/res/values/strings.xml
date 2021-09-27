@@ -84,6 +84,9 @@
     <string name="watch_letter">لا  - المشاهدة وقت لاحق</string>
     <string name="mintes">Minutes</string>
     <string name="pound">L.E</string>
+    <string name="gener">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

@@ -83,7 +83,9 @@
     <string name="watch_letter">لا  - المشاهدة وقت لاحق</string>
     <string name="mintes">دقيقة</string>
     <string name="pound">جنيه</string>
-
+    <string name="gener">ألجنس</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثي</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
