@@ -58,6 +58,10 @@ interface ApiServices {
     @GET("departments/courses")
     fun getDepartmentCourses(@Header("Authorization") Authorization: String?): Call<DepartmentCourseResponse>
 
+    @GET("students/courses")
+    fun getStudentCourses(@Header("Authorization") Authorization: String?): Call<DepartmentCourseResponse>
+
+
     @GET("students/info")
     fun getStudentInfo(@Header("Authorization") Authorization: String?): Call<UserInfoResponse>
 

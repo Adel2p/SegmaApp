@@ -17,6 +17,8 @@ class HomeRepository private constructor() {
     private lateinit var mCallback: NetworkResponseCallback
     private var depResponse: MutableLiveData<DepartmentCourseResponse?> =
         MutableLiveData<DepartmentCourseResponse?>()
+    var myCourseResponse: MutableLiveData<DepartmentCourseResponse?> =
+        MutableLiveData<DepartmentCourseResponse?>()
     var infoResponse: MutableLiveData<UserInfoResponse?> =
         MutableLiveData<UserInfoResponse?>()
     var updateTokenResponse: MutableLiveData<LoginResponse?> =
@@ -33,6 +35,7 @@ class HomeRepository private constructor() {
     private lateinit var fcmTokenCall: Call<BaseResponse>
     private lateinit var lecInfoCall: Call<LectureDetailsResponse>
     private lateinit var addSessionCall: Call<SessionResponse>
+    private lateinit var mCoursesCall: Call<DepartmentCourseResponse>
 
     var usersToInsertInDB = mutableListOf<User>()
 
@@ -82,6 +85,41 @@ class HomeRepository private constructor() {
 
         })
         return depResponse
+    }
+
+    fun getStudentCourses(
+        token: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<DepartmentCourseResponse?> {
+        mCallback = callback
+        if (myCourseResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            myCourseResponse = MutableLiveData()
+        }
+        mCoursesCall = RestClient.getInstance().getApiService().getStudentCourses(token)
+        mCoursesCall.enqueue(object : Callback<DepartmentCourseResponse> {
+
+            override fun onResponse(
+                call: Call<DepartmentCourseResponse>,
+                response: Response<DepartmentCourseResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    myCourseResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<DepartmentCourseResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return myCourseResponse
     }
 
     fun getStudentInfo(

@@ -33,8 +33,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtFaculty" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvLectures"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/_15sdp"
@@ -43,9 +43,15 @@
             android:paddingBottom="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txtDepartment"
-            app:layout_constraintTop_toBottomOf="@+id/txtDepartment"
+            app:layout_constraintTop_toBottomOf="@+id/txtDepartment">
 
-            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLectures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

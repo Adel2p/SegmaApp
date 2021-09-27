@@ -20,6 +20,8 @@ class CourseViewModel(
         MutableLiveData<MutableList<User>>()
     var depResponse: MutableLiveData<DepartmentCourseResponse?> =
         MutableLiveData<DepartmentCourseResponse?>()
+    var myCourseResponse: MutableLiveData<DepartmentCourseResponse?> =
+        MutableLiveData<DepartmentCourseResponse?>()
     var infoResponse: MutableLiveData<UserInfoResponse?> =
         MutableLiveData<UserInfoResponse?>()
     var updateTokenResponse: MutableLiveData<LoginResponse?> =
@@ -52,6 +54,31 @@ class CourseViewModel(
             mShowProgressBar.value = true
             depResponse =
                 mRepository.getDepartmentCourses(token, object : NetworkResponseCallback {
+                    override fun onNetworkFailure(th: Throwable) {
+                        mShowApiError.value = th.message
+                    }
+
+                    override fun onNetworkSuccess() {
+                        mShowProgressBar.value = false
+                    }
+
+                    override fun onResponseError(message: String) {
+                        mShowProgressBar.value = false
+                        mShowResponseError.value = message
+                    }
+
+                })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
+
+    fun getStudentCourses(token: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            myCourseResponse =
+                mRepository.getStudentCourses(token, object : NetworkResponseCallback {
                     override fun onNetworkFailure(th: Throwable) {
                         mShowApiError.value = th.message
                     }

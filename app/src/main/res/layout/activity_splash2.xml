@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_splash_bg"
+    android:background="@drawable/ic_splash_bg1"
     tools:context=".ui.splash.SplashActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/logo"
-        android:layout_width="@dimen/_62sdp"
-        android:layout_height="@dimen/_75sdp"
-        android:src="@drawable/ic_app_logo1"
+        android:layout_width="@dimen/_125sdp"
+        android:layout_height="@dimen/_211sdp"
+        android:src="@drawable/ic_splash_img1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

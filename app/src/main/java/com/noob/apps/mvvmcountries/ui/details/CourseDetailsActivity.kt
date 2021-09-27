@@ -1,15 +1,18 @@
 package com.noob.apps.mvvmcountries.ui.details
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -46,6 +49,7 @@ import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.noob.apps.mvvmcountries.adapters.CollageDropDownAdapter
 import com.noob.apps.mvvmcountries.adapters.ResolutionAdapter
+import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 
 
 class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
@@ -150,6 +154,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 link = ""
             }
         }
+        mActivityBinding.continueButton.setOnClickListener {
+            callWinnerDialog()
+        }
     }
 
     private fun initializeRecyclerView() {
@@ -164,8 +171,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private fun initializePlayer() {
         trackSelector = DefaultTrackSelector( /* context= */this)
         trackSelector!!.parameters = trackSelectorParameters!!
-        player = SimpleExoPlayer.Builder(this)
-            .setTrackSelector(trackSelector!!).build()
+        player = SimpleExoPlayer.Builder(this).build()
         player!!.playWhenReady = playWhenReady
         player!!.seekTo(currentWindow, playbackPosition)
         //   player!!.preparePlayer(mActivityBinding.playerView, true)
@@ -475,6 +481,43 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             styledPlayerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT
             styledPlayerView.player = this@preparePlayer
         }
+    }
+
+    private fun callWinnerDialog() {
+        var phoneNumber = ""
+        if (!course.firstPhone.isNullOrEmpty())
+            phoneNumber = course.firstPhone
+        else if (!course.secondPhone.isNullOrEmpty())
+            phoneNumber = course.secondPhone
+        lateinit var dialog: AlertDialog
+        val inflater = LayoutInflater.from(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(
+            this,
+            R.style.CustomDialog
+        )
+        val customLayout: CallDialogBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.call_dialog,
+            null,
+            false
+        )
+        builder.setCancelable(true)
+        builder.setView(customLayout.root)
+        dialog = builder.create()
+        customLayout.callButton.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse(
+                    "tel:${
+                        phoneNumber
+                    }"
+                )
+                startActivity(intent)
+            } catch (e: Exception) {
+
+            }
+        }
+        dialog.show()
     }
 
 }

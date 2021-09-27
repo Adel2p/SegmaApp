@@ -1,6 +1,7 @@
 package com.noob.apps.mvvmcountries.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,8 @@ class ResolutionAdapter(val context: Context, var dataSource: List<Files>) : Bas
             view = convertView
             vh = view.tag as ItemHolder
         }
-        vh.label.text = dataSource.get(position).quality
+        vh.label.setTextColor(Color.BLACK)
+        vh.label.text = dataSource[position].quality
 
 
         return view

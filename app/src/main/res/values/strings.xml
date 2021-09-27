@@ -87,6 +87,8 @@
     <string name="gener">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="call_service">contact with call center</string>
+    <string name="call">call</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

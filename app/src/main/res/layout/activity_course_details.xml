@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ic_background"
+        android:paddingBottom="@dimen/_10sdp"
         tools:context=".ui.details.CourseDetailsActivity">
 
         <com.google.android.exoplayer2.ui.StyledPlayerView
@@ -21,9 +22,9 @@
             android:id="@+id/video_quality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_50sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/curved_spinner"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/curved_video_spinner"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -124,7 +125,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@id/continueButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtLectures">
 
@@ -243,6 +245,22 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/continueButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_16ssp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/curved_button_blue"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="@string/Continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

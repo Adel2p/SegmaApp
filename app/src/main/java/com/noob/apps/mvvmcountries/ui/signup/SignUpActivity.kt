@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,8 @@ class SignUpActivity : BaseActivity() {
     private lateinit var password: String
     private lateinit var mActivityBinding: ActivitySignUpBinding
     private lateinit var mViewModel: RegistrationViewModel
+    var gender = "MALE"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -42,6 +45,10 @@ class SignUpActivity : BaseActivity() {
             mobileNumber = mActivityBinding.etMobileNumber.text.toString()
             password = mActivityBinding.etPassword.text.toString()
             if (checkValidation()) {
+                gender = if (mActivityBinding.radioMale.isChecked)
+                    "MALE"
+                else
+                    "FEMALE"
                 initializeObservers()
             }
         }
@@ -79,7 +86,7 @@ class SignUpActivity : BaseActivity() {
                 eMail,
                 mobileNumber,
                 password,
-                "MALE", "ANDROID",
+                gender, "ANDROID",
                 deviceId, appLanguage
             )
         ).observe(this, { kt ->

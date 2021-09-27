@@ -78,6 +78,10 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
             fcmToken = it
 
         })
+        mActivityBinding.swipeContainer.setOnRefreshListener {
+            mActivityBinding.swipeContainer.isRefreshing = false
+            getData()
+        }
 
     }
 

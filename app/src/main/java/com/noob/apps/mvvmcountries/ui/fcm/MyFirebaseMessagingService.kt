@@ -19,6 +19,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.data.UserPreferences
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
+import com.noob.apps.mvvmcountries.ui.more.NotificationActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -63,7 +64,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         remoteMessage.notification?.let {
             Log.d(TAG, "Message Notification Body: ${it.body}")
         }
-
+        remoteMessage.notification?.body?.let { sendNotification(it) }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
@@ -127,7 +128,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param messageBody FCM message body received.
      */
     private fun sendNotification(messageBody: String) {
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, NotificationActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0 /* Request code */, intent,
