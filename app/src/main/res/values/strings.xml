@@ -1,7 +1,7 @@
 <resources>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="fcm_message">FCM Message</string>
-    <string name="app_name">Segma</string>
+    <string name="app_name">Sigma</string>
     <string name="app_no_internet_msg">Internet connection is required!</string>
     <string name="refresh_button">Refresh Button</string>
     <string name="welcome_msg">welcome to segma app</string>
@@ -68,7 +68,7 @@
     <string name="cancel">Cancel</string>
     <string name="old_password">Old Password</string>
     <string name="check_connection">برجاء التأكد من إتصالك بالإنترنت و إعادة المحاولة</string>
-    <string name="retry_connection">إعادة المحاولة</string>‎
+    <string name="retry_connection">إعادة المحاولة</string>
     <string name="about_segma_content">App Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Contentvpp Content pp Content pp Content</string>
     <string name="send_successfully">send successfully</string>
     <string name="un_expected_error">UnExpected Error</string>
@@ -87,8 +87,9 @@
     <string name="gener">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="call_service">contact with call center</string>
+    <string name="call_service">call center</string>
     <string name="call">call</string>
+    <string name="call_us">call Us</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

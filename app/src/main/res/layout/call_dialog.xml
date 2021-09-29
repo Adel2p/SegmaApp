@@ -21,29 +21,57 @@
                 android:id="@+id/txtCall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/call_us"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/call_service"
-                android:fontFamily="@font/regular"
-                android:textSize="@dimen/_16ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/firstNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/call_us"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtCall" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/secondNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/call_us"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/firstNumber" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/callButton"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_16ssp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_30sdp"
                 android:background="@drawable/curved_button_blue"
                 android:fontFamily="@font/bold"
                 android:gravity="center"
-                android:text="@string/call"
+                android:text="@string/cancel"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
-                app:layout_constraintTop_toBottomOf="@id/txtCall"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/secondNumber"
 
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>

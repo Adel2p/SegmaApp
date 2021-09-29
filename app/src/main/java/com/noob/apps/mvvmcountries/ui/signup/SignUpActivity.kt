@@ -118,6 +118,7 @@ class SignUpActivity : BaseActivity() {
         val intent = Intent(this@SignUpActivity, VerifyOtpActivity::class.java)
         intent.putExtra(Constant.MOBILE_NUMBER, mobileNumber)
         intent.putExtra(Constant.USER_ID, response.data.uuid)
+        intent.putExtra(Constant.USER_PASSWORD, password)
         startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY)
     }
 

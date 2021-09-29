@@ -37,8 +37,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_70sdp"
                     android:scaleType="fitXY"
-                    app:imageThumb="@{lecture.image}"
                     android:src="@drawable/lec_img"
+                    app:imageThumb="@{lecture.image}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:riv_corner_radius="14dip" />
@@ -49,10 +49,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/bold"
+                    android:maxLines="1"
                     android:text="@{lecture.name}"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
+                    android:textSize="@dimen/_11ssp"
                     app:layout_constraintStart_toStartOf="@+id/lecImg"
                     app:layout_constraintTop_toBottomOf="@+id/lecImg"
 

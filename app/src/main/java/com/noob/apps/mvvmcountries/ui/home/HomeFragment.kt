@@ -21,6 +21,7 @@ import com.noob.apps.mvvmcountries.models.Course
 import com.noob.apps.mvvmcountries.models.RefreshTokenModel
 import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
+import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -250,5 +251,8 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
         intent.putExtra(Constant.SELECTED_COURSE, courses[position])
         intent.putExtra(Constant.ELIGIBLE_TO_WATCH, courses[position].eligibleToWatch)
         startActivity(intent)
+    }
+
+    override fun onQualitySelected(position: Int) {
     }
 }

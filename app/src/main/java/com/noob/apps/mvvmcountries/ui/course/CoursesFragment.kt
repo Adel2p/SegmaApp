@@ -152,4 +152,8 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
         intent.putExtra(Constant.ELIGIBLE_TO_WATCH, courses[position].eligibleToWatch)
         startActivity(intent)
     }
+
+    override fun onQualitySelected(position: Int) {
+        TODO("Not yet implemented")
+    }
 }

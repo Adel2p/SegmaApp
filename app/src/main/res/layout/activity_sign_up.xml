@@ -48,6 +48,7 @@
                 android:background="@drawable/curved_edittext"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtFullName">
@@ -56,10 +57,10 @@
                     android:id="@+id/etFullName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
+                    android:background="@null"
                     android:inputType="text"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:text="Mohamed Adel"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp" />
@@ -84,6 +85,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/curved_edittext"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtEmail">
@@ -92,10 +94,10 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
+                    android:background="@null"
                     android:inputType="textEmailAddress"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:text="mohmmed.adel99@gmail.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
@@ -132,8 +134,8 @@
                         android:id="@+id/radioMale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:buttonTint="@color/blue"
+                        android:checked="true"
                         android:text="@string/male" />
 
                     <androidx.appcompat.widget.AppCompatRadioButton
@@ -152,8 +154,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:text="@string/mobile_number"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/mobile_number"
                 android:textColor="@color/gray_purple"
                 android:textSize="@dimen/_15ssp"
                 app:fontFamily="@font/regular"
@@ -167,6 +169,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/curved_edittext"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtMobileNumber">
@@ -175,11 +178,11 @@
                     android:id="@+id/etMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
+                    android:background="@null"
                     android:inputType="number"
                     android:maxLength="11"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:text="01143075905"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp" />
@@ -204,6 +207,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/curved_edittext"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtPassword"
@@ -213,10 +217,10 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
+                    android:background="@null"
                     android:inputType="textPassword"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:text="123456"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15ssp" />

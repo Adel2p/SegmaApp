@@ -26,10 +26,12 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.*
 import com.google.android.exoplayer2.util.Util
 import com.noob.apps.mvvmcountries.R
-import com.noob.apps.mvvmcountries.adapters.*
+import com.noob.apps.mvvmcountries.adapters.CourseLectureAdapter
+import com.noob.apps.mvvmcountries.adapters.RecyclerViewClickListener
+import com.noob.apps.mvvmcountries.adapters.ResolutionAdapter
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
-import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
+import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetails2Binding
 import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 import com.noob.apps.mvvmcountries.models.Course
 import com.noob.apps.mvvmcountries.models.Files
@@ -37,10 +39,10 @@ import com.noob.apps.mvvmcountries.models.LectureDetails
 import com.noob.apps.mvvmcountries.models.LectureDetailsResponse
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
+import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
-import kotlinx.android.synthetic.main.activity_visitor.view.*
 import kotlinx.android.synthetic.main.call_dialog.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -48,9 +50,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
+class CourseDetailsActivity2 : BaseActivity(), RecyclerViewClickListener,
     PlayerControlView.VisibilityListener {
-    private lateinit var mActivityBinding: ActivityCourseDetailsBinding
+    private lateinit var mActivityBinding: ActivityCourseDetails2Binding
     private var player: SimpleExoPlayer? = null
     private var playWhenReady = false
     private var currentWindow = 0
@@ -71,19 +73,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private var trackSelector: DefaultTrackSelector? = null
     private var trackSelectorParameters: DefaultTrackSelector.Parameters? = null
     private var link = ""
-    private var isFullScreen = false
-    private lateinit var qualityAdapter: QualityAdapter
-
-    companion object {
-        var lastQualityPosition = 0
-
-    }
-
-    @SuppressLint("CutPasteId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_course_details)
+            DataBindingUtil.setContentView(this, R.layout.activity_course_details2)
         courseViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
@@ -141,106 +134,59 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         trackSelectorParameters = builder.build()
         mActivityBinding.playerView.setControllerVisibilityListener(this)
         mActivityBinding.playerView.requestFocus()
+        //   createMediaItem(course.introUrl)
+        mActivityBinding.videoQuality.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                link = resolutions[position].link
+                val time = player!!.currentPosition
+                createMediaItem(link)
+                player!!.seekTo(0, time)
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                link = ""
+            }
+        }
         mActivityBinding.continueButton.setOnClickListener {
             callWinnerDialog()
         }
-        val fullScreenButton: AppCompatImageView =
-            mActivityBinding.playerView.findViewById(R.id.exo_fullscreen_icon)
-        val normalScreenButton: AppCompatImageView =
-            mActivityBinding.playerView.findViewById(R.id.exo_fullscreen_icon)
-        fullScreenButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                R.drawable.ic_fullscreen_open
-            )
-        )
-        normalScreenButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                R.drawable.ic_fullscreen_close
-            )
-        )
-        fullScreenButton.setOnClickListener {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-            supportActionBar?.show()
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            val layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                200 * resources.displayMetrics.density.toInt()
-            )
-            mActivityBinding.playerView.layoutParams = layoutParams
-        }
-        normalScreenButton.setOnClickListener {
-            if (!isFullScreen) {
-                isFullScreen = true
-                window.decorView.systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                supportActionBar?.hide()
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                val layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                mActivityBinding.playerView.layoutParams = layoutParams
-                mActivityBinding.continueButton.visibility = View.INVISIBLE
-            } else {
-                isFullScreen = false
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-                supportActionBar?.show()
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                val layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    260 * resources.displayMetrics.density.toInt()
-                )
-                mActivityBinding.playerView.layoutParams = layoutParams
-                mActivityBinding.continueButton.visibility = View.VISIBLE
-
-            }
-        }
-        mActivityBinding.btnBack.setOnClickListener {
-            finish()
-        }
-        mActivityBinding.btnSetting.setOnClickListener {
-            mActivityBinding.qualityCard.visibility = View.VISIBLE
-        }
-        initializeQualityAdapter()
-
     }
 
     private fun initializeRecyclerView() {
         mAdapter = CourseLectureAdapter(this, this)
         mActivityBinding.lectureRv.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(this@CourseDetailsActivity, 1)
+            layoutManager = GridLayoutManager(this@CourseDetailsActivity2, 1)
             adapter = mAdapter
         }
     }
 
     private fun initializePlayer() {
-        trackSelector = DefaultTrackSelector( /* context= */this)
+        trackSelector = DefaultTrackSelector(this)
         trackSelector!!.parameters = trackSelectorParameters!!
         player = SimpleExoPlayer.Builder(this).build()
         mActivityBinding.playerView.player = player
         player!!.playWhenReady = true
         player!!.seekTo(currentWindow, playbackPosition)
+        //   player!!.preparePlayer(mActivityBinding.playerView, true)
+
 
     }
 
     private fun createMediaItem(url: String) {
         val mediaItem = MediaItem.fromUri(url)
         player!!.setMediaItem(mediaItem)
-        player!!.prepare()
-        if (resolutions.isEmpty())
-            mActivityBinding.btnSetting.visibility = View.INVISIBLE
-        else
-            mActivityBinding.btnSetting.visibility = View.VISIBLE
+        player!!.preparePlayer(mActivityBinding.playerView, true)
 
     }
 
 
     override fun onRecyclerViewItemClick(position: Int) {
-        lastQualityPosition = 0
         resolutions.clear()
         if (!eligibleToWatch) {
             course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
@@ -251,13 +197,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     }
 
     override fun onQualitySelected(position: Int) {
-        lastQualityPosition = position
-        qualityAdapter.notifyDataSetChanged()
-        mActivityBinding.qualityCard.visibility = View.INVISIBLE
-        link = resolutions[position].link
-        val time = player!!.currentPosition
-        createMediaItem(link)
-        player!!.seekTo(0, time)
     }
 
     fun onStartWatchClicked() {
@@ -299,24 +238,25 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     }
 
     private fun checkVideoSession() {
-        //    if (lectureResponse.studentSessions.isEmpty())
-        //  LectureWatchDialog.newInstance(lectureResponse)
-        //     .show(
-        //        supportFragmentManager,
-        //       LectureWatchDialog.TAG
-        //  )
-        //    else if (!lectureResponse.studentSessions[0].expired) {
-        releasePlayer()
-        initializePlayer()
-        clearTimer()
-        //  startTime = getStartDate()
-        //endTime = lectureResponse.studentSessions[0].expiredAt
-        //   printDifferenceDateForHours(startTime, endTime)
-        qualityAdapter.setData(resolutions)
-        createMediaItem(resolutions[0].link)
-        //  } else {
-        //        Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()
-        //     }
+        if (lectureResponse.studentSessions.isEmpty())
+            LectureWatchDialog.newInstance(lectureResponse)
+                .show(
+                    supportFragmentManager,
+                    LectureWatchDialog.TAG
+                )
+        else if (!lectureResponse.studentSessions[0].expired) {
+            releasePlayer()
+            initializePlayer()
+            clearTimer()
+            startTime = getStartDate()
+            endTime = lectureResponse.studentSessions[0].expiredAt
+            printDifferenceDateForHours(startTime, endTime)
+            val resolutionAdapter = ResolutionAdapter(this, resolutions)
+            mActivityBinding.videoQuality.adapter = resolutionAdapter
+            createMediaItem(resolutions[0].link)
+        } else {
+            Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getResolutions(kt: LectureDetailsResponse) {
@@ -407,7 +347,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
             override fun onFinish() {
                 releasePlayer()
-                Toast.makeText(this@CourseDetailsActivity, "session end", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CourseDetailsActivity2, "session end", Toast.LENGTH_LONG).show()
 
             }
         }.start()
@@ -468,6 +408,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         }
     }
 
+    override fun onVisibilityChange(visibility: Int) {
+        mActivityBinding.playerView.showController()
+    }
 
     @SuppressLint("SourceLockedOrientationActivity")
     private fun SimpleExoPlayer.preparePlayer(
@@ -506,7 +449,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 )
             )
             fullScreenButton.setOnClickListener {
-                supportActionBar?.show()
+                window.decorView.systemUiVisibility =
+                    (View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+                supportActionBar?.hide()
                 if (forceLandscape)
                     requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 styledPlayerView.visibility = View.GONE
@@ -540,7 +485,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             styledPlayerView.player = this@preparePlayer
         }
     }
-
 
     private fun callWinnerDialog() {
         var firstNumber = ""
@@ -601,33 +545,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             }
         }
         dialog.show()
-    }
-
-    override fun onVisibilityChange(visibility: Int) {
-        if (visibility == 8) {
-            mActivityBinding.playerView.hideController()
-            mActivityBinding.btnBack.visibility = View.INVISIBLE
-            mActivityBinding.btnSetting.visibility = View.INVISIBLE
-            mActivityBinding.qualityCard.visibility = View.INVISIBLE
-        } else {
-            mActivityBinding.playerView.showController()
-            mActivityBinding.btnBack.visibility = View.VISIBLE
-            if (resolutions.isNotEmpty())
-                mActivityBinding.btnSetting.visibility = View.VISIBLE
-            else
-                mActivityBinding.btnSetting.visibility = View.INVISIBLE
-
-        }
-
-    }
-
-    private fun initializeQualityAdapter() {
-        qualityAdapter = QualityAdapter(this, this)
-        mActivityBinding.rvQuality.apply {
-            setHasFixedSize(true)
-            layoutManager = GridLayoutManager(this@CourseDetailsActivity, 1)
-            adapter = qualityAdapter
-        }
     }
 
 }

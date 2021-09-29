@@ -3,12 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable-v24/exo_back_btn.xml" value="0.1046875" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/arrow.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_button.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_button_blue.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_edittext.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_spinner.xml" value="0.20512820512820512" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_video_spinner.xml" value="0.20512820512820512" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_icon.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo1.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_empty_couces.xml" value="0.20833333333333334" />
@@ -24,6 +26,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/about_segma_dialog.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_countries_list.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_course_details.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_course_details2.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_educational.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_favourite_lecture.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_forget_password.xml" value="0.1921875" />
@@ -54,11 +57,13 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/lectures_course_cell.xml" value="0.1716485507246377" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/notification_cell.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/notification_setting.xml" value="0.18931159420289856" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/quality_item_cell.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/spinner_department_item.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/spinner_term_item.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/spinner_year_item.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/test.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/test_dialog.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1046875" />
         <entry key="..\:/segma/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/curved_button.xml" value="0.23854166666666668" />
         <entry key="..\:/segma/app/src/main/res/drawable/curved_edittext.xml" value="0.264" />

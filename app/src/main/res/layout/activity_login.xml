@@ -35,12 +35,13 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputMobile"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/curved_edittext"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtMobileNumber">
@@ -48,15 +49,15 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etMobileNumber"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@null"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:paddingStart="@dimen/_10sdp"
-                android:text="01025529187"
                 android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_20sdp"
+                android:text="01025529187"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,10 +77,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/curved_edittext"
+            app:hintEnabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPassword"
             app:passwordToggleEnabled="true">
@@ -87,14 +89,14 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@null"
                 android:inputType="textPassword"
                 android:paddingStart="@dimen/_10sdp"
-                android:text="123456"
                 android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_20sdp"
+                android:text="123456"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 tools:ignore="SpeakableTextPresentCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,14 +109,14 @@
             android:fontFamily="@font/semibold"
             android:text="@string/forget_password"
             android:textColor="@color/blue"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_25sdp"
             android:layout_marginEnd="@dimen/_16sdp"
@@ -124,7 +126,7 @@
             android:gravity="center"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_14ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtForgetPassword" />
 

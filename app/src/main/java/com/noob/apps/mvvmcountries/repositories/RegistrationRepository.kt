@@ -48,7 +48,12 @@ class RegistrationRepository private constructor() {
                 call: Call<RegistrationResponse>,
                 response: Response<RegistrationResponse>
             ) {
-                if (response.code() != 201) {
+                if (response.code() == 400) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val internalMessage = jsonObject.getString("message")
+                    mCallback.onResponseError(internalMessage)
+                } else if (response.code() != 201) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
                     val userMessage = jsonObject.getString("error")

@@ -1,12 +1,13 @@
 package com.noob.apps.mvvmcountries.ui.base
 
 import android.app.Activity
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.noob.apps.mvvmcountries.data.UserPreferences
 import androidx.lifecycle.asLiveData
+import com.framgia.android.emulator.EmulatorDetector
 import java.util.*
 
 
@@ -45,6 +47,32 @@ open class BaseActivity : AppCompatActivity() {
                 createConfigurationContext(config)
             resources.updateConfiguration(config, resources.displayMetrics)
         })
+//        EmulatorDetector.with(this)
+//            .setCheckTelephony(true)
+//            .addPackageName("com.bluestacks")
+//            .setDebug(true)
+//            .detect {
+//                if (it) {
+//                    runOnUiThread {
+//                        Toast.makeText(
+//                            this,
+//                            "you cannot use App",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                        finish()
+//                    }
+//
+//                } else {
+//                    if (isEmulator()) {
+//                        Toast.makeText(
+//                            this,
+//                            "you cannot use App",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                        finish()
+//                    }
+//                }
+//            }
 
     }
 
@@ -83,6 +111,24 @@ open class BaseActivity : AppCompatActivity() {
                 removeObserver(this)
             }
         })
+    }
+    private fun isEmulator(): Boolean {
+        return (Build.FINGERPRINT.contains("generic")
+                || Build.FINGERPRINT.startsWith("unknown")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
+                || "google_sdk" == Build.PRODUCT)
+    }
+    open fun hideSystemUI() {
+//        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
+//                or View.SYSTEM_UI_FLAG_LOW_PROFILE
+//                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                or View.SYSTEM_UI_FLAG_IMMERSIVE
+//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
     }
 
 }

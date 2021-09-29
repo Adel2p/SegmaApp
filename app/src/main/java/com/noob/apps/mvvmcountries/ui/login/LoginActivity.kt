@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -77,6 +78,7 @@ class LoginActivity : BaseActivity() {
             }
 
         }
+
     }
 
     private fun checkValidation(): Boolean {

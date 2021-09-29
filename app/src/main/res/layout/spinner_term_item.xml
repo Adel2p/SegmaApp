@@ -9,8 +9,9 @@
         android:id="@+id/txtTerm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/red"
-        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/semibold"
+        android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
