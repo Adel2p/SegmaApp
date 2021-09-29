@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
@@ -36,14 +37,23 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
-        userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
-            isloggedin = it
-            if (isloggedin)
-                readISSaved()
-            else
-                openLogin()
+//        if (isEmulator()) {
+//            Toast.makeText(
+//                this,
+//                "you cannot use App",
+//                Toast.LENGTH_LONG
+//            ).show()
+//        } else {
+            userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
+                isloggedin = it
+                if (isloggedin)
+                    readISSaved()
+                else
+                    openLogin()
 
-        })
+            })
+     //   }
+
 
     }
 

@@ -26,10 +26,7 @@ class HomeActivity : BaseActivity() {
             userPreferences.saveUniversityData(true)
         }
         userPreferences.getFirebaseEnabled.asLiveData().observeOnce(this, {
-            if (it) {
-                val myService = Intent(this@HomeActivity, MyFirebaseMessagingService::class.java)
-                startService(myService)
-            } else {
+            if (!it) {
                 val myService = Intent(this@HomeActivity, MyFirebaseMessagingService::class.java)
                 stopService(myService)
             }

@@ -17,6 +17,8 @@ import com.noob.apps.mvvmcountries.data.UserPreferences
 import androidx.lifecycle.asLiveData
 import com.framgia.android.emulator.EmulatorDetector
 import java.util.*
+import android.os.Environment
+import java.io.File
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -24,6 +26,8 @@ open class BaseActivity : AppCompatActivity() {
     private var dialog: KProgressHUD? = null
     lateinit var userPreferences: UserPreferences
     var appLanguage = ""
+    private var sIsProbablyRunningOnEmulator: Boolean? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
@@ -62,17 +66,9 @@ open class BaseActivity : AppCompatActivity() {
 //                        finish()
 //                    }
 //
-//                } else {
-//                    if (isEmulator()) {
-//                        Toast.makeText(
-//                            this,
-//                            "you cannot use App",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                        finish()
-//                    }
 //                }
 //            }
+
 
     }
 
@@ -112,16 +108,37 @@ open class BaseActivity : AppCompatActivity() {
             }
         })
     }
-    private fun isEmulator(): Boolean {
-        return (Build.FINGERPRINT.contains("generic")
+
+    fun isEmulator(): Boolean {
+        var result = sIsProbablyRunningOnEmulator
+        if (result != null)
+            return result
+        // Android SDK emulator
+        result = (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
+                && Build.FINGERPRINT.endsWith(":user/release-keys")
+                && Build.MANUFACTURER == "Google" && Build.PRODUCT.startsWith("sdk_gphone_") && Build.BRAND == "google"
+                && Build.MODEL.startsWith("sdk_gphone_"))
+                //
+                || Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")
                 || Build.MODEL.contains("Emulator")
                 || Build.MODEL.contains("Android SDK built for x86")
+                //bluestacks
+                || "QC_Reference_Phone" == Build.BOARD && !"Xiaomi".equals(
+            Build.MANUFACTURER,
+            ignoreCase = true
+        ) //bluestacks
                 || Build.MANUFACTURER.contains("Genymotion")
+                || Build.HOST == "Build2" //MSI App Player
                 || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
-                || "google_sdk" == Build.PRODUCT)
+                || Build.PRODUCT == "google_sdk"
+        // another Android SDK emulator check
+
+        sIsProbablyRunningOnEmulator = result
+        return result
     }
+
     open fun hideSystemUI() {
 //        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
 //                or View.SYSTEM_UI_FLAG_LOW_PROFILE

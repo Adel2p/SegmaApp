@@ -59,11 +59,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputFullName"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/curved_edittext"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtFullName"
                 app:layout_constraintTop_toBottomOf="@+id/txtFullName">
@@ -71,14 +72,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFullName"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@null"
                     android:fontFamily="@font/semibold"
                     android:inputType="text"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp" />
+                    android:textSize="@dimen/_14ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -94,11 +95,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputEmail"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/curved_edittext"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtEmail"
                 app:layout_constraintTop_toBottomOf="@+id/txtEmail">
@@ -106,14 +108,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@null"
                     android:fontFamily="@font/semibold"
                     android:inputType="text"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp" />
+                    android:textSize="@dimen/_14ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -130,11 +132,12 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputMobileNumber"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_45sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/curved_edittext"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtMobileNumber"
                 app:layout_constraintTop_toBottomOf="@+id/txtMobileNumber">
@@ -142,14 +145,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMobileNumber"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:background="@null"
                     android:fontFamily="@font/semibold"
                     android:inputType="text"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_20sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp" />
+                    android:textSize="@dimen/_14ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -157,8 +160,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="@string/password"
                 android:fontFamily="@font/bold"
+                android:text="@string/password"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_18ssp"
                 app:layout_constraintStart_toStartOf="@+id/inputMobileNumber"
@@ -209,7 +212,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
@@ -219,7 +222,7 @@
                 android:gravity="center"
                 android:text="@string/save_changes"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtPassword"
                 app:layout_constraintTop_toBottomOf="@+id/changePassLay" />
