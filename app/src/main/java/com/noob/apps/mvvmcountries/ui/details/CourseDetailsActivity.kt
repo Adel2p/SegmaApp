@@ -10,7 +10,6 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -191,7 +190,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 val layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    260 * resources.displayMetrics.density.toInt()
+                    280 * resources.displayMetrics.density.toInt()
                 )
                 mActivityBinding.playerView.layoutParams = layoutParams
                 mActivityBinding.continueButton.visibility = View.VISIBLE
@@ -250,6 +249,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onQualitySelected(position: Int) {
         lastQualityPosition = position
         qualityAdapter.notifyDataSetChanged()
@@ -390,15 +390,14 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         return df.format(cal.time)
     }
 
-    private fun printDifferenceDateForHours(strTime: String?, endTime: String?) {
+    private fun printDifferenceDateForHours(strTime: String, endTime: String) {
         val format1 = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val currentTime = format1.parse(strTime)
         val endDate = format1.parse(endTime)
-        var different = endDate.time - currentTime.time
+        val different = endDate.time - currentTime.time
         countDownTimer = object : CountDownTimer(different, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
-                var diff = millisUntilFinished
                 val secondsInMilli: Long = 1000
                 val minutesInMilli = secondsInMilli * 60
                 minutesInMilli * 60
@@ -468,86 +467,12 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         }
     }
 
-
-    @SuppressLint("SourceLockedOrientationActivity")
-    private fun SimpleExoPlayer.preparePlayer(
-        styledPlayerView: PlayerView,
-        forceLandscape: Boolean = false
-    ) {
-        (styledPlayerView.context as AppCompatActivity).apply {
-            val playerViewFullscreen = PlayerView(this)
-            val layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            playerViewFullscreen.layoutParams = layoutParams
-            playerViewFullscreen.visibility = View.GONE
-            playerViewFullscreen.setBackgroundColor(Color.BLACK)
-            (styledPlayerView.rootView as ViewGroup).apply {
-                addView(
-                    playerViewFullscreen,
-                    childCount
-                )
-            }
-            val fullScreenButton: AppCompatImageView =
-                styledPlayerView.findViewById(R.id.exo_fullscreen_icon)
-            val normalScreenButton: AppCompatImageView =
-                playerViewFullscreen.findViewById(R.id.exo_fullscreen_icon)
-            fullScreenButton.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_fullscreen_open
-                )
-            )
-            normalScreenButton.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_fullscreen_close
-                )
-            )
-            fullScreenButton.setOnClickListener {
-                supportActionBar?.show()
-                if (forceLandscape)
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                styledPlayerView.visibility = View.GONE
-                playerViewFullscreen.visibility = View.VISIBLE
-                PlayerView.switchTargetView(
-                    this@preparePlayer,
-                    styledPlayerView,
-                    playerViewFullscreen
-                )
-            }
-            normalScreenButton.setOnClickListener {
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-                supportActionBar?.show()
-                if (forceLandscape)
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                normalScreenButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_fullscreen_close
-                    )
-                )
-                styledPlayerView.visibility = View.VISIBLE
-                playerViewFullscreen.visibility = View.GONE
-                PlayerView.switchTargetView(
-                    this@preparePlayer,
-                    playerViewFullscreen,
-                    styledPlayerView
-                )
-            }
-            styledPlayerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT
-            styledPlayerView.player = this@preparePlayer
-        }
-    }
-
-
     private fun callWinnerDialog() {
         var firstNumber = ""
         var secondNumber = ""
-        if (!course.firstPhone.isNullOrEmpty())
+        if (course.firstPhone.isNotEmpty())
             firstNumber = course.firstPhone
-        else if (!course.secondPhone.isNullOrEmpty())
+        else if (course.secondPhone.isNotEmpty())
             secondNumber = course.secondPhone
         lateinit var dialog: AlertDialog
         val inflater = LayoutInflater.from(this)

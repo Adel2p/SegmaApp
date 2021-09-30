@@ -3,306 +3,326 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_background"
-        android:paddingBottom="@dimen/_10sdp"
-        tools:context=".ui.details.CourseDetailsActivity">
-
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/playerView"
-            android:layout_width="0dp"
-            android:layout_height="260dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:resize_mode="fill" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_margin="@dimen/_20sdp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/exo_back_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_Setting"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/exo_ic_settings"
-            app:layout_constraintStart_toEndOf="@id/btn_back"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/qualityCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:visibility="invisible"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="0dp"
-            app:contentPadding="5dp"
-            app:layout_constraintStart_toEndOf="@id/btn_Setting"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvQuality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/video_quality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_55sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:background="@drawable/curved_video_spinner"
-            android:textColor="@android:color/white"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtLecId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fontFamily="@font/bold"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playerView" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:src="@drawable/ic_price_icon"
-            app:layout_constraintStart_toStartOf="@id/txtLecId"
-            app:layout_constraintTop_toBottomOf="@id/txtLecId"
-            tools:ignore="ImageContrastCheck" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_4sdp"
-            android:fontFamily="@font/bold"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toEndOf="@id/imgPrice"
-            app:layout_constraintTop_toBottomOf="@id/txtLecId" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtLecNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintEnd_toStartOf="@id/lectures"
-            app:layout_constraintTop_toBottomOf="@+id/playerView"
-            tools:text="10" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/lectures"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:fontFamily="@font/regular"
-            android:text="@string/lectures"
-            android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_12ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playerView" />
-
-        <View
-            android:id="@+id/lecSep"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgPrice" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtLectures"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:fontFamily="@font/bold"
-            android:text="@string/lectures"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toStartOf="@+id/txtLecId"
-            app:layout_constraintTop_toBottomOf="@+id/lecSep" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:fontFamily="@font/bold"
-            android:text="@string/information"
-            android:textColor="@color/gray_purple"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintStart_toEndOf="@+id/txtLectures"
-            app:layout_constraintTop_toTopOf="@+id/txtLectures" />
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lectureLay"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:padding="@dimen/_15sdp"
-            app:layout_constraintBottom_toTopOf="@id/continueButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtLectures">
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_background"
+            android:paddingBottom="@dimen/_10sdp"
+            tools:context=".ui.details.CourseDetailsActivity">
+
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/playerView"
+                android:layout_width="0dp"
+                android:layout_height="280dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:resize_mode="fill" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_margin="@dimen/_20sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exo_back_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_Setting"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exo_ic_settings"
+                app:layout_constraintStart_toEndOf="@id/btn_back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_play_mode"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_margin="@dimen/_20sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exo_styled_controls_play"
+                app:layout_constraintStart_toEndOf="@id/btn_Setting"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+                android:id="@+id/qualityCard"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:elevation="0dp"
-                app:cardCornerRadius="@dimen/_8sdp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:visibility="invisible"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="0dp"
+                app:contentPadding="5dp"
+                app:layout_constraintStart_toEndOf="@id/btn_Setting"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/lectureRv"
-                    android:layout_width="match_parent"
+                    android:id="@+id/rvQuality"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
-
             </androidx.cardview.widget.CardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/infoLay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_15sdp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtLectures">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/video_quality"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp"
-                app:cardCornerRadius="@dimen/_15sdp"
-                app:cardElevation="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginTop="@dimen/_55sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/curved_video_spinner"
+                android:textColor="@android:color/white"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtLecId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playerView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:src="@drawable/ic_price_icon"
+                app:layout_constraintStart_toStartOf="@id/txtLecId"
+                app:layout_constraintTop_toBottomOf="@id/txtLecId"
+                tools:ignore="ImageContrastCheck" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toEndOf="@id/imgPrice"
+                app:layout_constraintTop_toBottomOf="@id/txtLecId" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtLecNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/gray_purple"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toStartOf="@id/lectures"
+                app:layout_constraintTop_toBottomOf="@+id/playerView"
+                tools:text="10" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lectures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/regular"
+                android:text="@string/lectures"
+                android:textColor="@color/gray_purple"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playerView" />
+
+            <View
+                android:id="@+id/lecSep"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgPrice" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtLectures"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/lectures"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="@+id/txtLecId"
+                app:layout_constraintTop_toBottomOf="@+id/lecSep" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:fontFamily="@font/bold"
+                android:text="@string/information"
+                android:textColor="@color/gray_purple"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toEndOf="@+id/txtLectures"
+                app:layout_constraintTop_toTopOf="@+id/txtLectures" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lectureLay"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:padding="@dimen/_15sdp"
+                app:layout_constraintBottom_toTopOf="@id/continueButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLectures">
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_20sdp">
+                    android:elevation="0dp"
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lectureRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/heartImg"
-                        android:layout_width="wrap_content"
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/infoLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_15sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLectures">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_heart"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtAboutCourse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:fontFamily="@font/semibold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
-                        app:layout_constraintStart_toEndOf="@+id/heartImg"
-                        app:layout_constraintTop_toTopOf="@+id/heartImg"
-                        tools:text="About Course" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/arrowImg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_50sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:src="@drawable/arrow_icon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/txtAboutCourse" />
-
-                    <View
-                        android:id="@+id/aboutCourseSep"
-                        android:layout_width="wrap_content"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        app:layout_constraintStart_toStartOf="@+id/txtAboutCourse"
-                        app:layout_constraintTop_toBottomOf="@+id/arrowImg" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/folderImg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:src="@drawable/ic_folder"
-                        app:layout_constraintStart_toStartOf="@+id/heartImg"
-                        app:layout_constraintTop_toBottomOf="@+id/aboutCourseSep" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtFolder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/semibold"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp"
-                        app:layout_constraintStart_toStartOf="@+id/aboutCourseSep"
-                        app:layout_constraintTop_toTopOf="@+id/folderImg"
-                        tools:text="Folders" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:src="@drawable/arrow_icon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/txtFolder" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:padding="@dimen/_20sdp">
 
 
-            </androidx.cardview.widget.CardView>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/heartImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_heart"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtAboutCourse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            android:fontFamily="@font/semibold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintStart_toEndOf="@+id/heartImg"
+                            app:layout_constraintTop_toTopOf="@+id/heartImg"
+                            tools:text="About Course" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/arrowImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_50sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/arrow_icon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtAboutCourse" />
+
+                        <View
+                            android:id="@+id/aboutCourseSep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            app:layout_constraintStart_toStartOf="@+id/txtAboutCourse"
+                            app:layout_constraintTop_toBottomOf="@+id/arrowImg" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/folderImg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:src="@drawable/ic_folder"
+                            app:layout_constraintStart_toStartOf="@+id/heartImg"
+                            app:layout_constraintTop_toBottomOf="@+id/aboutCourseSep" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtFolder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/semibold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            app:layout_constraintStart_toStartOf="@+id/aboutCourseSep"
+                            app:layout_constraintTop_toTopOf="@+id/folderImg"
+                            tools:text="Folders" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:src="@drawable/arrow_icon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/txtFolder" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/continueButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="@dimen/_16ssp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@drawable/curved_button_blue"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:text="@string/call_service"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/continueButton"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_16ssp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:background="@drawable/curved_button_blue"
-            android:fontFamily="@font/bold"
-            android:gravity="center"
-            android:text="@string/call_service"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
