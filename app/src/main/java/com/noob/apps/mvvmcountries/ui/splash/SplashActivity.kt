@@ -44,22 +44,22 @@ class SplashActivity : BaseActivity() {
 //                Toast.LENGTH_LONG
 //            ).show()
 //        } else {
-            userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
-                isloggedin = it
-                if (isloggedin)
-                    readISSaved()
-                else
-                    openLogin()
+        userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
+            isloggedin = it
+            if (isloggedin)
+                readISSaved()
+            else
+                openLogin()
 
-            })
-     //   }
+        })
+        //   }
 
 
     }
 
     private fun readToken() {
         userPreferences.getRefreshToken.asLiveData().observeOnce(this, {
-            //     refreshToken = it
+        //    refreshToken = it
             if (refreshToken.isNotEmpty())
                 initTokenObservers()
             else
