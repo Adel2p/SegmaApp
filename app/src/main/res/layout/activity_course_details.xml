@@ -10,7 +10,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/ic_background"
             android:paddingBottom="@dimen/_10sdp"
             tools:context=".ui.details.CourseDetailsActivity">
@@ -23,6 +23,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:resize_mode="fill" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mobileNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintBottom_toBottomOf="@id/playerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/playerView" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_back"
@@ -54,6 +66,7 @@
                 android:layout_margin="@dimen/_20sdp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/exo_styled_controls_play"
+                android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@id/btn_Setting"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
@@ -76,19 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </androidx.cardview.widget.CardView>
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/video_quality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_55sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:background="@drawable/curved_video_spinner"
-                android:textColor="@android:color/white"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtLecId"

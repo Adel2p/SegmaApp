@@ -3,16 +3,15 @@ package com.noob.apps.mvvmcountries.ui.details
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -28,12 +27,10 @@ import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.adapters.*
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
+import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
 import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
-import com.noob.apps.mvvmcountries.models.Course
-import com.noob.apps.mvvmcountries.models.Files
-import com.noob.apps.mvvmcountries.models.LectureDetails
-import com.noob.apps.mvvmcountries.models.LectureDetailsResponse
+import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -72,10 +69,15 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private var link = ""
     private var isFullScreen = false
     private lateinit var qualityAdapter: QualityAdapter
+    private val playSpeeds: MutableList<String> =
+        mutableListOf("0.75", "1", "1.25", "1.5", "1.75", "2")
+    private var duration: Long = 0
+    private lateinit var roomViewModel: RoomViewModel
+    private lateinit var user: User
 
     companion object {
         var lastQualityPosition = 0
-
+        var lastSpeedPosition = 0
     }
 
     @SuppressLint("CutPasteId")
@@ -83,13 +85,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_course_details)
-        courseViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(
-                application,
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(this))
-            )
-        ).get(CourseViewModel::class.java)
+        initViewModel()
         val i = intent
         course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
         eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
@@ -130,7 +126,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 courseViewModel.findUser(userId)
                     .observeOnce(this, { result ->
                         if (result != null && result.size > 0) {
+                            user = result[0]
                             token = "Bearer " + result[0].access_token.toString()
+                            mActivityBinding.mobileNumber.text = user.user_mobile_number
                         }
                     })
             }
@@ -207,10 +205,28 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
     }
 
+    private fun initViewModel() {
+        courseViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                application,
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(this))
+            )
+        ).get(CourseViewModel::class.java)
+        roomViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                application,
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(this))
+            )
+        ).get(RoomViewModel::class.java)
+    }
+
     private fun initializeRecyclerView() {
         mAdapter = CourseLectureAdapter(this, this)
         mActivityBinding.lectureRv.apply {
             setHasFixedSize(true)
+            mActivityBinding.lectureRv.isNestedScrollingEnabled = false;
             layoutManager = GridLayoutManager(this@CourseDetailsActivity, 1)
             adapter = mAdapter
         }
@@ -230,11 +246,33 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         val mediaItem = MediaItem.fromUri(url)
         player!!.setMediaItem(mediaItem)
         player!!.prepare()
-        if (resolutions.isEmpty())
+        if (resolutions.isEmpty()) {
             mActivityBinding.btnSetting.visibility = View.INVISIBLE
-        else
+            mActivityBinding.mobileNumber.visibility = View.INVISIBLE
+        } else {
             mActivityBinding.btnSetting.visibility = View.VISIBLE
+            startAnimation()
+        }
 
+    }
+
+    private fun startAnimation() {
+        mActivityBinding.mobileNumber.visibility = View.VISIBLE
+        mActivityBinding.mobileNumber.clearAnimation()
+        val animation = TranslateAnimation(
+            0.0f,
+            1500.0f,
+            0.0f,
+            0.0f
+        ) // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
+
+
+        animation.duration = 30000
+
+        animation.repeatCount = duration.toInt() / 30
+
+        animation.fillAfter = false
+        mActivityBinding.mobileNumber.startAnimation(animation)
     }
 
 
@@ -306,6 +344,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         //       LectureWatchDialog.TAG
         //  )
         //    else if (!lectureResponse.studentSessions[0].expired) {
+
         releasePlayer()
         initializePlayer()
         clearTimer()
@@ -324,7 +363,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         lectureResponse = kt.data
         val jsonObject: JSONObject?
         jsonObject = JSONObject(kt.data.resolutions)
-        jsonObject.getString("duration")
+        duration = jsonObject.getString("duration").toLong()
         val files: JSONArray = jsonObject.getJSONArray("files")
         for (i in 0 until files.length()) {
             val winspeed = files.getString(i)
@@ -470,9 +509,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private fun callWinnerDialog() {
         var firstNumber = ""
         var secondNumber = ""
-        if (course.firstPhone.isNotEmpty())
+        if (!course.firstPhone.isNullOrEmpty())
             firstNumber = course.firstPhone
-        else if (course.secondPhone.isNotEmpty())
+        else if (!course.secondPhone.isNullOrEmpty())
             secondNumber = course.secondPhone
         lateinit var dialog: AlertDialog
         val inflater = LayoutInflater.from(this)
@@ -500,13 +539,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         }
         customLayout.firstNumber.setOnClickListener {
             try {
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse(
-                    "tel:${
-                        firstNumber
-                    }"
-                )
-                startActivity(intent)
+                val url = "https://api.whatsapp.com/send?phone=$firstNumber"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
             } catch (e: Exception) {
 
             }
@@ -514,13 +550,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         }
         customLayout.secondNumber.setOnClickListener {
             try {
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse(
-                    "tel:${
-                        secondNumber
-                    }"
-                )
-                startActivity(intent)
+                val url = "https://api.whatsapp.com/send?phone=$secondNumber"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
             } catch (e: Exception) {
 
             }
