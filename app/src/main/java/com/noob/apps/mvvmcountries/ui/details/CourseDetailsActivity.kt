@@ -76,6 +76,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private lateinit var user: User
     private var lastLecId = ""
     private var lastDuration: Long = 0
+    private var isBack = false
 
     companion object {
         var lastQualityPosition = 0
@@ -398,6 +399,8 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         courseViewModel.addSession(token, lecId)
         courseViewModel.sessionResponse.observeOnce(this, { kt ->
             if (kt != null) {
+                if (isBack)
+                    finish()
                 //       initializePlayer()
                 //     printDifferenceDateForHours(startTime, endTime)
                 //      createMediaItem(resolutions[0].link)
@@ -603,6 +606,25 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             layoutManager = GridLayoutManager(this@CourseDetailsActivity, 1)
             adapter = qualityAdapter
         }
+    }
+
+    override fun onBackPressed() {
+        lastDuration = (player!!.currentPosition / 1000) % 60
+        val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+        val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+        val total = hours * 60 * 60 + minutes * 60
+
+
+        if (lastLecId.isNotEmpty()) {
+            isBack = true
+
+            val progress = (duration * 10) / 100
+            if (total >= progress) {
+                initAddSession(lastLecId)
+
+            }
+        }
+        super.onBackPressed()
     }
 
 }
