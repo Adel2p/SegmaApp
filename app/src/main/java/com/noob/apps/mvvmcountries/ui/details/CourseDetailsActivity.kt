@@ -18,8 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.*
 import com.google.android.exoplayer2.util.Util
@@ -33,6 +32,7 @@ import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
+import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
@@ -71,9 +71,11 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private lateinit var qualityAdapter: QualityAdapter
     private val playSpeeds: MutableList<String> =
         mutableListOf("0.75", "1", "1.25", "1.5", "1.75", "2")
-    private var duration: Long = 0
+    private var duration: Int = 0
     private lateinit var roomViewModel: RoomViewModel
     private lateinit var user: User
+    private var lastLecId = ""
+    private var lastDuration: Long = 0
 
     companion object {
         var lastQualityPosition = 0
@@ -269,7 +271,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
         animation.duration = 30000
 
-        animation.repeatCount = duration.toInt() / 30
+        animation.repeatCount = duration / 30
 
         animation.fillAfter = false
         mActivityBinding.mobileNumber.startAnimation(animation)
@@ -279,6 +281,20 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     override fun onRecyclerViewItemClick(position: Int) {
         lastQualityPosition = 0
         resolutions.clear()
+        lastDuration = (player!!.currentPosition / 1000) % 60
+        val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+        val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+        val total = hours * 60 * 60 + minutes * 60
+
+
+        if (lastLecId.isEmpty()) {
+            lastLecId = course.lectures?.get(position)?.uuid.toString()
+        } else {
+            val progress = (duration * 10) / 100
+            if (total >= progress) {
+                initAddSession(lastLecId)
+            }
+        }
         if (!eligibleToWatch) {
             course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
         } else
@@ -301,7 +317,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     fun onStartWatchClicked() {
         startTime = getStartDate()
         endTime = getStartDate(sessionTimeout)
-        initAddSession(selectedLectureId)
+        initializePlayer()
+        printDifferenceDateForHours(startTime, endTime)
+        createMediaItem(resolutions[0].link)
+        //  initAddSession(selectedLectureId)
     }
 
     private fun initLectureInfo(lecId: String) {
@@ -337,25 +356,24 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     }
 
     private fun checkVideoSession() {
-        //    if (lectureResponse.studentSessions.isEmpty())
-        //  LectureWatchDialog.newInstance(lectureResponse)
-        //     .show(
-        //        supportFragmentManager,
-        //       LectureWatchDialog.TAG
-        //  )
-        //    else if (!lectureResponse.studentSessions[0].expired) {
-
-        releasePlayer()
-        initializePlayer()
-        clearTimer()
-        //  startTime = getStartDate()
-        //endTime = lectureResponse.studentSessions[0].expiredAt
-        //   printDifferenceDateForHours(startTime, endTime)
-        qualityAdapter.setData(resolutions)
-        createMediaItem(resolutions[0].link)
-        //  } else {
-        //        Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()
-        //     }
+        if (lectureResponse.studentSessions.isEmpty())
+            LectureWatchDialog.newInstance(lectureResponse)
+                .show(
+                    supportFragmentManager,
+                    LectureWatchDialog.TAG
+                )
+        else if (!lectureResponse.studentSessions[0].expired) {
+            releasePlayer()
+            initializePlayer()
+            clearTimer()
+            startTime = getStartDate()
+            endTime = lectureResponse.studentSessions[0].expiredAt
+            printDifferenceDateForHours(startTime, endTime)
+            qualityAdapter.setData(resolutions)
+            createMediaItem(resolutions[0].link)
+        } else {
+            Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getResolutions(kt: LectureDetailsResponse) {
@@ -363,7 +381,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         lectureResponse = kt.data
         val jsonObject: JSONObject?
         jsonObject = JSONObject(kt.data.resolutions)
-        duration = jsonObject.getString("duration").toLong()
+        duration = jsonObject.getString("duration").toInt()
         val files: JSONArray = jsonObject.getJSONArray("files")
         for (i in 0 until files.length()) {
             val winspeed = files.getString(i)
@@ -380,9 +398,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         courseViewModel.addSession(token, lecId)
         courseViewModel.sessionResponse.observeOnce(this, { kt ->
             if (kt != null) {
-                initializePlayer()
-                printDifferenceDateForHours(startTime, endTime)
-                createMediaItem(resolutions[0].link)
+                //       initializePlayer()
+                //     printDifferenceDateForHours(startTime, endTime)
+                //      createMediaItem(resolutions[0].link)
             }
         })
         courseViewModel.mShowResponseError.observeOnce(this, {
@@ -435,7 +453,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         val endDate = format1.parse(endTime)
         val different = endDate.time - currentTime.time
         countDownTimer = object : CountDownTimer(different, 1000) {
-
             override fun onTick(millisUntilFinished: Long) {
                 val secondsInMilli: Long = 1000
                 val minutesInMilli = secondsInMilli * 60

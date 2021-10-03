@@ -5,9 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -15,11 +13,7 @@ import androidx.lifecycle.Observer
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.noob.apps.mvvmcountries.data.UserPreferences
 import androidx.lifecycle.asLiveData
-import com.framgia.android.emulator.EmulatorDetector
 import java.util.*
-import android.os.Environment
-import java.io.File
-
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var deviceId: String
@@ -27,6 +21,7 @@ open class BaseActivity : AppCompatActivity() {
     lateinit var userPreferences: UserPreferences
     var appLanguage = ""
     private var sIsProbablyRunningOnEmulator: Boolean? = null
+    //  private lateinit var caster: Caster
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +63,17 @@ open class BaseActivity : AppCompatActivity() {
 //
 //                }
 //            }
-
+//        caster = Caster.create(this)
+//        if (caster.isConnected)
+//            finishAffinity()
+//        caster.setOnConnectChangeListener(object : Caster.OnConnectChangeListener {
+//            override fun onConnected() {
+//                finishAffinity()
+//            }
+//
+//            override fun onDisconnected() {
+//            }
+//        })
 
     }
 

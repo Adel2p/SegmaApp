@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -30,6 +31,13 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
+
+        val CanMirror: Int = Settings.Secure.getInt(
+            this.contentResolver,
+            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
+            0
+        )
+
         splashViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
@@ -44,22 +52,22 @@ class SplashActivity : BaseActivity() {
 //                Toast.LENGTH_LONG
 //            ).show()
 //        } else {
-        userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
-            isloggedin = it
-            if (isloggedin)
-                readISSaved()
-            else
-                openLogin()
+            userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
+                isloggedin = it
+                if (isloggedin)
+                    readISSaved()
+                else
+                    openLogin()
 
-        })
-        //   }
+            })
+      //  }
 
 
     }
 
     private fun readToken() {
         userPreferences.getRefreshToken.asLiveData().observeOnce(this, {
-        //    refreshToken = it
+            //    refreshToken = it
             if (refreshToken.isNotEmpty())
                 initTokenObservers()
             else

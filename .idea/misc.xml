@@ -19,11 +19,13 @@
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_login_success.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_refresh.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_splash_bg.xml" value="0.1537037037037037" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_studying_cuate.xml" value="0.1046875" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/navigation_view_colored.xml" value="0.14907407407407408" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/progress_dialog.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/radio_btn_state.xml" value="0.20512820512820512" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/rounded_dialog.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/about_segma_dialog.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_base.xml" value="0.18070652173913043" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_countries_list.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_course_details.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_course_details2.xml" value="0.1" />
