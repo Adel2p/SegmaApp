@@ -90,6 +90,9 @@
     <string name="call_service">call center</string>
     <string name="call">call</string>
     <string name="call_us">call Us</string>
+    <string name="ok">Ok</string>
+    <string name="block_title">Excuse me…. You can use the app on this device</string>
+
 
     <string-array name="Collages">
         <item>please select collage</item>

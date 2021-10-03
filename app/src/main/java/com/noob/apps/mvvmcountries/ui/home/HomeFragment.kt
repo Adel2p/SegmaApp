@@ -22,6 +22,7 @@ import com.noob.apps.mvvmcountries.models.RefreshTokenModel
 import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
 import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity2
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -155,6 +156,9 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
             if (kt != null) {
                 mActivityBinding.txtFaculty.text = kt.data.studyFieldName
                 mActivityBinding.txtDepartment.text = kt.data.departmentName
+                if (!kt.data.enabled)
+                    BlockUserDialog.newInstance()
+                        .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
                 if (fcmToken.isNotEmpty())
                     initFCMTokenObservers()
             }

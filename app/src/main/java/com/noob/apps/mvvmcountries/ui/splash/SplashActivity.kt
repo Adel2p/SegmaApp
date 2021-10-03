@@ -11,6 +11,7 @@ import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.models.RefreshTokenModel
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
@@ -45,13 +46,10 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
-//        if (isEmulator()) {
-//            Toast.makeText(
-//                this,
-//                "you cannot use App",
-//                Toast.LENGTH_LONG
-//            ).show()
-//        } else {
+        if (isEmulator()) {
+            BlockUserDialog.newInstance()
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        } else {
             userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
                 isloggedin = it
                 if (isloggedin)
@@ -60,7 +58,7 @@ class SplashActivity : BaseActivity() {
                     openLogin()
 
             })
-      //  }
+        }
 
 
     }
