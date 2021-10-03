@@ -92,6 +92,8 @@
     <string name="call_us">call Us</string>
     <string name="ok">Ok</string>
     <string name="block_title">Excuse me…. You can use the app on this device</string>
+    <string name="excced_watch">You do not have any views available for the lecture</string>
+    <string name="pay_first">Pay First</string>
 
 
     <string-array name="Collages">

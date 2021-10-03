@@ -9,6 +9,7 @@ data class Lectures(
     val sessionTimeout: Int,
     val allowedSessions: Int,
     val allowedWatches: Int,
+    val actualSessions: Int,
     val resolutions: String,
     val publicWatch: Boolean,
     val studentSessions: List<StudentSessions>

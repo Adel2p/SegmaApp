@@ -3,9 +3,11 @@ package com.noob.apps.mvvmcountries.ui.details
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.icu.text.CaseMap
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +31,7 @@ import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.data.RoomViewModel
 import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
 import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
+import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
@@ -77,6 +80,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private var lastLecId = ""
     private var lastDuration: Long = 0
     private var isBack = false
+    private var selectedPosition = 0
 
     companion object {
         var lastQualityPosition = 0
@@ -262,44 +266,64 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     private fun startAnimation() {
         mActivityBinding.mobileNumber.visibility = View.VISIBLE
         mActivityBinding.mobileNumber.clearAnimation()
-        val animation = TranslateAnimation(
-            0.0f,
-            1500.0f,
-            0.0f,
-            0.0f
-        ) // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
-
-
-        animation.duration = 30000
-
-        animation.repeatCount = duration / 30
-
-        animation.fillAfter = false
-        mActivityBinding.mobileNumber.startAnimation(animation)
+        val displaymetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displaymetrics)
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    val R = Random()
+                    val dx = R.nextFloat() * displaymetrics.widthPixels
+                    val dy = R.nextFloat() * 650
+                    val timer = Timer()
+                    mActivityBinding.mobileNumber.animate()
+                        .x(dx)
+                        .y(dy)
+                        .setDuration(0)
+                        .start()
+                }
+            }
+        }, 0, 6000)
+//        val animation = TranslateAnimation(
+//            0.0f,
+//            1500.0f,
+//            0.0f,
+//            0.0f
+//        ) // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
+//
+//
+//        animation.duration = 30000
+//
+//        animation.repeatCount = duration / 30
+//        animation.repeatMode
+//
+//        animation.fillAfter = false
+//        mActivityBinding.mobileNumber.startAnimation(animation)
     }
 
 
     override fun onRecyclerViewItemClick(position: Int) {
         lastQualityPosition = 0
+        selectedPosition = position
         resolutions.clear()
         lastDuration = (player!!.currentPosition / 1000) % 60
         val minutes = (player!!.currentPosition / (1000 * 60) % 60)
         val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
         val total = hours * 60 * 60 + minutes * 60
-
-
         if (lastLecId.isEmpty()) {
             lastLecId = course.lectures?.get(position)?.uuid.toString()
         } else {
             val progress = (duration * 10) / 100
             if (total >= progress) {
-                initAddSession(lastLecId)
+                if (course.lectures?.get(position)?.studentSessions!!.isEmpty()
+                )
+                    initAddSession(lastLecId)
             }
         }
         if (!eligibleToWatch) {
             course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
         } else
-            Toast.makeText(this, "pay first", Toast.LENGTH_LONG).show()
+        invalidWatchDialog(getString(R.string.pay_first))
 
 
     }
@@ -363,7 +387,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                     supportFragmentManager,
                     LectureWatchDialog.TAG
                 )
-        else if (!lectureResponse.studentSessions[0].expired) {
+        else if (
+            lectureResponse.actualSessions < lectureResponse.allowedSessions
+        ) {
             releasePlayer()
             initializePlayer()
             clearTimer()
@@ -373,7 +399,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             qualityAdapter.setData(resolutions)
             createMediaItem(resolutions[0].link)
         } else {
-            Toast.makeText(this, "session end", Toast.LENGTH_LONG).show()
+            //   Toast.makeText(this, "You exceed number of watches", Toast.LENGTH_LONG).show()
+            invalidWatchDialog(getString(R.string.excced_watch))
+
         }
     }
 
@@ -581,6 +609,30 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         dialog.show()
     }
 
+    private fun invalidWatchDialog(title: String) {
+        lateinit var dialog: AlertDialog
+        val inflater = LayoutInflater.from(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(
+            this,
+            R.style.CustomDialog
+        )
+        val customLayout: InvalidWatchDialogBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.invalid_watch_dialog,
+            null,
+            false
+        )
+        customLayout.txtTitle.text = title
+        builder.setCancelable(true)
+        builder.setView(customLayout.root)
+        dialog = builder.create()
+        customLayout.callButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+
     override fun onVisibilityChange(visibility: Int) {
         if (visibility == 8) {
             mActivityBinding.playerView.hideController()
@@ -613,14 +665,13 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         val minutes = (player!!.currentPosition / (1000 * 60) % 60)
         val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
         val total = hours * 60 * 60 + minutes * 60
-
-
-        if (lastLecId.isNotEmpty()) {
+        if (lastLecId.isNotEmpty() && duration != 0) {
             isBack = true
-
             val progress = (duration * 10) / 100
             if (total >= progress) {
-                initAddSession(lastLecId)
+                if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                )
+                    initAddSession(lastLecId)
 
             }
         }
