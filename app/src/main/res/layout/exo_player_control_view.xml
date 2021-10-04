@@ -1,58 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_65sdp"
     android:layout_gravity="bottom"
-    android:background="#CC000000"
-    android:orientation="vertical">
+    android:background="#CC000000">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="4dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@id/exo_prev"
-            style="@style/ExoMediaButton.Previous"
+            style="@style/ExoMediaButton.Rewind"
             android:contentDescription="TODO"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TouchTargetSizeCheck" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_rew"
-            style="@style/ExoMediaButton.Rewind" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@id/exo_play"
-            style="@style/ExoMediaButton.Play" />
+            style="@style/ExoMediaButton.Play"
+            app:layout_constraintStart_toEndOf="@id/exo_prev"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@id/exo_pause"
-            style="@style/ExoMediaButton.Pause" />
+            style="@style/ExoMediaButton.Pause"
+            app:layout_constraintStart_toEndOf="@id/exo_play"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@id/exo_next"
-            style="@style/ExoMediaButton.Next"
-            android:contentDescription="TODO" />
+            style="@style/ExoMediaButton.FastForward"
+            android:contentDescription="TODO"
+            app:layout_constraintStart_toEndOf="@id/exo_pause"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <FrameLayout
+        android:id="@+id/exo_fullscreen_button"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--        <androidx.appcompat.widget.AppCompatImageButton-->
-<!--            android:id="@id/exo_settings"-->
-<!--            style="@style/ExoStyledControls.Button.Bottom.Settings"-->
-<!--        />-->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/exo_fullscreen_icon"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:contentDescription="TODO"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_fullscreen_open" />
 
+    </FrameLayout>
 
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/layout">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@id/exo_position"
@@ -82,24 +103,7 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-        <FrameLayout
-            android:id="@+id/exo_fullscreen_button"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_gravity="end">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/exo_fullscreen_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:contentDescription="TODO"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_fullscreen_open" />
-
-        </FrameLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

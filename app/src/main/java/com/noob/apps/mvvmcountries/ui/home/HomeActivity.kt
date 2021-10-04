@@ -48,7 +48,6 @@ class HomeActivity : BaseActivity() {
             true
         }
     }
-
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.container, fragment)

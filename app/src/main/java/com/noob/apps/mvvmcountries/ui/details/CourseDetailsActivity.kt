@@ -3,7 +3,6 @@ package com.noob.apps.mvvmcountries.ui.details
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.icu.text.CaseMap
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -11,7 +10,6 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
@@ -92,6 +90,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_course_details)
+        //  mActivityBinding.aspect.setAspectRatio(16f / 9f)
         initViewModel()
         readValues()
         initView()
@@ -158,10 +157,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 val layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                 )
                 mActivityBinding.playerView.layoutParams = layoutParams
-                mActivityBinding.continueButton.visibility = View.INVISIBLE
+                //  mActivityBinding.continueButton.visibility = View.INVISIBLE
             } else {
                 isFullScreen = false
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -169,10 +168,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 val layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    280 * resources.displayMetrics.density.toInt()
+                    220 * resources.displayMetrics.density.toInt()
                 )
                 mActivityBinding.playerView.layoutParams = layoutParams
-                mActivityBinding.continueButton.visibility = View.VISIBLE
+                //  mActivityBinding.continueButton.visibility = View.VISIBLE
 
             }
         }
@@ -212,7 +211,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
 
         }
-        mActivityBinding.continueButton.setOnClickListener {
+        mActivityBinding.txtGroup.setOnClickListener {
             callWinnerDialog()
         }
     }
@@ -247,7 +246,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         mAdapter = CourseLectureAdapter(this, this)
         mActivityBinding.lectureRv.apply {
             setHasFixedSize(true)
-            mActivityBinding.lectureRv.isNestedScrollingEnabled = false;
+            mActivityBinding.lectureRv.isNestedScrollingEnabled = false
             layoutManager = GridLayoutManager(this@CourseDetailsActivity, 1)
             adapter = mAdapter
         }
@@ -395,6 +394,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     }
 
     private fun checkVideoSession() {
+        qualityAdapter.setData(resolutions)
         if (lectureResponse.studentSessions.isEmpty())
             LectureWatchDialog.newInstance(lectureResponse)
                 .show(
@@ -410,7 +410,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             startTime = getStartDate()
             endTime = lectureResponse.studentSessions[0].expiredAt
             printDifferenceDateForHours(startTime, endTime)
-            qualityAdapter.setData(resolutions)
             createMediaItem(resolutions[0].link)
         } else {
             //   Toast.makeText(this, "You exceed number of watches", Toast.LENGTH_LONG).show()

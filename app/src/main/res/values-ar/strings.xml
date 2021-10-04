@@ -93,7 +93,9 @@
     <string name="block_title">عفواً …. لا يمكنك إستخدام التطبيق على هذا الجهاز</string>
     <string name="excced_watch">ليس لديك مشاهدات متاحة للمحاضرة</string>
     <string name="pay_first">الدفع اولا</string>
-
+    <string name="about_course">عن الدورة</string>
+    <string name="attached_files">الملفات المرفقة</string>
+    <string name="whats_contact">التاصل عبر واتس اب</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
