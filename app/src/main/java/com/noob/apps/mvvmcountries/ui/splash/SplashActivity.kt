@@ -2,6 +2,7 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.provider.Settings
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -45,6 +46,10 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
+        if (!Debug.isDebuggerConnected()) {
+            return BlockUserDialog.newInstance()
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance()
                 .show(supportFragmentManager, BlockUserDialog.TAG)
