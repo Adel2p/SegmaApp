@@ -93,38 +93,8 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_course_details)
         initViewModel()
-        val i = intent
-        course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
-        eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
-        mActivityBinding.txtLecId.text = course.name
-        mActivityBinding.txtLecNum.text = course.lectures!!.size.toString()
-        mActivityBinding.price.text = course.price.toString() + " " + getString(R.string.pound)
-        mActivityBinding.txtLectures.setTextColor(
-            ContextCompat.getColor(this, R.color.blue)
-        )
-        mActivityBinding.txtLectures.setOnClickListener {
-            mActivityBinding.txtLectures.setTextColor(
-                ContextCompat.getColor(this, R.color.blue)
-            )
-            mActivityBinding.txtInfo.setTextColor(
-                ContextCompat.getColor(this, R.color.gray_purple)
-            )
-            mActivityBinding.lectureLay.visibility = View.VISIBLE
-            mActivityBinding.infoLay.visibility = View.GONE
-
-        }
-        mActivityBinding.txtInfo.setOnClickListener {
-            mActivityBinding.txtLectures.setTextColor(
-                ContextCompat.getColor(this, R.color.gray_purple)
-            )
-            mActivityBinding.txtInfo.setTextColor(
-                ContextCompat.getColor(this, R.color.blue)
-            )
-            mActivityBinding.lectureLay.visibility = View.GONE
-            mActivityBinding.infoLay.visibility = View.VISIBLE
-
-
-        }
+        readValues()
+        initView()
         initializeRecyclerView()
         mAdapter.setData(course.lectures!!)
         userPreferences.getUserId.asLiveData().observeOnce(this, {
@@ -141,13 +111,16 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             }
 
         })
+        initPlayerView()
+
+    }
+
+    private fun initPlayerView() {
         val builder = DefaultTrackSelector.ParametersBuilder( /* context= */this)
         trackSelectorParameters = builder.build()
         mActivityBinding.playerView.setControllerVisibilityListener(this)
         mActivityBinding.playerView.requestFocus()
-        mActivityBinding.continueButton.setOnClickListener {
-            callWinnerDialog()
-        }
+
         val fullScreenButton: AppCompatImageView =
             mActivityBinding.playerView.findViewById(R.id.exo_fullscreen_icon)
         val normalScreenButton: AppCompatImageView =
@@ -209,7 +182,47 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             mActivityBinding.qualityCard.visibility = View.VISIBLE
         }
         initializeQualityAdapter()
+    }
 
+    private fun initView() {
+        mActivityBinding.txtLectures.setTextColor(
+            ContextCompat.getColor(this, R.color.blue)
+        )
+        mActivityBinding.txtLectures.setOnClickListener {
+            mActivityBinding.txtLectures.setTextColor(
+                ContextCompat.getColor(this, R.color.blue)
+            )
+            mActivityBinding.txtInfo.setTextColor(
+                ContextCompat.getColor(this, R.color.gray_purple)
+            )
+            mActivityBinding.lectureLay.visibility = View.VISIBLE
+            mActivityBinding.infoLay.visibility = View.GONE
+
+        }
+        mActivityBinding.txtInfo.setOnClickListener {
+            mActivityBinding.txtLectures.setTextColor(
+                ContextCompat.getColor(this, R.color.gray_purple)
+            )
+            mActivityBinding.txtInfo.setTextColor(
+                ContextCompat.getColor(this, R.color.blue)
+            )
+            mActivityBinding.lectureLay.visibility = View.GONE
+            mActivityBinding.infoLay.visibility = View.VISIBLE
+
+
+        }
+        mActivityBinding.continueButton.setOnClickListener {
+            callWinnerDialog()
+        }
+    }
+
+    private fun readValues() {
+        val i = intent
+        course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
+        eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
+        mActivityBinding.txtLecId.text = course.name
+        mActivityBinding.txtLecNum.text = course.lectures!!.size.toString()
+        mActivityBinding.price.text = course.price.toString() + " " + getString(R.string.pound)
     }
 
     private fun initViewModel() {
