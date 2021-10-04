@@ -186,6 +186,7 @@ open class BaseActivity : AppCompatActivity() {
                 || Build.PRODUCT == "google_sdk"
         // another Android SDK emulator check
 
+
         sIsProbablyRunningOnEmulator = result
         return result
     }
