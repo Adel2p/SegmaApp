@@ -52,9 +52,13 @@ open class BaseActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        );
         hideSystemUI();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            getWindow().getAttributes().layoutInDisplayCutoutMode =
+            window.attributes.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
         super.onCreate(savedInstanceState)
@@ -184,7 +188,7 @@ open class BaseActivity : AppCompatActivity() {
         return result
     }
 
-    fun checkFiles(targets: Array<String>): Boolean {
+    private fun checkFiles(targets: Array<String>): Boolean {
         for (pipe in targets) {
             val file = File(pipe)
             if (file.exists()) {

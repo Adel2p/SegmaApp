@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.WindowManager
 
 
-
-
 class MyApplication : Application() {
     private var context: Context? = null
     override fun onCreate() {

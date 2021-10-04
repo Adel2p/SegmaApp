@@ -21,6 +21,7 @@ import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
+import android.bluetooth.BluetoothAdapter
 
 
 class SplashActivity : BaseActivity() {
@@ -46,10 +47,16 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
-        if (!Debug.isDebuggerConnected()) {
+
+        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (mBluetoothAdapter.isEnabled)
             return BlockUserDialog.newInstance()
                 .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
+
+//        if (!Debug.isDebuggerConnected()) {
+//            return BlockUserDialog.newInstance()
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance()
                 .show(supportFragmentManager, BlockUserDialog.TAG)
