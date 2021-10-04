@@ -10,83 +10,91 @@
         android:background="@drawable/ic_background"
         tools:context=".ui.details.CourseDetailsActivity">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/playerView"
-            android:layout_width="0dp"
+        <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+            android:id="@+id/aspect"
+            android:layout_width="match_parent"
             android:layout_height="220dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:resize_mode="fill" />
+            app:resize_mode="fill">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mobileNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:background="@drawable/curved_black"
-            android:fontFamily="@font/regular"
-            android:padding="@dimen/_3sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintBottom_toBottomOf="@id/playerView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/playerView" />
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/playerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:resize_mode="zoom" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_back"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/exo_back_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mobileNumber"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_21sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@drawable/curved_black"
+                android:fontFamily="@font/regular"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toBottomOf="@id/playerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/playerView" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_Setting"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/exo_ic_settings"
-            app:layout_constraintStart_toEndOf="@id/btn_back"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/exo_back_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_play_mode"
-            android:layout_width="@dimen/_45sdp"
-            android:layout_height="@dimen/_45sdp"
-            android:layout_margin="@dimen/_20sdp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/exo_styled_controls_play"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@id/btn_Setting"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_Setting"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exo_ic_settings"
+                app:layout_constraintStart_toEndOf="@id/btn_back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/qualityCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="invisible"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="0dp"
-            app:contentPadding="5dp"
-            app:layout_constraintStart_toEndOf="@id/btn_Setting"
-            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_play_mode"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_margin="@dimen/_20sdp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/exo_styled_controls_play"
+                android:visibility="invisible"
+                app:layout_constraintStart_toEndOf="@id/btn_Setting"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvQuality"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/qualityCard"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="invisible"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="0dp"
+                app:contentPadding="5dp"
+                app:layout_constraintStart_toEndOf="@id/btn_Setting"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvQuality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
+        </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtLecId"
@@ -98,7 +106,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playerView" />
+            app:layout_constraintTop_toBottomOf="@+id/aspect" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgPrice"
@@ -106,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             android:src="@drawable/ic_price_icon"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/txtLecId"
             app:layout_constraintTop_toBottomOf="@id/txtLecId"
             tools:ignore="ImageContrastCheck" />
@@ -119,7 +127,7 @@
             android:fontFamily="@font/bold"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/imgPrice"
             app:layout_constraintTop_toBottomOf="@id/txtLecId" />
 
@@ -133,7 +141,7 @@
             android:textColor="@color/gray_purple"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toStartOf="@id/lectures"
-            app:layout_constraintTop_toBottomOf="@+id/playerView"
+            app:layout_constraintTop_toBottomOf="@+id/aspect"
             tools:text="10" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -147,7 +155,7 @@
             android:textColor="@color/gray_purple"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playerView" />
+            app:layout_constraintTop_toBottomOf="@+id/aspect" />
 
         <View
             android:id="@+id/lecSep"

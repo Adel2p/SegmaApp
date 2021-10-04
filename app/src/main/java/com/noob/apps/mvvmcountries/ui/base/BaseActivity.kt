@@ -22,7 +22,11 @@ import java.io.File
 import java.util.*
 import android.content.Intent
 import android.content.IntentFilter
+import android.util.Log
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStream
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -231,6 +235,25 @@ open class BaseActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    fun checkHDMI(): String {
+        var result = ""
+        try {
+            val file = File("/sys/class/display/display0.hdmi/connect")
+            val `in`: InputStream = FileInputStream(file)
+            val re = ByteArray(32768)
+            var read = 0
+            while (`in`.read(re, 0, 32768).also { read = it } != -1) {
+                val string = String(re, 0, read)
+                Log.v("String_whilecondition", "HDMI state = $string")
+                result = string
+            }
+            `in`.close()
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+        return result
     }
 
     override fun onDestroy() {

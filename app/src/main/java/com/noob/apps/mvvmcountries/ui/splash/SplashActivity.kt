@@ -35,7 +35,10 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
-
+        if (checkHDMI() == "1") {
+            return BlockUserDialog.newInstance("Please plug off hdmi cable")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         val CanMirror: Int = Settings.Secure.getInt(
             this.contentResolver,
             Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
@@ -55,10 +58,10 @@ class SplashActivity : BaseActivity() {
             return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
 
-        if (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) == 1) {
-            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
+//        if (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) == 1) {
+//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)

@@ -92,7 +92,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_course_details)
-        //  mActivityBinding.aspect.setAspectRatio(16f / 9f)
+        mActivityBinding.aspect.setAspectRatio(16f / 9f)
         initViewModel()
         readValues()
         initView()
@@ -154,16 +154,13 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         normalScreenButton.setOnClickListener {
             if (!isFullScreen) {
                 isFullScreen = true
-                window.decorView.systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
-                            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 supportActionBar?.hide()
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 val layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    1110,
                 )
-                mActivityBinding.playerView.layoutParams = layoutParams
+                mActivityBinding.aspect.layoutParams = layoutParams
                 //  mActivityBinding.continueButton.visibility = View.INVISIBLE
             } else {
                 isFullScreen = false
@@ -172,9 +169,9 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 val layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    220 * resources.displayMetrics.density.toInt()
+                    600
                 )
-                mActivityBinding.playerView.layoutParams = layoutParams
+                mActivityBinding.aspect.layoutParams = layoutParams
                 //  mActivityBinding.continueButton.visibility = View.VISIBLE
 
             }
@@ -305,21 +302,6 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 }
             }
         }, 0, 6000)
-//        val animation = TranslateAnimation(
-//            0.0f,
-//            1500.0f,
-//            0.0f,
-//            0.0f
-//        ) // new TranslateAnimation (float fromXDelta,float toXDelta, float fromYDelta, float toYDelta)
-//
-//
-//        animation.duration = 30000
-//
-//        animation.repeatCount = duration / 30
-//        animation.repeatMode
-//
-//        animation.fillAfter = false
-//        mActivityBinding.mobileNumber.startAnimation(animation)
     }
 
 
@@ -363,6 +345,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     fun onStartWatchClicked() {
         startTime = getStartDate()
         endTime = getStartDate(sessionTimeout)
+        releasePlayer()
         initializePlayer()
         printDifferenceDateForHours(startTime, endTime)
         createMediaItem(resolutions[0].link)
