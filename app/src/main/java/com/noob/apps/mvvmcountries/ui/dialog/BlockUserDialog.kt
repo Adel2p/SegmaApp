@@ -45,6 +45,7 @@ class BlockUserDialog : DialogFragment() {
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
             dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
         }
     }
 

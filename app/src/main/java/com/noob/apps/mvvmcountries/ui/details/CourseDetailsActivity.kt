@@ -115,6 +115,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
     }
 
+    @SuppressLint("CutPasteId")
     private fun initPlayerView() {
         val builder = DefaultTrackSelector.ParametersBuilder( /* context= */this)
         trackSelectorParameters = builder.build()
@@ -336,7 +337,7 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
         if (!eligibleToWatch) {
             course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
         } else
-        invalidWatchDialog(getString(R.string.pay_first))
+            invalidWatchDialog(getString(R.string.pay_first))
 
 
     }

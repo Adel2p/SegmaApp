@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.noob.apps.mvvmcountries.data.UserPreferences
 import androidx.lifecycle.asLiveData
+import com.framgia.android.emulator.EmulatorDetector
 import java.util.*
 
 open class BaseActivity : AppCompatActivity() {
@@ -46,23 +48,23 @@ open class BaseActivity : AppCompatActivity() {
                 createConfigurationContext(config)
             resources.updateConfiguration(config, resources.displayMetrics)
         })
-//        EmulatorDetector.with(this)
-//            .setCheckTelephony(true)
-//            .addPackageName("com.bluestacks")
-//            .setDebug(true)
-//            .detect {
-//                if (it) {
-//                    runOnUiThread {
-//                        Toast.makeText(
-//                            this,
-//                            "you cannot use App",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                        finish()
-//                    }
-//
-//                }
-//            }
+        EmulatorDetector.with(this)
+            .setCheckTelephony(true)
+            .addPackageName("com.bluestacks")
+            .setDebug(true)
+            .detect {
+                if (it) {
+                    runOnUiThread {
+                        Toast.makeText(
+                            this,
+                            "you cannot use App",
+                            Toast.LENGTH_LONG
+                        ).show()
+                     //   finish()
+                    }
+
+                }
+            }
 //        caster = Caster.create(this)
 //        if (caster.isConnected)
 //            finishAffinity()

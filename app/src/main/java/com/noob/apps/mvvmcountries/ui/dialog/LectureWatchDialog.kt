@@ -67,6 +67,7 @@ class LectureWatchDialog : DialogFragment() {
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
         }
     }
 
