@@ -50,12 +50,12 @@ class SplashActivity : BaseActivity() {
             )
         ).get(SplashViewModel::class.java)
 
-//        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-//        if (mBluetoothAdapter.isEnabled)
-//            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
+        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (mBluetoothAdapter.isEnabled)
+            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
 
-        if (Debug.isDebuggerConnected()) {
+        if (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) == 1) {
             return BlockUserDialog.newInstance("Please turn off usb debugging\n")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         }

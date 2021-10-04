@@ -171,6 +171,7 @@
                         android:layout_marginStart="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@color/sepColor"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/txtNotification" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -180,6 +181,7 @@
                         android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:src="@drawable/ic_pre_exam"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/notifictionSep" />
 
@@ -192,6 +194,7 @@
                         android:text="@string/previous_exams"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toStartOf="@id/previousExamsArrow"
                         app:layout_constraintStart_toEndOf="@+id/preExamImg"
                         app:layout_constraintTop_toTopOf="@+id/preExamImg" />
@@ -202,6 +205,7 @@
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:background="@drawable/arrow_icon"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/preExamImg" />
 
@@ -212,6 +216,7 @@
                         android:layout_marginStart="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:background="@color/sepColor"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/txtPreviousExams" />
 
 
@@ -222,6 +227,7 @@
                         android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:src="@drawable/ic_payment"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/preExamSep" />
 
@@ -234,6 +240,7 @@
                         android:text="@string/payment_method"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toStartOf="@id/paymentArrow"
                         app:layout_constraintStart_toEndOf="@+id/paymentImg"
                         app:layout_constraintTop_toTopOf="@+id/paymentImg" />
@@ -244,6 +251,7 @@
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:background="@drawable/arrow_icon"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/paymentImg" />
 
@@ -409,6 +417,48 @@
                         app:layout_constraintTop_toBottomOf="@+id/txtAboutApp"
 
                         />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/groupImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/ic_whats"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/aboutAppSep" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtGroup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:fontFamily="@font/semibold"
+                        android:text="@string/whats_contact"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintEnd_toStartOf="@id/groupArrow"
+                        app:layout_constraintStart_toEndOf="@+id/groupImg"
+                        app:layout_constraintTop_toTopOf="@+id/groupImg" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/groupArrow"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:background="@drawable/arrow_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/groupImg" />
+
+                    <View
+                        android:id="@+id/groupSep"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/sepColor"
+                        app:layout_constraintTop_toBottomOf="@+id/txtGroup"
+
+                        />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/logOutImg"
@@ -418,7 +468,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:src="@drawable/ic_lock"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/aboutAppSep" />
+                        app:layout_constraintTop_toBottomOf="@+id/groupSep" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtLogOut"

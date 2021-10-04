@@ -1,6 +1,7 @@
 package com.noob.apps.mvvmcountries.ui.more
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -145,7 +146,16 @@ class MoreFragment : BaseFragment() {
                 )
             }
         }
+        mActivityBinding.txtGroup.setOnClickListener {
+            try {
+                val url = "https://api.whatsapp.com/send?phone=$01554587098"
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+            } catch (e: Exception) {
 
+            }
+        }
     }
 
     companion object {

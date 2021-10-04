@@ -16,9 +16,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_prev"
-            style="@style/ExoMediaButton.Rewind"
-            android:contentDescription="TODO"
+            android:id="@+id/player_rewind"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:background="@drawable/ic_player_back"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TouchTargetSizeCheck" />
@@ -26,7 +28,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@id/exo_play"
             style="@style/ExoMediaButton.Play"
-            app:layout_constraintStart_toEndOf="@id/exo_prev"
+            app:layout_constraintStart_toEndOf="@id/player_rewind"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -37,9 +39,11 @@
 
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_next"
-            style="@style/ExoMediaButton.FastForward"
-            android:contentDescription="TODO"
+            android:id="@+id/player_forward"
+            android:layout_width="@dimen/_23sdp"
+            android:layout_height="@dimen/_8sdp"
+            android:background="@drawable/ic_player_forward"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/exo_pause"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="TouchTargetSizeCheck" />

@@ -24,9 +24,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_2sdp"
-            android:fontFamily="@font/bold"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:background="@drawable/curved_black"
+            android:fontFamily="@font/regular"
+            android:padding="@dimen/_3sdp"
             android:textColor="@color/white"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_11ssp"
             app:layout_constraintBottom_toBottomOf="@id/playerView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/playerView" />
@@ -103,6 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
             android:src="@drawable/ic_price_icon"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@id/txtLecId"
             app:layout_constraintTop_toBottomOf="@id/txtLecId"
             tools:ignore="ImageContrastCheck" />
@@ -115,6 +119,7 @@
             android:fontFamily="@font/bold"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@id/imgPrice"
             app:layout_constraintTop_toBottomOf="@id/txtLecId" />
 

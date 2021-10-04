@@ -3,15 +3,17 @@ package com.noob.apps.mvvmcountries.ui.details
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -123,6 +125,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
         val fullScreenButton: AppCompatImageView =
             mActivityBinding.playerView.findViewById(R.id.exo_fullscreen_icon)
+        val prevButton: AppCompatImageButton =
+            mActivityBinding.playerView.findViewById(R.id.player_rewind)
+        val forwardButton: AppCompatImageButton =
+            mActivityBinding.playerView.findViewById(R.id.player_forward)
         val normalScreenButton: AppCompatImageView =
             mActivityBinding.playerView.findViewById(R.id.exo_fullscreen_icon)
         fullScreenButton.setImageDrawable(
@@ -137,15 +143,13 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 R.drawable.ic_fullscreen_close
             )
         )
-        fullScreenButton.setOnClickListener {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-            supportActionBar?.show()
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            val layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                200 * resources.displayMetrics.density.toInt()
-            )
-            mActivityBinding.playerView.layoutParams = layoutParams
+        prevButton.setOnClickListener {
+            player?.seekTo(player!!.currentPosition - 10000)
+
+        }
+        forwardButton.setOnClickListener {
+            player?.seekTo(player!!.currentPosition + 10000)
+
         }
         normalScreenButton.setOnClickListener {
             if (!isFullScreen) {
@@ -277,6 +281,10 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
     }
 
     private fun startAnimation() {
+        val display: Display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        val width: Int = size.x - 260
         mActivityBinding.mobileNumber.visibility = View.VISIBLE
         mActivityBinding.mobileNumber.clearAnimation()
         val displaymetrics = DisplayMetrics()
@@ -286,8 +294,8 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
             override fun run() {
                 runOnUiThread {
                     val R = Random()
-                    val dx = R.nextFloat() * displaymetrics.widthPixels
-                    val dy = R.nextFloat() * 650
+                    val dx = R.nextFloat() * width
+                    val dy = R.nextFloat() * 450
                     val timer = Timer()
                     mActivityBinding.mobileNumber.animate()
                         .x(dx)
@@ -506,7 +514,8 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
 
             override fun onFinish() {
                 releasePlayer()
-                Toast.makeText(this@CourseDetailsActivity, "session end", Toast.LENGTH_LONG).show()
+                invalidWatchDialog(getString(R.string.excced_watch))
+
 
             }
         }.start()

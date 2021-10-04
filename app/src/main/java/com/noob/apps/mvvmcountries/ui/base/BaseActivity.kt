@@ -1,6 +1,8 @@
 package com.noob.apps.mvvmcountries.ui.base
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -18,6 +20,10 @@ import androidx.lifecycle.asLiveData
 import com.framgia.android.emulator.EmulatorDetector
 import java.io.File
 import java.util.*
+import android.content.Intent
+import android.content.IntentFilter
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
+
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var deviceId: String
@@ -52,6 +58,16 @@ open class BaseActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                // internet lost alert dialog method call from here...
+                return BlockUserDialog.newInstance("App can't run on Emulators")
+                    .show(supportFragmentManager, BlockUserDialog.TAG)
+            }
+        }
+        registerReceiver(broadcastReceiver, IntentFilter("INTERNET_LOST"));
+
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
@@ -217,5 +233,9 @@ open class BaseActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        //    unregisterReceiver(broadcastReceiver)
+    }
 
 }
