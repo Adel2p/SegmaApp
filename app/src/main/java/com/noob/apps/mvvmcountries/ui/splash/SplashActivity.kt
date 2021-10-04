@@ -22,6 +22,8 @@ import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import android.bluetooth.BluetoothAdapter
+import android.content.Context
+import android.telephony.TelephonyManager
 
 
 class SplashActivity : BaseActivity() {
@@ -50,18 +52,24 @@ class SplashActivity : BaseActivity() {
 
         val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (mBluetoothAdapter.isEnabled)
-            return BlockUserDialog.newInstance()
+            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
 
-//        if (!Debug.isDebuggerConnected()) {
-//            return BlockUserDialog.newInstance()
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
+        if (!Debug.isDebuggerConnected()) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         if (checkEmulatorFiles())
-            return BlockUserDialog.newInstance()
+            return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         if (isEmulator()) {
-            return BlockUserDialog.newInstance()
+            return BlockUserDialog.newInstance("App can't run on Emulators")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
+        val tm = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
+        val networkOperator = tm.networkOperatorName
+        if ("Android" == networkOperator) {
+            return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         } else {
             userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {

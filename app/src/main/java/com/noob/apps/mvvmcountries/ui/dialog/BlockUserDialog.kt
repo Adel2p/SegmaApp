@@ -11,18 +11,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.UserBlockDialogBinding
+import com.noob.apps.mvvmcountries.models.LectureDetails
 
 class BlockUserDialog : DialogFragment() {
     private lateinit var mActivityBinding: UserBlockDialogBinding
-
+    private var Title = ""
 
     companion object {
 
         const val TAG = "LectureWatchDialog"
 
 
-        fun newInstance(): BlockUserDialog {
+        fun newInstance(title: String): BlockUserDialog {
             val args = Bundle()
+            args.putString("title", title)
             val fragment = BlockUserDialog()
             fragment.arguments = args
             return fragment
@@ -32,6 +34,10 @@ class BlockUserDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            Title =
+                (it.getString("title").toString())
+        }
 
     }
 
@@ -62,6 +68,8 @@ class BlockUserDialog : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (Title.isNotEmpty())
+            mActivityBinding.txtCheckConnection.text = Title
         mActivityBinding.retry.setOnClickListener {
             requireActivity().finishAffinity()
             dismiss()

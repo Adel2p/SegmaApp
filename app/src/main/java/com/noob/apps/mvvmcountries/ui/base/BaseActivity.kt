@@ -83,6 +83,8 @@ open class BaseActivity : AppCompatActivity() {
                 createConfigurationContext(config)
             resources.updateConfiguration(config, resources.displayMetrics)
         })
+
+
         EmulatorDetector.with(this)
             .setCheckTelephony(true)
             .addPackageName("com.bluestacks")

@@ -157,7 +157,7 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                 mActivityBinding.txtFaculty.text = kt.data.studyFieldName
                 mActivityBinding.txtDepartment.text = kt.data.departmentName
                 if (!kt.data.enabled)
-                    BlockUserDialog.newInstance()
+                    BlockUserDialog.newInstance("")
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
                 if (fcmToken.isNotEmpty())
                     initFCMTokenObservers()
