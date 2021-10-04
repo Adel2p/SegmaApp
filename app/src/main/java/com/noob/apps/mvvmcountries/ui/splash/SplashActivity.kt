@@ -3,7 +3,6 @@ package com.noob.apps.mvvmcountries.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
@@ -46,8 +45,11 @@ class SplashActivity : BaseActivity() {
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         ).get(SplashViewModel::class.java)
+        if (checkEmulatorFiles())
+            return BlockUserDialog.newInstance()
+                .show(supportFragmentManager, BlockUserDialog.TAG)
         if (isEmulator()) {
-            BlockUserDialog.newInstance()
+            return BlockUserDialog.newInstance()
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         } else {
             userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
