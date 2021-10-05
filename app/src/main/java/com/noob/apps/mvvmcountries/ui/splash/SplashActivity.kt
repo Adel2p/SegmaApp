@@ -21,12 +21,14 @@ import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.telephony.TelephonyManager
 import android.media.AudioManager.ACTION_HDMI_AUDIO_PLUG
 import android.content.IntentFilter
-import android.widget.Toast
+import androidx.mediarouter.app.MediaRouteDiscoveryFragment
+import androidx.mediarouter.media.MediaRouter
 
 
 class SplashActivity : BaseActivity() {
@@ -51,12 +53,7 @@ class SplashActivity : BaseActivity() {
             )
         ).get(SplashViewModel::class.java)
 
-        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        if (mBluetoothAdapter.isEnabled)
-            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
-
-        if (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) == 1) {
+        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
             return BlockUserDialog.newInstance("Please turn off usb debugging\n")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         }
@@ -155,46 +152,28 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun openHome() {
-        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun openUniversity() {
-        val intent =
-            Intent(this@SplashActivity, UniversityActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun openLogin() {
-        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private val eventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent) {
-            // pause video
-            val action = intent.action
-            when (action) {
-                ACTION_HDMI_AUDIO_PLUG ->                     // EXTRA_AUDIO_PLUG_STATE: 0 - UNPLUG, 1 - PLUG
-                    return BlockUserDialog.newInstance("Please plug off HDMI cable")
-                        .show(supportFragmentManager, BlockUserDialog.TAG)
-            }
+        if (!isrouted) {
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        unregisterReceiver(eventReceiver)
+    private fun openUniversity() {
+        if (!isrouted) {
+            val intent =
+                Intent(this@SplashActivity, UniversityActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        val filter = IntentFilter()
-        filter.addAction(ACTION_HDMI_AUDIO_PLUG)
-        registerReceiver(eventReceiver, filter)
+    private fun openLogin() {
+        if (!isrouted) {
+            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
 }

@@ -88,6 +88,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.scottyab:rootbeer-lib:0.1.0'
     implementation 'com.github.framgia:android-emulator-detector:1.4.0'
+    implementation 'androidx.mediarouter:mediarouter:1.2.5'
 
 
 

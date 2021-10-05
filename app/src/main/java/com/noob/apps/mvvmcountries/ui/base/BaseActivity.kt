@@ -1,6 +1,7 @@
 package com.noob.apps.mvvmcountries.ui.base
 
 import android.app.Activity
+import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.os.Build
@@ -22,13 +23,10 @@ import java.io.File
 import java.util.*
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
+import android.media.AudioManager
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStream
-import java.lang.Exception
-
+import androidx.mediarouter.app.MediaRouteDiscoveryFragment
+import androidx.mediarouter.media.MediaRouter
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var deviceId: String
@@ -36,6 +34,9 @@ open class BaseActivity : AppCompatActivity() {
     lateinit var userPreferences: UserPreferences
     var appLanguage = ""
     private var sIsProbablyRunningOnEmulator: Boolean? = null
+    private var mMediaRouter: MediaRouter? = null
+    private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
+    var isrouted = false
 
     //  private lateinit var caster: Caster
     private val PIPES = arrayOf(
@@ -61,6 +62,65 @@ open class BaseActivity : AppCompatActivity() {
         "init.nox.rc",
         "ueventd.nox.rc"
     )
+    private val mMediaRouterCB: MediaRouter.Callback = object : MediaRouter.Callback() {
+        // Return a custom callback that will simply log all of the route events
+        // for demonstration purposes.
+        override fun onRouteAdded(router: MediaRouter, route: MediaRouter.RouteInfo) {
+        }
+
+        override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+        }
+
+        override fun onRouteRemoved(router: MediaRouter, route: MediaRouter.RouteInfo) {
+        }
+
+        override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo) {
+//            mPlayer.updatePresentation()
+//            mSessionManager.setPlayer(mPlayer)
+//            mSessionManager.unsuspend()
+//            registerRemoteControlClient()
+//            updateUi()
+
+        }
+
+        override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            isrouted=true
+            return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
+                .show(
+                    supportFragmentManager,
+                    BlockUserDialog.TAG
+                )            //  mPlayer.updatePresentation()
+            //  mPlayer.release()
+        }
+
+        override fun onRouteVolumeChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            // Log.d(MainActivity.TAG, "onRouteVolumeChanged: route=$route")
+        }
+
+        override fun onRoutePresentationDisplayChanged(
+            router: MediaRouter,
+            route: MediaRouter.RouteInfo
+        ) {
+            //  Log.d(MainActivity.TAG, "onRoutePresentationDisplayChanged: route=$route")
+            //  mPlayer.updatePresentation()
+            isrouted=true
+            return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
+
+        override fun onProviderAdded(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+            // Log.d(MainActivity.TAG, "onRouteProviderAdded: provider=$provider")
+        }
+
+        override fun onProviderRemoved(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+            // Log.d(MainActivity.TAG, "onRouteProviderRemoved: provider=$provider")
+        }
+
+        override fun onProviderChanged(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+            //   Log.d(MainActivity.TAG, "onRouteProviderChanged: provider=$provider")
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.setFlags(
@@ -95,7 +155,17 @@ open class BaseActivity : AppCompatActivity() {
             resources.updateConfiguration(config, resources.displayMetrics)
         })
 
+        // Add a fragment to take care of media route discovery.
+        // This fragment automatically adds or removes a callback whenever the activity
+        // is started or stopped.
 
+        mMediaRouter = MediaRouter.getInstance(this)
+
+        val fm = supportFragmentManager
+        var fragment: DiscoveryFragment?
+        fragment = DiscoveryFragment()
+        fragment.setCallback(mMediaRouterCB)
+        fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
         EmulatorDetector.with(this)
             .setCheckTelephony(true)
             .addPackageName("com.bluestacks")
@@ -228,46 +298,69 @@ open class BaseActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 
-    fun checkHDMI(): String {
-        var result = ""
-        try {
-            val file = File("/sys/class/display/display0.hdmi/connect")
-            val `in`: InputStream = FileInputStream(file)
-            val re = ByteArray(32768)
-            var read = 0
-            while (`in`.read(re, 0, 32768).also { read = it } != -1) {
-                val string = String(re, 0, read)
-                Log.v("String_whilecondition", "HDMI state = $string")
-                result = string
+    private val bluetoothChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val action = intent.action
+
+            if (action == BluetoothAdapter.ACTION_STATE_CHANGED) {
+                val state = intent.getIntExtra(
+                    BluetoothAdapter.EXTRA_STATE,
+                    BluetoothAdapter.ERROR
+                )
+                when (state) {
+                    BluetoothAdapter.STATE_ON -> return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+                    BluetoothAdapter.STATE_TURNING_ON -> return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+                }
             }
-            `in`.close()
-        } catch (ex: IOException) {
-            ex.printStackTrace()
         }
-        return result
     }
-
-    fun isHdmiSwitchSet(): Boolean {
-
-        // The file '/sys/devices/virtual/switch/hdmi/state' holds an int -- if it's 1 then an HDMI device is connected.
-        // An alternative file to check is '/sys/class/switch/hdmi/state' which exists instead on certain devices.
-        var switchFile = File("/sys/devices/virtual/switch/hdmi/state")
-        if (!switchFile.exists()) {
-            switchFile = File("/sys/class/switch/hdmi/state")
-        }
-        return try {
-            val switchFileScanner = Scanner(switchFile)
-            val switchValue = switchFileScanner.nextInt()
-            switchFileScanner.close()
-            switchValue > 0
-        } catch (e: Exception) {
-            false
+    private val eventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            // pause video
+            val action = intent.action
+            when (action) {
+                AudioManager.ACTION_HDMI_AUDIO_PLUG ->                     // EXTRA_AUDIO_PLUG_STATE: 0 - UNPLUG, 1 - PLUG
+                    return BlockUserDialog.newInstance("Please plug off HDMI cable")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+            }
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        //    unregisterReceiver(broadcastReceiver)
+    override fun onResume() {
+        super.onResume()
+//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
+        val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+        registerReceiver(bluetoothChangeReceiver, filter)
+        val filter2 = IntentFilter()
+        filter2.addAction(AudioManager.ACTION_HDMI_AUDIO_PLUG)
+        registerReceiver(eventReceiver, filter2)
     }
 
+    class DiscoveryFragment : MediaRouteDiscoveryFragment() {
+        private lateinit var mCallback: MediaRouter.Callback
+        fun setCallback(cb: MediaRouter.Callback) {
+            mCallback = cb
+        }
+
+        override fun onCreateCallback(): MediaRouter.Callback {
+            return mCallback
+        }
+
+        override fun onPrepareCallbackFlags(): Int {
+            // Add the CALLBACK_FLAG_UNFILTERED_EVENTS flag to ensure that we will
+            // observe and log all route events including those that are for routes
+            // that do not match our selector.  This is only for demonstration purposes
+            // and should not be needed by most applications.
+            return super.onPrepareCallbackFlags() or MediaRouter.CALLBACK_FLAG_UNFILTERED_EVENTS
+        }
+
+        companion object {
+            private const val TAG = "DiscoveryFragment"
+        }
+    }
 }
