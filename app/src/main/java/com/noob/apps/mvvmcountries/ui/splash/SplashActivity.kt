@@ -2,7 +2,6 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
 import android.provider.Settings
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -22,8 +21,12 @@ import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import android.bluetooth.BluetoothAdapter
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.telephony.TelephonyManager
+import android.media.AudioManager.ACTION_HDMI_AUDIO_PLUG
+import android.content.IntentFilter
+import android.widget.Toast
 
 
 class SplashActivity : BaseActivity() {
@@ -35,15 +38,16 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
-        if (checkHDMI() == "1") {
-            return BlockUserDialog.newInstance("Please plug off hdmi cable")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
         val CanMirror: Int = Settings.Secure.getInt(
             this.contentResolver,
             Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
             0
         )
+        if (CanMirror == 1) {
+            Toast.makeText(this, "CanMirror", Toast.LENGTH_LONG).show()
+        } else
+            Toast.makeText(this, "CannotMirror", Toast.LENGTH_LONG).show()
+
 
         splashViewModel = ViewModelProvider(
             this,
@@ -173,6 +177,30 @@ class SplashActivity : BaseActivity() {
         val intent = Intent(this@SplashActivity, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private val eventReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            // pause video
+            val action = intent.action
+            when (action) {
+                ACTION_HDMI_AUDIO_PLUG ->                     // EXTRA_AUDIO_PLUG_STATE: 0 - UNPLUG, 1 - PLUG
+                    return BlockUserDialog.newInstance("Please plug off HDMI cable")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(eventReceiver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter()
+        filter.addAction(ACTION_HDMI_AUDIO_PLUG)
+        registerReceiver(eventReceiver, filter)
     }
 
 }

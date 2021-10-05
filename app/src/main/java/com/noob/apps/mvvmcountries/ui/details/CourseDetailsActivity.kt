@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +35,7 @@ import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
+import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -47,7 +49,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
+class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     PlayerControlView.VisibilityListener {
     private lateinit var mActivityBinding: ActivityCourseDetailsBinding
     private var player: SimpleExoPlayer? = null
@@ -156,19 +158,17 @@ class CourseDetailsActivity : BaseActivity(), RecyclerViewClickListener,
                 isFullScreen = true
                 supportActionBar?.hide()
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                val layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    1110,
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    1100,
                 )
                 mActivityBinding.aspect.layoutParams = layoutParams
                 //  mActivityBinding.continueButton.visibility = View.INVISIBLE
             } else {
                 isFullScreen = false
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-                supportActionBar?.show()
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                val layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
                     600
                 )
                 mActivityBinding.aspect.layoutParams = layoutParams

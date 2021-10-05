@@ -1,8 +1,7 @@
 package com.noob.apps.mvvmcountries.ui.base
 
+
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -20,17 +19,14 @@ import androidx.lifecycle.asLiveData
 import com.framgia.android.emulator.EmulatorDetector
 import java.io.File
 import java.util.*
-import android.content.Intent
-import android.content.IntentFilter
 import android.util.Log
-import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.lang.Exception
 
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity2 : AppCompatActivity() {
     lateinit var deviceId: String
     private var dialog: KProgressHUD? = null
     lateinit var userPreferences: UserPreferences
@@ -67,11 +63,6 @@ open class BaseActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
         );
-        hideSystemUI();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            window.attributes.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        }
         super.onCreate(savedInstanceState)
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         userPreferences = UserPreferences(this)
