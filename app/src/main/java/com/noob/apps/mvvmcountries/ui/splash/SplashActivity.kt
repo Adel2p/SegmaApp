@@ -43,12 +43,6 @@ class SplashActivity : BaseActivity() {
             Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
             0
         )
-        if (CanMirror == 1) {
-            Toast.makeText(this, "CanMirror", Toast.LENGTH_LONG).show()
-        } else
-            Toast.makeText(this, "CannotMirror", Toast.LENGTH_LONG).show()
-
-
         splashViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
@@ -62,10 +56,10 @@ class SplashActivity : BaseActivity() {
             return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
 
-//        if (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) == 1) {
-//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
+        if (Settings.Secure.getInt(getContentResolver(), Settings.Secure.ADB_ENABLED, 0) == 1) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)

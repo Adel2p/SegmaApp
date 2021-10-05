@@ -11,7 +11,6 @@ import android.util.DisplayMetrics
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -34,7 +33,6 @@ import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
 import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
-import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
@@ -183,6 +181,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             mActivityBinding.qualityCard.visibility = View.VISIBLE
         }
         initializeQualityAdapter()
+
     }
 
     private fun initView() {
