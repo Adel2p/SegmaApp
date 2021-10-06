@@ -27,6 +27,8 @@ import android.content.Context
 import android.telephony.TelephonyManager
 import android.media.AudioManager.ACTION_HDMI_AUDIO_PLUG
 import android.content.IntentFilter
+import android.os.Build
+import android.widget.Toast
 import androidx.mediarouter.app.MediaRouteDiscoveryFragment
 import androidx.mediarouter.media.MediaRouter
 
@@ -53,10 +55,10 @@ class SplashActivity : BaseActivity() {
             )
         ).get(SplashViewModel::class.java)
 
-        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
+//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
@@ -152,28 +154,25 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun openHome() {
-        if (!isrouted) {
-            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 
     private fun openUniversity() {
-        if (!isrouted) {
-            val intent =
-                Intent(this@SplashActivity, UniversityActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        val intent =
+            Intent(this@SplashActivity, UniversityActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 
     private fun openLogin() {
-        if (!isrouted) {
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+
     }
 
 }

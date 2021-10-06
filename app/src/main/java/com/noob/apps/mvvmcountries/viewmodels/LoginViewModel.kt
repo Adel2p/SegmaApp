@@ -3,12 +3,9 @@ package com.noob.apps.mvvmcountries.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.noob.apps.mvvmcountries.data.ApiHelper
 import com.noob.apps.mvvmcountries.data.DatabaseHelper
 import com.noob.apps.mvvmcountries.interfaces.NetworkResponseCallback
-import com.noob.apps.mvvmcountries.models.Country
 import com.noob.apps.mvvmcountries.models.LoginResponse
-import com.noob.apps.mvvmcountries.repositories.CountriesRepository
 import com.noob.apps.mvvmcountries.repositories.LoginRepository
 import com.noob.apps.mvvmcountries.utils.NetworkHelper
 

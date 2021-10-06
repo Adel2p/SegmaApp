@@ -12,6 +12,8 @@ import androidx.fragment.app.DialogFragment
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.UserBlockDialogBinding
 import com.noob.apps.mvvmcountries.models.LectureDetails
+import android.content.Intent
+
 
 class BlockUserDialog : DialogFragment() {
     private lateinit var mActivityBinding: UserBlockDialogBinding
@@ -19,7 +21,7 @@ class BlockUserDialog : DialogFragment() {
 
     companion object {
 
-        const val TAG = "LectureWatchDialog"
+        const val TAG = "BlockUserDialog"
 
 
         fun newInstance(title: String): BlockUserDialog {
@@ -71,8 +73,11 @@ class BlockUserDialog : DialogFragment() {
         if (Title.isNotEmpty())
             mActivityBinding.txtCheckConnection.text = Title
         mActivityBinding.retry.setOnClickListener {
-            requireActivity().finishAffinity()
-            dismiss()
+            // requireActivity().finishAffinity()
+            val homeIntent = Intent(Intent.ACTION_MAIN)
+            homeIntent.addCategory(Intent.CATEGORY_HOME)
+            homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(homeIntent)
         }
     }
 }

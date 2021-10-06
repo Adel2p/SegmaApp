@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.mediarouter.media.MediaRouter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -33,6 +35,7 @@ import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
 import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
+import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
@@ -49,6 +52,7 @@ import java.util.*
 
 class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     PlayerControlView.VisibilityListener {
+    private val TAG = "CourseDetailsActivity"
     private lateinit var mActivityBinding: ActivityCourseDetailsBinding
     private var player: SimpleExoPlayer? = null
     private var playWhenReady = false
@@ -85,6 +89,80 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     companion object {
         var lastQualityPosition = 0
         var lastSpeedPosition = 0
+    }
+
+    private var mMediaRouter: MediaRouter? = null
+    private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
+    private val mMediaRouterCB: MediaRouter.Callback = object : MediaRouter.Callback() {
+        override fun onRouteAdded(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteAdded: route=$route"
+            )
+
+        }
+
+        override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteChanged: route=$route"
+            )
+
+        }
+
+
+        override fun onRouteRemoved(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteRemoved: route=$route"
+            )
+
+        }
+
+        override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteSelected: route=$route"
+            )
+            if (route.name != "Phone")
+                showBlockDialog("You Cannot run App on Screen Mirroring")
+
+
+        }
+
+        override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteUnselected: route=$route"
+            )
+
+            hideBlockDialog()
+        }
+
+        override fun onRouteVolumeChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+        }
+
+        override fun onRoutePresentationDisplayChanged(
+            router: MediaRouter,
+            route: MediaRouter.RouteInfo
+        ) {
+            Log.d(
+                TAG,
+                "onRoutePresentationDisplayChanged: route=$route"
+            )
+            if (route.name != "Phone")
+                showBlockDialog("You Cannot run App on Screen Mirroring")
+
+        }
+
+        override fun onProviderAdded(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+        }
+
+        override fun onProviderRemoved(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+        }
+
+        override fun onProviderChanged(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+        }
     }
 
     @SuppressLint("CutPasteId")
@@ -531,6 +609,12 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         if ((Util.SDK_INT < 24 || player == null)) {
             initializePlayer()
         }
+        mMediaRouter = MediaRouter.getInstance(this)
+        val fm = supportFragmentManager
+        val fragment: BaseActivity.DiscoveryFragment?
+        fragment = BaseActivity.DiscoveryFragment()
+        fragment.setCallback(mMediaRouterCB)
+        fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
     }
 
     override fun onPause() {

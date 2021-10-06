@@ -44,7 +44,8 @@ open class BaseActivity2 : AppCompatActivity() {
     private var mMediaRouter: MediaRouter? = null
     private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
     var isrouted = false
-    //  private lateinit var caster: Caster
+    private lateinit var blockUserDialog: BlockUserDialog
+
     private val PIPES = arrayOf(
         "/dev/socket/qemud",
         "/dev/qemu_pipe"
@@ -90,7 +91,7 @@ open class BaseActivity2 : AppCompatActivity() {
         }
 
         override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo) {
-            isrouted=true
+            isrouted = true
             return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
                 .show(
                     supportFragmentManager,
@@ -109,7 +110,7 @@ open class BaseActivity2 : AppCompatActivity() {
         ) {
             //  Log.d(MainActivity.TAG, "onRoutePresentationDisplayChanged: route=$route")
             //  mPlayer.updatePresentation()
-            isrouted=true
+            isrouted = true
             return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         }
@@ -374,6 +375,7 @@ open class BaseActivity2 : AppCompatActivity() {
         super.onDestroy()
         //    unregisterReceiver(broadcastReceiver)
     }
+
     class DiscoveryFragment : MediaRouteDiscoveryFragment() {
         private lateinit var mCallback: MediaRouter.Callback
         fun setCallback(cb: MediaRouter.Callback) {
@@ -395,5 +397,22 @@ open class BaseActivity2 : AppCompatActivity() {
         companion object {
             private const val TAG = "DiscoveryFragment"
         }
+    }
+
+    fun showBlockDialog(msg: String) {
+        blockUserDialog = BlockUserDialog.newInstance(msg)
+        blockUserDialog.show(
+            supportFragmentManager,
+            BlockUserDialog.TAG
+        )
+    }
+
+
+    fun hideBlockDialog() {
+        if (::blockUserDialog.isInitialized) {
+            finish();
+            startActivity(intent);
+        }
+
     }
 }

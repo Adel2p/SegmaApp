@@ -55,10 +55,10 @@
                 android:maxLength="11"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:text="01025529187"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:text="01025529187" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -94,10 +94,10 @@
                 android:inputType="textPassword"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:text="123456"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14ssp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck"
+                tools:text="123456" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView

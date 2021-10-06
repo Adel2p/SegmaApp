@@ -34,8 +34,10 @@ open class BaseActivity : AppCompatActivity() {
     lateinit var userPreferences: UserPreferences
     var appLanguage = ""
     private var sIsProbablyRunningOnEmulator: Boolean? = null
-    private var mMediaRouter: MediaRouter? = null
-    private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
+    private lateinit var blockUserDialog: BlockUserDialog
+
+    // var mMediaRouter: MediaRouter? = null
+    // val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
     var isrouted = false
 
     //  private lateinit var caster: Caster
@@ -62,75 +64,17 @@ open class BaseActivity : AppCompatActivity() {
         "init.nox.rc",
         "ueventd.nox.rc"
     )
-    private val mMediaRouterCB: MediaRouter.Callback = object : MediaRouter.Callback() {
-        // Return a custom callback that will simply log all of the route events
-        // for demonstration purposes.
-        override fun onRouteAdded(router: MediaRouter, route: MediaRouter.RouteInfo) {
-        }
-
-        override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
-        }
-
-        override fun onRouteRemoved(router: MediaRouter, route: MediaRouter.RouteInfo) {
-        }
-
-        override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo) {
-//            mPlayer.updatePresentation()
-//            mSessionManager.setPlayer(mPlayer)
-//            mSessionManager.unsuspend()
-//            registerRemoteControlClient()
-//            updateUi()
-
-        }
-
-        override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo) {
-            isrouted=true
-            return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
-                .show(
-                    supportFragmentManager,
-                    BlockUserDialog.TAG
-                )            //  mPlayer.updatePresentation()
-            //  mPlayer.release()
-        }
-
-        override fun onRouteVolumeChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
-            // Log.d(MainActivity.TAG, "onRouteVolumeChanged: route=$route")
-        }
-
-        override fun onRoutePresentationDisplayChanged(
-            router: MediaRouter,
-            route: MediaRouter.RouteInfo
-        ) {
-            //  Log.d(MainActivity.TAG, "onRoutePresentationDisplayChanged: route=$route")
-            //  mPlayer.updatePresentation()
-            isrouted=true
-            return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
-
-        override fun onProviderAdded(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
-            // Log.d(MainActivity.TAG, "onRouteProviderAdded: provider=$provider")
-        }
-
-        override fun onProviderRemoved(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
-            // Log.d(MainActivity.TAG, "onRouteProviderRemoved: provider=$provider")
-        }
-
-        override fun onProviderChanged(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
-            //   Log.d(MainActivity.TAG, "onRouteProviderChanged: provider=$provider")
-        }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
-        );
-        hideSystemUI();
+        )
+        hideSystemUI()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             window.attributes.layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
         super.onCreate(savedInstanceState)
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
@@ -145,10 +89,7 @@ open class BaseActivity : AppCompatActivity() {
                 "en"
             val locale = Locale(lang)
             Locale.setDefault(locale)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                config.setLocale(locale)
-            else
-                config.locale = locale
+            config.setLocale(locale)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 createConfigurationContext(config)
@@ -159,13 +100,7 @@ open class BaseActivity : AppCompatActivity() {
         // This fragment automatically adds or removes a callback whenever the activity
         // is started or stopped.
 
-        mMediaRouter = MediaRouter.getInstance(this)
 
-        val fm = supportFragmentManager
-        var fragment: DiscoveryFragment?
-        fragment = DiscoveryFragment()
-        fragment.setCallback(mMediaRouterCB)
-        fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
         EmulatorDetector.with(this)
             .setCheckTelephony(true)
             .addPackageName("com.bluestacks")
@@ -245,6 +180,8 @@ open class BaseActivity : AppCompatActivity() {
                 && Build.MODEL.startsWith("sdk_gphone_"))
                 //
                 || Build.HARDWARE == "vbox86"
+                || Build.HARDWARE == "Kirin 710"
+                || Build.HARDWARE == "Kirin 710".trim()
                 || Build.PRODUCT == "vbox86p"
                 || Build.HARDWARE.lowercase(Locale.getDefault()).contains("nox")
                 || Build.MODEL.lowercase(Locale.getDefault()).contains("droid4x")
@@ -334,6 +271,7 @@ open class BaseActivity : AppCompatActivity() {
 //            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
 //                .show(supportFragmentManager, BlockUserDialog.TAG)
 //        }
+
         val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
         registerReceiver(bluetoothChangeReceiver, filter)
         val filter2 = IntentFilter()
@@ -362,5 +300,22 @@ open class BaseActivity : AppCompatActivity() {
         companion object {
             private const val TAG = "DiscoveryFragment"
         }
+    }
+
+    fun showBlockDialog(msg: String) {
+        blockUserDialog = BlockUserDialog.newInstance(msg)
+        blockUserDialog.show(
+            supportFragmentManager,
+            BlockUserDialog.TAG
+        )
+    }
+
+
+    fun hideBlockDialog() {
+        if (::blockUserDialog.isInitialized) {
+            finish();
+            startActivity(intent);
+        }
+
     }
 }

@@ -13,11 +13,87 @@ import com.noob.apps.mvvmcountries.ui.library.LibraryFragment
 import com.noob.apps.mvvmcountries.ui.more.MoreFragment
 import kotlinx.coroutines.launch
 import android.content.Intent
+import android.util.Log
+import androidx.mediarouter.media.MediaRouter
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.fcm.MyFirebaseMessagingService
 
 
 class HomeActivity : BaseActivity() {
+    private val TAG = "HomeActivity"
+    private var mMediaRouter: MediaRouter? = null
+    private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
     private lateinit var mActivityBinding: ActivityHomeBinding
+    private val mMediaRouterCB: MediaRouter.Callback = object : MediaRouter.Callback() {
+        override fun onRouteAdded(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteAdded: route=$route"
+            )
+
+        }
+
+        override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteChanged: route=$route"
+            )
+
+        }
+
+
+        override fun onRouteRemoved(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteRemoved: route=$route"
+            )
+
+        }
+
+        override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteSelected: route=$route"
+            )
+            if (route.name != "Phone")
+                showBlockDialog("You Cannot run App on Screen Mirroring")
+        }
+
+        override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            Log.d(
+                TAG,
+                "onRouteUnselected: route=$route"
+            )
+
+            hideBlockDialog()
+        }
+
+        override fun onRouteVolumeChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+        }
+
+        override fun onRoutePresentationDisplayChanged(
+            router: MediaRouter,
+            route: MediaRouter.RouteInfo
+        ) {
+            Log.d(
+                TAG,
+                "onRoutePresentationDisplayChanged: route=$route"
+            )
+            if (route.name != "Phone")
+                showBlockDialog("You Cannot run App on Screen Mirroring")
+
+        }
+
+        override fun onProviderAdded(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+        }
+
+        override fun onProviderRemoved(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+        }
+
+        override fun onProviderChanged(router: MediaRouter, provider: MediaRouter.ProviderInfo) {
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivityBinding =
@@ -48,9 +124,20 @@ class HomeActivity : BaseActivity() {
             true
         }
     }
+
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.container, fragment)
             commit()
         }
+
+    override fun onResume() {
+        super.onResume()
+        mMediaRouter = MediaRouter.getInstance(this)
+        val fm = supportFragmentManager
+        val fragment: DiscoveryFragment?
+        fragment = DiscoveryFragment()
+        fragment.setCallback(mMediaRouterCB)
+        fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
+    }
 }
