@@ -373,7 +373,8 @@ open class BaseActivity2 : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        //    unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(bluetoothChangeReceiver)
+        unregisterReceiver(eventReceiver)
     }
 
     class DiscoveryFragment : MediaRouteDiscoveryFragment() {

@@ -27,6 +27,9 @@ import android.media.AudioManager
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import androidx.mediarouter.app.MediaRouteDiscoveryFragment
 import androidx.mediarouter.media.MediaRouter
+import com.noob.apps.mvvmcountries.ui.dialog.MirroringDialog
+import android.telephony.TelephonyManager
+
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var deviceId: String
@@ -34,7 +37,7 @@ open class BaseActivity : AppCompatActivity() {
     lateinit var userPreferences: UserPreferences
     var appLanguage = ""
     private var sIsProbablyRunningOnEmulator: Boolean? = null
-    private lateinit var blockUserDialog: BlockUserDialog
+    private lateinit var blockUserDialog: MirroringDialog
 
     // var mMediaRouter: MediaRouter? = null
     // val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
@@ -95,12 +98,6 @@ open class BaseActivity : AppCompatActivity() {
                 createConfigurationContext(config)
             resources.updateConfiguration(config, resources.displayMetrics)
         })
-
-        // Add a fragment to take care of media route discovery.
-        // This fragment automatically adds or removes a callback whenever the activity
-        // is started or stopped.
-
-
         EmulatorDetector.with(this)
             .setCheckTelephony(true)
             .addPackageName("com.bluestacks")
@@ -118,17 +115,6 @@ open class BaseActivity : AppCompatActivity() {
 
                 }
             }
-//        caster = Caster.create(this)
-//        if (caster.isConnected)
-//            finishAffinity()
-//        caster.setOnConnectChangeListener(object : Caster.OnConnectChangeListener {
-//            override fun onConnected() {
-//                finishAffinity()
-//            }
-//
-//            override fun onDisconnected() {
-//            }
-//        })
 
     }
 
@@ -245,10 +231,12 @@ open class BaseActivity : AppCompatActivity() {
                     BluetoothAdapter.ERROR
                 )
                 when (state) {
-                    BluetoothAdapter.STATE_ON -> return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
-                        .show(supportFragmentManager, BlockUserDialog.TAG)
-                    BluetoothAdapter.STATE_TURNING_ON -> return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
-                        .show(supportFragmentManager, BlockUserDialog.TAG)
+                    BluetoothAdapter.STATE_ON ->
+                        return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
+                    BluetoothAdapter.STATE_TURNING_ON ->
+                        return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
                 }
             }
         }
@@ -296,14 +284,10 @@ open class BaseActivity : AppCompatActivity() {
             // and should not be needed by most applications.
             return super.onPrepareCallbackFlags() or MediaRouter.CALLBACK_FLAG_UNFILTERED_EVENTS
         }
-
-        companion object {
-            private const val TAG = "DiscoveryFragment"
-        }
     }
 
     fun showBlockDialog(msg: String) {
-        blockUserDialog = BlockUserDialog.newInstance(msg)
+        blockUserDialog = MirroringDialog.newInstance(msg)
         blockUserDialog.show(
             supportFragmentManager,
             BlockUserDialog.TAG
@@ -313,9 +297,16 @@ open class BaseActivity : AppCompatActivity() {
 
     fun hideBlockDialog() {
         if (::blockUserDialog.isInitialized) {
-            finish();
-            startActivity(intent);
+            finish()
+            startActivity(intent)
         }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(bluetoothChangeReceiver)
+        unregisterReceiver(eventReceiver)
 
     }
 }

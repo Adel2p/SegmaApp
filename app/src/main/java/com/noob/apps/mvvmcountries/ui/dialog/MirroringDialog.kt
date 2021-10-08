@@ -1,6 +1,7 @@
 package com.noob.apps.mvvmcountries.ui.dialog
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,11 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.UserBlockDialogBinding
-import com.noob.apps.mvvmcountries.models.LectureDetails
-import android.content.Intent
 
-
-class BlockUserDialog : DialogFragment() {
+class MirroringDialog : DialogFragment() {
     private lateinit var mActivityBinding: UserBlockDialogBinding
     private var Title = ""
 
@@ -24,10 +22,10 @@ class BlockUserDialog : DialogFragment() {
         const val TAG = "BlockUserDialog"
 
 
-        fun newInstance(title: String): BlockUserDialog {
+        fun newInstance(title: String): MirroringDialog {
             val args = Bundle()
             args.putString("title", title)
-            val fragment = BlockUserDialog()
+            val fragment = MirroringDialog()
             fragment.arguments = args
             return fragment
         }
@@ -73,8 +71,10 @@ class BlockUserDialog : DialogFragment() {
         if (Title.isNotEmpty())
             mActivityBinding.txtCheckConnection.text = Title
         mActivityBinding.retry.setOnClickListener {
-            dismiss()
-            requireActivity().finishAffinity()
+            val homeIntent = Intent(Intent.ACTION_MAIN)
+            homeIntent.addCategory(Intent.CATEGORY_HOME)
+            homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(homeIntent)
         }
     }
 }
