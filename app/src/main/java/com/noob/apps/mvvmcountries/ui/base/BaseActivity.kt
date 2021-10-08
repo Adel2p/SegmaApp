@@ -28,7 +28,6 @@ import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import androidx.mediarouter.app.MediaRouteDiscoveryFragment
 import androidx.mediarouter.media.MediaRouter
 import com.noob.apps.mvvmcountries.ui.dialog.MirroringDialog
-import android.telephony.TelephonyManager
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -39,11 +38,6 @@ open class BaseActivity : AppCompatActivity() {
     private var sIsProbablyRunningOnEmulator: Boolean? = null
     private lateinit var blockUserDialog: MirroringDialog
 
-    // var mMediaRouter: MediaRouter? = null
-    // val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
-    var isrouted = false
-
-    //  private lateinit var caster: Caster
     private val PIPES = arrayOf(
         "/dev/socket/qemud",
         "/dev/qemu_pipe"
