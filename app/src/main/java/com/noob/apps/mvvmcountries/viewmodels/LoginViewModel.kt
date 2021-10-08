@@ -24,7 +24,7 @@ class LoginViewModel(
     fun fetchCountriesFromServer(mobile: String, password: String): MutableLiveData<LoginResponse> {
         if (NetworkHelper.isOnline(app.baseContext)) {
             mShowProgressBar.value = true
-            user = mRepository.login(dbHelper,mobile, password, object : NetworkResponseCallback {
+            user = mRepository.login(dbHelper, mobile, password, object : NetworkResponseCallback {
                 override fun onNetworkFailure(th: Throwable) {
                     mShowApiError.value = th.message
                 }
