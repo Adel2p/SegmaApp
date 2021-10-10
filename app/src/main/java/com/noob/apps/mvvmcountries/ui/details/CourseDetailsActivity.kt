@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -85,6 +86,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private var lastDuration: Long = 0
     private var isBack = false
     private var selectedPosition = 0
+    var lecturesDB = mutableListOf<WatchedLectures>()
 
     companion object {
         var lastQualityPosition = 0
@@ -191,7 +193,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
         })
         initPlayerView()
-
     }
 
     @SuppressLint("CutPasteId")
@@ -253,7 +254,25 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             }
         }
         mActivityBinding.btnBack.setOnClickListener {
-            finish()
+            lastDuration = (player!!.currentPosition / 1000) % 60
+            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+            val total = hours * 60 * 60 + minutes * 60
+            if (lastLecId.isNotEmpty() && duration != 0) {
+                isBack = true
+                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                roomViewModel.updateLecture(lecture)
+                val progress = (duration * 10) / 100
+                if (total >= progress) {
+                    if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                    )
+
+                        initAddSession(lastLecId)
+
+                } else
+                    finish()
+            } else
+                finish()
         }
         mActivityBinding.btnSetting.setOnClickListener {
             mActivityBinding.qualityCard.visibility = View.VISIBLE
@@ -318,6 +337,11 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(this))
             )
         ).get(RoomViewModel::class.java)
+        roomViewModel.getLectures()
+            .observe(this, { result ->
+                lecturesDB = result
+            })
+
     }
 
     private fun initializeRecyclerView() {
@@ -341,6 +365,15 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     private fun createMediaItem(url: String) {
+        roomViewModel.getLectures()
+            .observe(this, { result ->
+                lecturesDB = result
+                if (resolutions.isNotEmpty() && lecturesDB.isNotEmpty()) {
+                    val lecture = lecturesDB.filter { it.uuid == lectureResponse.uuid }
+                    if (lecture.isNotEmpty())
+                        player!!.seekTo(0, lecture[0].position)
+                }
+            })
         val mediaItem = MediaItem.fromUri(url)
         player!!.setMediaItem(mediaItem)
         player!!.prepare()
@@ -393,6 +426,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         if (lastLecId.isEmpty()) {
             lastLecId = course.lectures?.get(position)?.uuid.toString()
         } else {
+           // Toast.makeText(this, lastLecId, Toast.LENGTH_LONG).show()
+            val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+            roomViewModel.updateLecture(lecture)
             val progress = (duration * 10) / 100
             if (total >= progress) {
                 if (course.lectures?.get(position)?.studentSessions!!.isEmpty()
@@ -420,6 +456,8 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     fun onStartWatchClicked() {
+        var watchedLectures = WatchedLectures(lectureResponse.uuid, 0)
+        roomViewModel.addLecture(watchedLectures)
         startTime = getStartDate()
         endTime = getStartDate(sessionTimeout)
         releasePlayer()
@@ -463,7 +501,20 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
     private fun checkVideoSession() {
         qualityAdapter.setData(resolutions)
-        if (lectureResponse.studentSessions.isEmpty())
+        val lecture = lecturesDB.filter { it.uuid == lectureResponse.uuid }
+        if (lecture.isNotEmpty() &&
+            lectureResponse.actualSessions < lectureResponse.allowedSessions
+        ) {
+            releasePlayer()
+            initializePlayer()
+            clearTimer()
+            if (lectureResponse.studentSessions.isNotEmpty()) {
+                startTime = getStartDate()
+                endTime = getStartDate(sessionTimeout)
+                printDifferenceDateForHours(startTime, endTime)
+            }
+            createMediaItem(resolutions[0].link)
+        } else if (lectureResponse.studentSessions.isEmpty())
             LectureWatchDialog.newInstance(lectureResponse)
                 .show(
                     supportFragmentManager,

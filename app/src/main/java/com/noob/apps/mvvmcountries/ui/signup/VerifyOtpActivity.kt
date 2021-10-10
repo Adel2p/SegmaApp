@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.noob.apps.mvvmcountries.R
+import com.noob.apps.mvvmcountries.data.DatabaseBuilder
+import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.databinding.ActivityVerifyOtpBinding
 import com.noob.apps.mvvmcountries.models.OtpModel
 import com.noob.apps.mvvmcountries.models.ResendModel
@@ -18,6 +20,7 @@ import com.noob.apps.mvvmcountries.ui.home.HomeActivity
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.Constant
+import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 import com.noob.apps.mvvmcountries.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.*
@@ -127,6 +130,14 @@ class VerifyOtpActivity : BaseActivity() {
     }
 
     private fun initializeObservers() {
+        loginViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(
+                application,
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
+            )
+        ).get(LoginViewModel::class.java)
+
         loginViewModel.fetchCountriesFromServer(mobileNumber, password)
             .observeOnce(this, { user ->
                 if (user != null) {
