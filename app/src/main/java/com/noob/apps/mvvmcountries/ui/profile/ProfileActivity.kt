@@ -7,10 +7,11 @@ import androidx.databinding.DataBindingUtil
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.ActivityProfileBinding
 import com.noob.apps.mvvmcountries.models.User
+import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.ForgetPasswordBottomDialog
 import com.noob.apps.mvvmcountries.utils.Constant
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
     private lateinit var mActivityBinding: ActivityProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,19 +19,17 @@ class ProfileActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_profile)
         val i = intent
         val mUser: User = i.getSerializableExtra(Constant.USER_DATA) as User
-        mActivityBinding.etFullName.text= Editable.Factory.getInstance().newEditable(mUser.user_name)
-        mActivityBinding.etEmail.text= Editable.Factory.getInstance().newEditable(mUser.user_email)
-        mActivityBinding.etMobileNumber.text= Editable.Factory.getInstance().newEditable(mUser.user_mobile_number)
-
-
+        mActivityBinding.etFullName.text =
+            Editable.Factory.getInstance().newEditable(mUser.user_name)
+        mActivityBinding.etEmail.text = Editable.Factory.getInstance().newEditable(mUser.user_email)
+        mActivityBinding.etMobileNumber.text =
+            Editable.Factory.getInstance().newEditable(mUser.user_mobile_number)
         mActivityBinding.txtchangePassword.setOnClickListener {
             val bottomSheetFragment = ForgetPasswordBottomDialog()
-            // activity?.let { it1 ->
             bottomSheetFragment.show(
                 supportFragmentManager,
                 ForgetPasswordBottomDialog.TAG
             )
-            // }
         }
         mActivityBinding.backImg.setOnClickListener {
             finish()

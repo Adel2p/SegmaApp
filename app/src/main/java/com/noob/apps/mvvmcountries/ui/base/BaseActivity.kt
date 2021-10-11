@@ -1,5 +1,6 @@
 package com.noob.apps.mvvmcountries.ui.base
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
@@ -28,6 +29,7 @@ import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import androidx.mediarouter.app.MediaRouteDiscoveryFragment
 import androidx.mediarouter.media.MediaRouter
 import com.noob.apps.mvvmcountries.ui.dialog.MirroringDialog
+import com.noob.apps.mvvmcountries.utils.SystemProperties
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -63,24 +65,24 @@ open class BaseActivity : AppCompatActivity() {
     )
 
 
+    @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
 //        window.setFlags(
 //            WindowManager.LayoutParams.FLAG_SECURE,
 //            WindowManager.LayoutParams.FLAG_SECURE
 //        )
-//        hideSystemUI()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//            window.attributes.layoutInDisplayCutoutMode =
-//                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-//        }
+        hideSystemUI()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.attributes.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        }
         super.onCreate(savedInstanceState)
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         userPreferences = UserPreferences(this)
         userPreferences.getAppLanguage.asLiveData().observeOnce(this, {
             val config = resources.configuration
-            var lang = "ar"
             appLanguage = it
-            lang = if (appLanguage == "ARABIC")
+            val lang: String = if (appLanguage == "ARABIC")
                 "ar"
             else
                 "en"
@@ -182,8 +184,8 @@ open class BaseActivity : AppCompatActivity() {
                 || Build.HOST == "Build2" //MSI App Player
                 || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
                 || Build.PRODUCT == "google_sdk"
-        // another Android SDK emulator check
-
+                // another Android SDK emulator check
+                || SystemProperties.getProp("ro.kernel.qemu") == "1"
 
         sIsProbablyRunningOnEmulator = result
         return result

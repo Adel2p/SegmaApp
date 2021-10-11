@@ -97,6 +97,7 @@
     <string name="about_course">About Course</string>
     <string name="attached_files">Files</string>
     <string name="whats_contact">Contact via WhatsApp</string>
+    <string name="empty_library">نعتذر .. لا توجد ملفات</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

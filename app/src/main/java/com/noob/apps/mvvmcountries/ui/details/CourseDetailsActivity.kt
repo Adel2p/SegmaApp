@@ -369,6 +369,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             .observe(this, { result ->
                 lecturesDB = result
                 if (resolutions.isNotEmpty() && lecturesDB.isNotEmpty()) {
+                    //   Toast.makeText(this, lectureResponse.uuid, Toast.LENGTH_LONG).show()
                     val lecture = lecturesDB.filter { it.uuid == lectureResponse.uuid }
                     if (lecture.isNotEmpty())
                         player!!.seekTo(0, lecture[0].position)
@@ -426,7 +427,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         if (lastLecId.isEmpty()) {
             lastLecId = course.lectures?.get(position)?.uuid.toString()
         } else {
-           // Toast.makeText(this, lastLecId, Toast.LENGTH_LONG).show()
             val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
             roomViewModel.updateLecture(lecture)
             val progress = (duration * 10) / 100

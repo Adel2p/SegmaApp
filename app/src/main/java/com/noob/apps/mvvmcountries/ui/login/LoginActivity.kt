@@ -176,19 +176,25 @@ class LoginActivity : BaseActivity() {
         mViewModel.fetchCountriesFromServer(mobileNumber, password)
             .observeOnce(this, { user ->
                 if (user != null) {
-                    lifecycleScope.launch {
-                        user.user_uuid?.let { userPreferences.saveUserId(it) }
-                    }
-                    lifecycleScope.launch {
-                        userPreferences.saveUserLogedIn(true)
-                    }
-                    lifecycleScope.launch {
-                        user.refresh_token?.let { userPreferences.saveRefreshToken(it) }
-                    }
-                    CoroutineScope(Dispatchers.IO).launch {
-                        delay(TimeUnit.SECONDS.toMillis(1))
-                        withContext(Dispatchers.Main) {
-                            user.user_on_boarded?.let { checkUserOnBoard(it) }
+                    if (user.user_device_id != deviceId)
+                        BlockUserDialog.newInstance("App installed on other device")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
+                    else {
+
+                        lifecycleScope.launch {
+                            user.user_uuid?.let { userPreferences.saveUserId(it) }
+                        }
+                        lifecycleScope.launch {
+                            userPreferences.saveUserLogedIn(true)
+                        }
+                        lifecycleScope.launch {
+                            user.refresh_token?.let { userPreferences.saveRefreshToken(it) }
+                        }
+                        CoroutineScope(Dispatchers.IO).launch {
+                            delay(TimeUnit.SECONDS.toMillis(1))
+                            withContext(Dispatchers.Main) {
+                                user.user_on_boarded?.let { checkUserOnBoard(it) }
+                            }
                         }
                     }
                 }
