@@ -180,10 +180,10 @@ class LoginActivity : BaseActivity() {
         mViewModel.fetchCountriesFromServer(mobileNumber, password)
             .observeOnce(this, { user ->
                 if (user != null) {
-                    if (user.user_device_id != deviceId)
-                        BlockUserDialog.newInstance("App installed on other device")
-                            .show(supportFragmentManager, BlockUserDialog.TAG)
-                    else {
+//                    if (user.user_device_id != deviceId)
+//                        BlockUserDialog.newInstance("App installed on other device")
+//                            .show(supportFragmentManager, BlockUserDialog.TAG)
+//                    else {
 
                         lifecycleScope.launch {
                             user.user_uuid?.let { userPreferences.saveUserId(it) }
@@ -201,7 +201,7 @@ class LoginActivity : BaseActivity() {
                             }
                         }
                     }
-                }
+               // }
             })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()
