@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit
 
 class LoginActivity : BaseActivity() {
     private val TAG = "LoginActivity"
+    private var isSaved = false
     private lateinit var mobileNumber: String
     private lateinit var password: String
     private lateinit var mActivityBinding: ActivityLoginBinding
@@ -156,6 +157,9 @@ class LoginActivity : BaseActivity() {
             }
 
         }
+        userPreferences.getUniversityData.asLiveData().observeOnce(this, {
+            isSaved = it
+        })
 
     }
 
@@ -220,7 +224,7 @@ class LoginActivity : BaseActivity() {
         if (onboarded) {
             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
             finish()
-        } else {
+        } else if (!isSaved) {
             startActivity(Intent(this@LoginActivity, UniversityActivity::class.java))
             finish()
         }
