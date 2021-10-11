@@ -61,7 +61,7 @@ class LectureWatchDialog : DialogFragment() {
         super.onStart()
         val dialog: Dialog? = dialog
         if (dialog != null) {
-            dialog.getWindow()
+            dialog.window
                 ?.setLayout(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
@@ -77,7 +77,8 @@ class LectureWatchDialog : DialogFragment() {
         mActivityBinding.availableWatches.text =
             mLectureDetails.allowedSessions.toString() + " " + context?.resources?.getString(R.string.watches)
         mActivityBinding.restWatches.text =
-            mLectureDetails.actualSessions.toString() + " " + context?.resources?.getString(R.string.watches)
+            (mLectureDetails.allowedSessions - mLectureDetails.actualSessions).toString()
+        " " + context?.resources?.getString(R.string.watches)
         mActivityBinding.startDate.text = getStartDate(0)
         mActivityBinding.endDate.text = getStartDate(mLectureDetails.sessionTimeout)
         mActivityBinding.watchLetter.setOnClickListener {
