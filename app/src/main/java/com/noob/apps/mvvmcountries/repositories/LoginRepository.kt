@@ -5,6 +5,7 @@ import com.noob.apps.mvvmcountries.data.DatabaseHelper
 import com.noob.apps.mvvmcountries.interfaces.NetworkResponseCallback
 import com.noob.apps.mvvmcountries.models.LoginResponse
 import com.noob.apps.mvvmcountries.models.User
+import com.noob.apps.mvvmcountries.models.UserInfoResponse
 import com.noob.apps.mvvmcountries.network.RestClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +18,12 @@ import retrofit2.Response
 
 class LoginRepository private constructor() {
     var usersToInsertInDB = mutableListOf<User>()
-
+    var infoResponse: MutableLiveData<UserInfoResponse?> =
+        MutableLiveData<UserInfoResponse?>()
     private lateinit var mCallback: NetworkResponseCallback
     private var loginResponse: MutableLiveData<LoginResponse> =
         MutableLiveData<LoginResponse>()
+    private lateinit var mInfoCall: Call<UserInfoResponse>
 
     companion object {
         private var mInstance: LoginRepository? = null
@@ -98,5 +101,41 @@ class LoginRepository private constructor() {
 
         })
         return loginResponse
+    }
+
+    fun getStudentInfo(
+        token: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<UserInfoResponse?> {
+        mCallback = callback
+        if (infoResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            infoResponse = MutableLiveData()
+        }
+        mInfoCall = RestClient.getInstance().getApiService().getStudentInfo(token)
+        mInfoCall.enqueue(object : Callback<UserInfoResponse> {
+
+            override fun onResponse(
+                call: Call<UserInfoResponse>,
+                response: Response<UserInfoResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    infoResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return infoResponse
     }
 }

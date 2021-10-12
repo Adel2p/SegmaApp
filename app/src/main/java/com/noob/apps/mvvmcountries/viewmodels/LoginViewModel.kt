@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.noob.apps.mvvmcountries.data.DatabaseHelper
 import com.noob.apps.mvvmcountries.interfaces.NetworkResponseCallback
 import com.noob.apps.mvvmcountries.models.LoginResponse
+import com.noob.apps.mvvmcountries.models.UserInfoResponse
 import com.noob.apps.mvvmcountries.repositories.LoginRepository
 import com.noob.apps.mvvmcountries.utils.NetworkHelper
 
@@ -15,6 +16,8 @@ class LoginViewModel(
 ) : AndroidViewModel(app) {
     private var user: MutableLiveData<LoginResponse> =
         MutableLiveData<LoginResponse>()
+    var infoResponse: MutableLiveData<UserInfoResponse?> =
+        MutableLiveData<UserInfoResponse?>()
     val mShowProgressBar = MutableLiveData(true)
     val mShowNetworkError: MutableLiveData<Boolean> = MutableLiveData()
     val mShowApiError = MutableLiveData<String>()
@@ -44,6 +47,30 @@ class LoginViewModel(
             mShowNetworkError.value = true
         }
         return user
+    }
+    fun getStudentInfo(token: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            infoResponse =
+                mRepository.getStudentInfo(token, object : NetworkResponseCallback {
+                    override fun onNetworkFailure(th: Throwable) {
+                        mShowApiError.value = th.message
+                    }
+
+                    override fun onNetworkSuccess() {
+                        mShowProgressBar.value = false
+                    }
+
+                    override fun onResponseError(message: String) {
+                        mShowProgressBar.value = false
+                        mShowResponseError.value = message
+                    }
+
+                })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
     }
 
 }

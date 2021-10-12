@@ -1,10 +1,8 @@
 package com.noob.apps.mvvmcountries.ui.login
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -13,7 +11,6 @@ import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.data.RoomViewModel
-import com.noob.apps.mvvmcountries.databinding.ActivityHomeBinding
 import com.noob.apps.mvvmcountries.databinding.ActivityLoginBinding
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
@@ -42,6 +39,8 @@ class LoginActivity : BaseActivity() {
     private lateinit var sharedViewModel: SharedViewModel
     private var mMediaRouter: MediaRouter? = null
     private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
+    private var token = ""
+
     private val mMediaRouterCB: MediaRouter.Callback = object : MediaRouter.Callback() {
         override fun onRouteAdded(router: MediaRouter, route: MediaRouter.RouteInfo) {
             Log.d(
@@ -160,7 +159,11 @@ class LoginActivity : BaseActivity() {
         userPreferences.getUniversityData.asLiveData().observeOnce(this, {
             isSaved = it
         })
-
+        userPreferences.getUserToken.asLiveData().observeOnce(this, {
+            token = it
+            //     if (token.isNotEmpty())
+            //  initInfoObservers()
+        })
     }
 
     private fun checkValidation(): Boolean {
@@ -180,28 +183,28 @@ class LoginActivity : BaseActivity() {
         mViewModel.fetchCountriesFromServer(mobileNumber, password)
             .observeOnce(this, { user ->
                 if (user != null) {
-//                    if (user.user_device_id != deviceId)
+//                    if (token.isEmpty() && user.user_device_id != deviceId)
 //                        BlockUserDialog.newInstance("App installed on other device")
 //                            .show(supportFragmentManager, BlockUserDialog.TAG)
 //                    else {
 
-                        lifecycleScope.launch {
-                            user.user_uuid?.let { userPreferences.saveUserId(it) }
-                        }
-                        lifecycleScope.launch {
-                            userPreferences.saveUserLogedIn(true)
-                        }
-                        lifecycleScope.launch {
-                            user.refresh_token?.let { userPreferences.saveRefreshToken(it) }
-                        }
-                        CoroutineScope(Dispatchers.IO).launch {
-                            delay(TimeUnit.SECONDS.toMillis(1))
-                            withContext(Dispatchers.Main) {
-                                user.user_on_boarded?.let { checkUserOnBoard(it) }
-                            }
+                    lifecycleScope.launch {
+                        user.user_uuid?.let { userPreferences.saveUserId(it) }
+                    }
+                    lifecycleScope.launch {
+                        userPreferences.saveUserLogedIn(true)
+                    }
+                    lifecycleScope.launch {
+                        user.refresh_token?.let { userPreferences.saveRefreshToken(it) }
+                    }
+                    CoroutineScope(Dispatchers.IO).launch {
+                        delay(TimeUnit.SECONDS.toMillis(1))
+                        withContext(Dispatchers.Main) {
+                            user.user_on_boarded?.let { checkUserOnBoard(it) }
                         }
                     }
-               // }
+                }
+                //    }
             })
         mViewModel.mShowResponseError.observe(this, Observer {
             AlertDialog.Builder(this).setMessage(it).show()
@@ -230,6 +233,35 @@ class LoginActivity : BaseActivity() {
         }
 
     }
+
+//    private fun initInfoObservers() {
+//        mViewModel.getStudentInfo(token)
+//        mViewModel.infoResponse.observeOnce(this, { kt ->
+//            if (kt != null) {
+//                if (kt.data.deviceId != deviceId)
+//                    BlockUserDialog.newInstance("App installed on other device")
+//                        .show(supportFragmentManager, BlockUserDialog.TAG)
+//            }
+//        })
+//        mViewModel.mShowResponseError.observeOnce(this, {
+//        })
+//        mViewModel.mShowProgressBar.observe(this, { bt ->
+//            if (bt) {
+//                showLoader()
+//            } else {
+//                hideLoader()
+//            }
+//
+//        })
+//        mViewModel.mShowNetworkError.observeOnce(this, {
+//            if (it != null) {
+//                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+//                    .show(supportFragmentManager, ConnectionDialogFragment.TAG)
+//            }
+//
+//        })
+//    }
+
 
     override fun onResume() {
         super.onResume()

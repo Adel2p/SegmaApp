@@ -11,5 +11,6 @@ data class UserInfo(
     val onBoarded: Boolean,
     val levelName: String,
     val studyFieldName: String,
-    val departmentName: String
+    val departmentName: String,
+    val deviceId: String
 )
