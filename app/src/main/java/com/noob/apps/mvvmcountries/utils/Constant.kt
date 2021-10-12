@@ -18,6 +18,7 @@ object Constant {
     const val NOTIFICATION_ENABLED = "NOTIFICATION_ENABLED"
     const val ELIGIBLE_TO_WATCH = "ELIGIBLE_TO_WATCH"
     const val USER_TOKEN = "USER_TOKEN"
+    const val WEB_URL = "WEB_URL"
 
 
 

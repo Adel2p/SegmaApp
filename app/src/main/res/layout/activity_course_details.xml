@@ -257,7 +257,7 @@
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:fontFamily="@font/semibold"
-                        android:text="@string/about_course"
+                        android:text="@string/join_group"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp"
                         app:layout_constraintStart_toEndOf="@+id/heartImg"
@@ -297,13 +297,14 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtFolder"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:fontFamily="@font/semibold"
                         android:text="@string/attached_files"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp"
+                        app:layout_constraintEnd_toStartOf="@id/arrowFolder"
                         app:layout_constraintStart_toStartOf="@+id/txtAboutCourse"
                         app:layout_constraintTop_toBottomOf="@+id/aboutCourseSep"
                         tools:text="Folders" />

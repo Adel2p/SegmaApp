@@ -199,6 +199,9 @@ class CourseDetailsActivity2 : BaseActivity(), RecyclerViewClickListener,
     override fun onQualitySelected(position: Int) {
     }
 
+    override fun openFile(url: String) {
+    }
+
     fun onStartWatchClicked() {
         startTime = getStartDate()
         endTime = getStartDate(sessionTimeout)

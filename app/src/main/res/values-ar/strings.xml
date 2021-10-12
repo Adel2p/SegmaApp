@@ -97,7 +97,9 @@
     <string name="attached_files">الملفات المرفقة</string>
     <string name="whats_contact">التاصل عبر واتس اب</string>
     <string name="empty_library">نعتذر .. لا توجد ملفات</string>
-
+    <string name="join_group">انضم للجروب</string>
+    <string name="whatsApp">واتس اب</string>
+    <string name="Facebook">فيس بوك</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_welcome">WelcomeActivity</string>

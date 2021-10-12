@@ -311,6 +311,15 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         mActivityBinding.txtGroup.setOnClickListener {
             callWinnerDialog()
         }
+        mActivityBinding.txtFolder.setOnClickListener {
+            val intent = Intent(this, LectureFolderActivity::class.java)
+            intent.putExtra(Constant.SELECTED_COURSE, course)
+            startActivity(intent)
+        }
+        mActivityBinding.txtAboutCourse.setOnClickListener {
+            openGroupDialog()
+
+        }
     }
 
     private fun readValues() {
@@ -453,6 +462,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         val time = player!!.currentPosition
         createMediaItem(link)
         player!!.seekTo(0, time)
+    }
+
+    override fun openFile(url: String) {
     }
 
     fun onStartWatchClicked() {
@@ -691,6 +703,40 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             player!!.release()
             player = null
         }
+    }
+
+    private fun openGroupDialog() {
+        lateinit var dialog: AlertDialog
+        val inflater = LayoutInflater.from(this)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(
+            this,
+            R.style.CustomDialog
+        )
+        val customLayout: CallDialogBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.call_dialog,
+            null,
+            false
+        )
+        builder.setCancelable(true)
+        builder.setView(customLayout.root)
+        dialog = builder.create()
+        customLayout.firstNumber.text = getString(R.string.whatsApp)
+        customLayout.secondNumber.text = getString(R.string.Facebook)
+        customLayout.callButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        customLayout.firstNumber.setOnClickListener {
+            val intent = Intent(this, WebActivity::class.java)
+            intent.putExtra(Constant.WEB_URL, course.whatsapp)
+            startActivity(intent)
+        }
+        customLayout.secondNumber.setOnClickListener {
+            val intent = Intent(this, WebActivity::class.java)
+            intent.putExtra(Constant.WEB_URL, course.facebook)
+            startActivity(intent)
+        }
+        dialog.show()
     }
 
     private fun callWinnerDialog() {

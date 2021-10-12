@@ -156,4 +156,8 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
     override fun onQualitySelected(position: Int) {
         TODO("Not yet implemented")
     }
+
+    override fun openFile(url: String) {
+        TODO("Not yet implemented")
+    }
 }

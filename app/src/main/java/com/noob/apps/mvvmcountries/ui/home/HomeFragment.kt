@@ -262,4 +262,7 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
 
     override fun onQualitySelected(position: Int) {
     }
+
+    override fun openFile(url: String) {
+    }
 }

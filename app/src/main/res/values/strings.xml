@@ -98,6 +98,9 @@
     <string name="attached_files">Files</string>
     <string name="whats_contact">Contact via WhatsApp</string>
     <string name="empty_library">نعتذر .. لا توجد ملفات</string>
+    <string name="join_group">Join Group</string>
+    <string name="whatsApp">WhatsApp</string>
+    <string name="Facebook">FaceBook</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

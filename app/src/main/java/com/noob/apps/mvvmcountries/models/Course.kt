@@ -12,5 +12,9 @@ data class Course(
     val lectures: List<Lectures>?,
     val eligibleToWatch: Boolean,
     val firstPhone: String,
-    val secondPhone: String
+    val secondPhone: String,
+    val whatsapp: String,
+    val facebook: String,
+    val attachments: List<Attachments>
+
 ) : Serializable

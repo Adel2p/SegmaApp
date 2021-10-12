@@ -40,7 +40,9 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_forget_password.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_forget_password_reset.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_lecture_folder.xml" value="0.10778985507246377" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_login.xml" value="0.18" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_notification.xml" value="0.10778985507246377" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_profile.xml" value="0.12001811594202899" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_sign_up.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_splash2.xml" value="0.12771739130434784" />
@@ -48,6 +50,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_university.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_verify_otp.xml" value="0.15" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_visitor.xml" value="0.1213768115942029" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_web.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/activity_welcome.xml" value="0.1921875" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/call_dialog.xml" value="0.1213768115942029" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/change_language.xml" value="0.1" />
@@ -57,6 +60,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/layout/exo_playback_control_view.xml" value="0.13360507246376813" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/exo_player_control_view.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/favourite_lecture_cell.xml" value="0.1921875" />
+        <entry key="..\:/SegmaApp/app/src/main/res/layout/folder_cell.xml" value="0.10778985507246377" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_courses.xml" value="0.18931159420289856" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/layout/fragment_library.xml" value="0.10778985507246377" />
