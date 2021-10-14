@@ -12,9 +12,11 @@
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_edittext.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_spinner.xml" value="0.20512820512820512" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_video_spinner.xml" value="0.20512820512820512" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/curved_white.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_icon.xml" value="0.1" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_app_logo1.xml" value="0.1" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.16944444444444445" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_connection.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_empty_couces.xml" value="0.20833333333333334" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_favourite_lecture.xml" value="0.20833333333333334" />
@@ -22,6 +24,7 @@
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_login_success.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_player_back.xml" value="0.20512820512820512" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_player_forward.xml" value="0.20512820512820512" />
+        <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_profile.xml" value="0.16944444444444445" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_refresh.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_splash_bg.xml" value="0.1537037037037037" />
         <entry key="..\:/SegmaApp/app/src/main/res/drawable/ic_studying_cuate.xml" value="0.1046875" />

@@ -37,9 +37,9 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/stuImg"
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
-                        android:background="@drawable/round_img"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/ic_profile"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,8 +94,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:visibility="gone"
                         android:src="@drawable/ic_favourite_lecture"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -107,8 +107,8 @@
                         android:fontFamily="@font/semibold"
                         android:text="@string/favourite_lecture"
                         android:textColor="@color/black"
-                        android:visibility="gone"
                         android:textSize="@dimen/_12ssp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toStartOf="@id/FavoriteArrow"
                         app:layout_constraintStart_toEndOf="@+id/FavoriteLecImg"
                         app:layout_constraintTop_toTopOf="@+id/FavoriteLecImg" />
@@ -118,8 +118,8 @@
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
-                        android:visibility="gone"
                         android:background="@drawable/arrow_icon"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/FavoriteLecImg" />
 
@@ -129,8 +129,8 @@
                         android:layout_height="@dimen/_1sdp"
                         android:layout_marginStart="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:visibility="gone"
                         android:background="@color/sepColor"
+                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/FavoriteLecImg"
 
                         />
@@ -421,6 +421,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/txtAboutApp"
 
                         />
+
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/groupImg"
                         android:layout_width="wrap_content"

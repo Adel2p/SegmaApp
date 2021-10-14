@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit
 import android.bluetooth.BluetoothAdapter
 import android.telephony.TelephonyManager
 import android.hardware.display.DisplayManager
+import android.provider.Settings
 import android.view.Display
 
 

@@ -4,7 +4,7 @@
     <string name="app_name">Sigma</string>
     <string name="app_no_internet_msg">Internet connection is required!</string>
     <string name="refresh_button">Refresh Button</string>
-    <string name="welcome_msg">welcome to segma app</string>
+    <string name="welcome_msg">welcome to sigma app</string>
     <string name="mobile_number">Mobile Number </string>
     <string name="password"> Password</string>
     <string name="forget_password"> Forget Password?</string>
@@ -53,7 +53,7 @@
     <string name="setting">Setting</string>
     <string name="change_language">Change Language</string>
     <string name="notification_setting">Notification Setting</string>
-    <string name="about_segma_app">About Segma App</string>
+    <string name="about_segma_app">About Sigma App</string>
     <string name="log_out">Log Out</string>
     <string name="lecture">Lectures</string>
     <string name="english">English</string>
@@ -101,6 +101,8 @@
     <string name="join_group">Join Group</string>
     <string name="whatsApp">WhatsApp</string>
     <string name="Facebook">FaceBook</string>
+    <string name="ratio">rate</string>
+    <string name="enrrol_first">You must participate in the course</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

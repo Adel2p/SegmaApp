@@ -34,7 +34,7 @@ class LibraryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         mActivityBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_library, container, false)

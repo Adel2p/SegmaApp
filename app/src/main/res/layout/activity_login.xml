@@ -171,7 +171,8 @@
             android:fontFamily="@font/semibold"
             android:text="@string/visitor"
             android:textColor="@color/blue"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

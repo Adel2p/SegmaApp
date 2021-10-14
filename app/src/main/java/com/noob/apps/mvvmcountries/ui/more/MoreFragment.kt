@@ -35,7 +35,7 @@ class MoreFragment : BaseFragment() {
     private lateinit var roomViewModel: RoomViewModel
     private var userId = ""
     private lateinit var user: User
-
+    private val phoneNumber = "01554587098"
     private var param1: String? = null
     private var param2: String? = null
 
@@ -148,7 +148,7 @@ class MoreFragment : BaseFragment() {
         }
         mActivityBinding.txtGroup.setOnClickListener {
             try {
-                val url = "https://api.whatsapp.com/send?phone=$01554587098"
+                val url = "https://api.whatsapp.com/send?phone=$phoneNumber"
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
                 startActivity(i)

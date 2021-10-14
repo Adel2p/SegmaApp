@@ -12,7 +12,6 @@ import com.noob.apps.mvvmcountries.adapters.RecyclerViewClickListener
 import com.noob.apps.mvvmcountries.databinding.ActivityLectureFolderBinding
 import com.noob.apps.mvvmcountries.models.Course
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
-import com.noob.apps.mvvmcountries.ui.signup.VerifyOtpActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 
 class LectureFolderActivity : BaseActivity(), RecyclerViewClickListener {
@@ -102,7 +101,9 @@ class LectureFolderActivity : BaseActivity(), RecyclerViewClickListener {
         course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
         initializeRecyclerView()
         mAdapter.setData(course.attachments)
-
+        mActivityBinding.backImg.setOnClickListener {
+            finish()
+        }
 
     }
 

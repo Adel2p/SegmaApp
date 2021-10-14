@@ -12,7 +12,6 @@ import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -86,7 +85,8 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private var lastDuration: Long = 0
     private var isBack = false
     private var selectedPosition = 0
-    var lecturesDB = mutableListOf<WatchedLectures>()
+    private var lecturesDB = mutableListOf<WatchedLectures>()
+    private var currentSpeed = "1"
 
     companion object {
         var lastQualityPosition = 0
@@ -309,16 +309,48 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
         }
         mActivityBinding.txtGroup.setOnClickListener {
-            callWinnerDialog()
+            if (eligibleToWatch)
+                callWinnerDialog()
+            else
+                invalidWatchDialog(getString(R.string.enrrol_first))
+
         }
         mActivityBinding.txtFolder.setOnClickListener {
-            val intent = Intent(this, LectureFolderActivity::class.java)
-            intent.putExtra(Constant.SELECTED_COURSE, course)
-            startActivity(intent)
+            if (eligibleToWatch) {
+                val intent = Intent(this, LectureFolderActivity::class.java)
+                intent.putExtra(Constant.SELECTED_COURSE, course)
+                startActivity(intent)
+            } else
+                invalidWatchDialog(getString(R.string.enrrol_first))
         }
         mActivityBinding.txtAboutCourse.setOnClickListener {
-            openGroupDialog()
-
+            if (eligibleToWatch)
+                openGroupDialog()
+            else
+                invalidWatchDialog(getString(R.string.enrrol_first))
+        }
+        mActivityBinding.speedTxt.setOnClickListener {
+            if (currentSpeed == "1") {
+                mActivityBinding.speedTxt.text = "1.25X"
+                currentSpeed = "1.25"
+                player!!.setPlaybackSpeed(1.25f)
+            } else if (currentSpeed == "1.25") {
+                mActivityBinding.speedTxt.text = "1.5X"
+                currentSpeed = "1.5"
+                player!!.setPlaybackSpeed(1.5f)
+            } else if (currentSpeed == "1.5") {
+                mActivityBinding.speedTxt.text = "1.75X"
+                currentSpeed = "1.75"
+                player!!.setPlaybackSpeed(1.75f)
+            } else if (currentSpeed == "1.75") {
+                mActivityBinding.speedTxt.text = "2X"
+                currentSpeed = "2"
+                player!!.setPlaybackSpeed(2f)
+            } else if (currentSpeed == "2") {
+                mActivityBinding.speedTxt.text = "1X"
+                currentSpeed = "1"
+                player!!.setPlaybackSpeed(1f)
+            }
         }
     }
 
@@ -370,7 +402,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         mActivityBinding.playerView.player = player
         player!!.playWhenReady = true
         player!!.seekTo(currentWindow, playbackPosition)
-
     }
 
     private fun createMediaItem(url: String) {
@@ -394,6 +425,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             mActivityBinding.btnSetting.visibility = View.VISIBLE
             startAnimation()
         }
+        player!!.setPlaybackSpeed(1f)
 
     }
 
@@ -445,10 +477,10 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     initAddSession(lastLecId)
             }
         }
-        if (!eligibleToWatch) {
+        if (eligibleToWatch) {
             course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
         } else
-            invalidWatchDialog(getString(R.string.pay_first))
+            invalidWatchDialog(getString(R.string.enrrol_first))
 
 
     }
@@ -824,9 +856,11 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             mActivityBinding.btnBack.visibility = View.INVISIBLE
             mActivityBinding.btnSetting.visibility = View.INVISIBLE
             mActivityBinding.qualityCard.visibility = View.INVISIBLE
+            mActivityBinding.speedTxt.visibility = View.INVISIBLE
         } else {
             mActivityBinding.playerView.showController()
             mActivityBinding.btnBack.visibility = View.VISIBLE
+            mActivityBinding.speedTxt.visibility = View.VISIBLE
             if (resolutions.isNotEmpty())
                 mActivityBinding.btnSetting.visibility = View.VISIBLE
             else
@@ -850,6 +884,10 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         val minutes = (player!!.currentPosition / (1000 * 60) % 60)
         val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
         val total = hours * 60 * 60 + minutes * 60
+        if (selectedLectureId.isNotEmpty()) {
+            val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+            roomViewModel.updateLecture(lecture)
+        }
         if (lastLecId.isNotEmpty() && duration != 0) {
             isBack = true
             val progress = (duration * 10) / 100

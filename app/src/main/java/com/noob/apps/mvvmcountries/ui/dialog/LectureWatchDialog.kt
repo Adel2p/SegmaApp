@@ -77,8 +77,8 @@ class LectureWatchDialog : DialogFragment() {
         mActivityBinding.availableWatches.text =
             mLectureDetails.allowedSessions.toString() + " " + context?.resources?.getString(R.string.watches)
         mActivityBinding.restWatches.text =
-            (mLectureDetails.allowedSessions - mLectureDetails.actualSessions).toString()
-        " " + context?.resources?.getString(R.string.watches)
+            (mLectureDetails.allowedSessions - mLectureDetails.actualSessions).toString() +
+                    " " + context?.resources?.getString(R.string.watches)
         mActivityBinding.startDate.text = getStartDate(0)
         mActivityBinding.endDate.text = getStartDate(mLectureDetails.sessionTimeout)
         mActivityBinding.watchLetter.setOnClickListener {
