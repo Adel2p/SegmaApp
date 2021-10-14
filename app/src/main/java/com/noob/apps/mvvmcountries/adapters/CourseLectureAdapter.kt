@@ -59,7 +59,7 @@ class CourseLectureAdapter(
             )
         }
         if (position == mList!!.size - 1)
-            holder.itemBinding.sep.visibility = View.VISIBLE
+            holder.itemBinding.sep.visibility = View.INVISIBLE
         if (position == lastPosition) {
             holder.itemBinding.container.setBackgroundColor(
                 ContextCompat.getColor(

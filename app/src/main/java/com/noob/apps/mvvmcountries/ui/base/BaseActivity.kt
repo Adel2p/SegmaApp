@@ -77,8 +77,10 @@ open class BaseActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
         super.onCreate(savedInstanceState)
+
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         userPreferences = UserPreferences(this)
+
         userPreferences.getAppLanguage.asLiveData().observeOnce(this, {
             val config = resources.configuration
             appLanguage = it

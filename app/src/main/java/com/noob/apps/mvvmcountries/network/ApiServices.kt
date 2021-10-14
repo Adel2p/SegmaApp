@@ -94,4 +94,11 @@ interface ApiServices {
     @GET("notifications")
     fun getNotifications(@Header("Authorization") Authorization: String?): Call<NotificationResponse>
 
+
+    @POST("students/forgetPassword")
+    fun forgetPassword(
+        @Body otpModel: ForgetPasswordModel
+    ): Call<BaseResponse>
+
+
 }

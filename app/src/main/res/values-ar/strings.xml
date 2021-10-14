@@ -63,10 +63,10 @@
     <string name="change_password">تغيير كلمة السر</string>
     <string name="save_changes">حفظ التغييرات</string>
     <string name="lectures">محاضرات</string>
-    <string name="information">Information</string>
-    <string name="cancel">Cancel</string>
+    <string name="information">المعلومات</string>
+    <string name="cancel">إلغاء</string>
     <string name="old_password">كلمة السر الحالية</string>
-    <string name="about_segma_content">App Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Content pp Contentvpp Content pp Content pp Content</string>
+    <string name="about_segma_content">سيجما هى منصة تعليم اونلاين تهتم بعرض المحتوى التعليمى بصورة سهلة وبسيطة للطلاب مع توفير كافة الخصائص المطلوبة من عرض المناهج الدراسية والامتحانات التقييمية لدعم التعليم عن بٌعد خاصةً فى هذه الفترة </string>
     <string name="check_connection">برجاء التأكد من إتصالك بالإنترنت و إعادة المحاولة</string>
     <string name="retry_connection">إعادة المحاولة</string>
     <string name="send_successfully">تم الإرسال</string>

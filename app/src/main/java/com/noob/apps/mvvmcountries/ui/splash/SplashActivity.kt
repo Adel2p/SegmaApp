@@ -2,7 +2,6 @@ package com.noob.apps.mvvmcountries.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
@@ -21,16 +20,9 @@ import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.telephony.TelephonyManager
-import android.media.AudioManager.ACTION_HDMI_AUDIO_PLUG
-import android.content.IntentFilter
-import android.os.Build
-import android.widget.Toast
-import androidx.mediarouter.app.MediaRouteDiscoveryFragment
-import androidx.mediarouter.media.MediaRouter
+import android.hardware.display.DisplayManager
+import android.view.Display
 
 
 class SplashActivity : BaseActivity() {
@@ -42,11 +34,12 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
-        val CanMirror: Int = Settings.Secure.getInt(
-            this.contentResolver,
-            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
-            0
-        )
+        val displayManager = applicationContext.getSystemService(DISPLAY_SERVICE) as DisplayManager
+        var var1: Array<Display?>? = displayManager.displays
+        if (var1!!.size > 1) {
+            return BlockUserDialog.newInstance("You Cannot run App on Screen Mirroring")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         splashViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
@@ -60,8 +53,6 @@ class SplashActivity : BaseActivity() {
             return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         }
-
-
 //        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
 //            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
 //                .show(supportFragmentManager, BlockUserDialog.TAG)
@@ -83,8 +74,14 @@ class SplashActivity : BaseActivity() {
                 isloggedin = it
                 if (isloggedin)
                     readISSaved()
-                else
-                    openLogin()
+                else {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        delay(TimeUnit.SECONDS.toMillis(2))
+                        withContext(Dispatchers.Main) {
+                            openLogin()
+                        }
+                    }
+                }
 
             })
         }
@@ -94,7 +91,7 @@ class SplashActivity : BaseActivity() {
 
     private fun readToken() {
         userPreferences.getRefreshToken.asLiveData().observeOnce(this, {
-            refreshToken = it
+            //     refreshToken = it
             if (refreshToken.isNotEmpty())
                 initTokenObservers()
             else
@@ -140,7 +137,7 @@ class SplashActivity : BaseActivity() {
 
     private fun navigate() {
         CoroutineScope(Dispatchers.IO).launch {
-            delay(TimeUnit.SECONDS.toMillis(0))
+            delay(TimeUnit.SECONDS.toMillis(2))
             withContext(Dispatchers.Main) {
                 if (isloggedin) {
                     if (isSaved) {

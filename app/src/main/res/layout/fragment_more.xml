@@ -94,6 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_5sdp"
+                        android:visibility="gone"
                         android:src="@drawable/ic_favourite_lecture"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -106,6 +107,7 @@
                         android:fontFamily="@font/semibold"
                         android:text="@string/favourite_lecture"
                         android:textColor="@color/black"
+                        android:visibility="gone"
                         android:textSize="@dimen/_12ssp"
                         app:layout_constraintEnd_toStartOf="@id/FavoriteArrow"
                         app:layout_constraintStart_toEndOf="@+id/FavoriteLecImg"
@@ -116,6 +118,7 @@
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
+                        android:visibility="gone"
                         android:background="@drawable/arrow_icon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/FavoriteLecImg" />
@@ -126,6 +129,7 @@
                         android:layout_height="@dimen/_1sdp"
                         android:layout_marginStart="@dimen/_40sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:visibility="gone"
                         android:background="@color/sepColor"
                         app:layout_constraintTop_toBottomOf="@+id/FavoriteLecImg"
 
