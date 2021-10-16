@@ -3,10 +3,12 @@ package com.noob.apps.mvvmcountries.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import androidx.mediarouter.media.MediaRouter
+import com.google.android.gms.safetynet.SafetyNet
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
@@ -55,7 +57,6 @@ class LoginActivity : BaseActivity() {
                 TAG,
                 "onRouteChanged: route=$route"
             )
-
         }
 
 
@@ -64,7 +65,6 @@ class LoginActivity : BaseActivity() {
                 TAG,
                 "onRouteRemoved: route=$route"
             )
-
         }
 
         override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo) {
@@ -83,7 +83,6 @@ class LoginActivity : BaseActivity() {
                 TAG,
                 "onRouteUnselected: route=$route"
             )
-
             hideBlockDialog()
         }
 
@@ -98,6 +97,7 @@ class LoginActivity : BaseActivity() {
                 TAG,
                 "onRoutePresentationDisplayChanged: route=$route"
             )
+
             if (route.name != "Phone")
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
@@ -164,6 +164,24 @@ class LoginActivity : BaseActivity() {
             //     if (token.isNotEmpty())
             //  initInfoObservers()
         })
+
+        SafetyNet.getClient(this)
+            .isVerifyAppsEnabled
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result.isVerifyAppsEnabled) {
+                        Log.d("MY_APP_TAG", "The Verify Apps feature is enabled.")
+                    } else {
+                        Log.d("MY_APP_TAG", "The Verify Apps feature is disabled.")
+                        BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
+                    }
+                } else {
+                    Log.e("MY_APP_TAG", "A general error occurred.")
+                    BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+                }
+            }
     }
 
     private fun checkValidation(): Boolean {
@@ -265,6 +283,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        //     mActivityBinding.surfaceView.onResume()
         mMediaRouter = MediaRouter.getInstance(this)
         val fm = supportFragmentManager
         val fragment: DiscoveryFragment?

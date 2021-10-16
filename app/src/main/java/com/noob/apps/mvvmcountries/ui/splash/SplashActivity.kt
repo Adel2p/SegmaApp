@@ -132,7 +132,6 @@ class SplashActivity : BaseActivity() {
                 ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
                     .show(supportFragmentManager, ConnectionDialogFragment.TAG)
             }
-
         })
     }
 

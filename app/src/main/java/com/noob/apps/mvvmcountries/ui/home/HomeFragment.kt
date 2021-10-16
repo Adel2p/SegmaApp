@@ -21,7 +21,6 @@ import com.noob.apps.mvvmcountries.models.Course
 import com.noob.apps.mvvmcountries.models.RefreshTokenModel
 import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
-import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
