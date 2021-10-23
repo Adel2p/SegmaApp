@@ -458,30 +458,32 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
 
     override fun onRecyclerViewItemClick(position: Int) {
-        lastQualityPosition = 0
-        selectedPosition = position
-        resolutions.clear()
-        lastDuration = (player!!.currentPosition / 1000) % 60
-        val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-        val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-        val total = hours * 60 * 60 + minutes * 60
-        if (lastLecId.isEmpty()) {
-            lastLecId = course.lectures?.get(position)?.uuid.toString()
+        if (!eligibleToWatch) {
+            invalidWatchDialog(getString(R.string.enrrol_first))
         } else {
-            val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-            roomViewModel.updateLecture(lecture)
-            val progress = (duration * 10) / 100
-            if (total >= progress) {
-                if (course.lectures?.get(position)?.studentSessions!!.isEmpty()
-                )
-                    initAddSession(lastLecId)
+            lastQualityPosition = 0
+            selectedPosition = position
+            resolutions.clear()
+            lastDuration = (player!!.currentPosition / 1000) % 60
+            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+            val total = hours * 60 * 60 + minutes * 60
+            if (lastLecId.isEmpty()) {
+                lastLecId = course.lectures?.get(position)?.uuid.toString()
+            } else {
+                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                roomViewModel.updateLecture(lecture)
+                val progress = (duration * 10) / 100
+                if (total >= progress) {
+                    if (course.lectures?.get(position)?.studentSessions!!.isEmpty()
+                    )
+                        initAddSession(lastLecId)
+                }
+            }
+            if (eligibleToWatch) {
+                course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
             }
         }
-        if (eligibleToWatch) {
-            course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
-        } else
-            invalidWatchDialog(getString(R.string.enrrol_first))
-
 
     }
 

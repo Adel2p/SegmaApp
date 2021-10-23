@@ -42,7 +42,7 @@
     <string name="new_password">كلمة السر الجديدة</string>
     <string name="confirm_new_password">تأكيد كلمة السر</string>
     <string name="main">الرئيسية</string>
-    <string name="course">Course</string>
+    <string name="course">كورساتي</string>
     <string name="library">المكتبة</string>
     <string name="more">المزيد</string>
     <string name="favourite_lecture">المحاضرات المفضلة</string>
@@ -101,7 +101,7 @@
     <string name="whatsApp">واتس اب</string>
     <string name="Facebook">فيس بوك</string>
     <string name="ratio">معدل</string>
-    <string name="enrrol_first">يجب الاشتراك بالكورس</string>
+    <string name="enrrol_first">يجب الاشتراك بالكورس, قم بفتح الكورس من زر كورساتي</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

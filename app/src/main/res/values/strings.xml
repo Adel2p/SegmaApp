@@ -43,7 +43,7 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="main">Main</string>
-    <string name="course">Course</string>
+    <string name="course">My Courses</string>
     <string name="library">Library</string>
     <string name="more">More</string>
     <string name="favourite_lecture">Favourite Lecture</string>
@@ -102,7 +102,7 @@
     <string name="whatsApp">WhatsApp</string>
     <string name="Facebook">FaceBook</string>
     <string name="ratio">rate</string>
-    <string name="enrrol_first">You must participate in the course</string>
+    <string name="enrrol_first">You must participate in the course,open course from My Courses Tab</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

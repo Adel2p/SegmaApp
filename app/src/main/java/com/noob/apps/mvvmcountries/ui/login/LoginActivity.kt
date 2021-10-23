@@ -215,12 +215,8 @@ class LoginActivity : BaseActivity() {
                     lifecycleScope.launch {
                         user.refresh_token?.let { userPreferences.saveRefreshToken(it) }
                     }
-                    CoroutineScope(Dispatchers.IO).launch {
-                        delay(TimeUnit.SECONDS.toMillis(1))
-                        withContext(Dispatchers.Main) {
-                            user.user_on_boarded?.let { checkUserOnBoard(it) }
-                        }
-                    }
+
+                    initInfoObservers("Bearer " + user.access_token.toString())
                 }
                 //    }
             })
@@ -250,6 +246,38 @@ class LoginActivity : BaseActivity() {
             finish()
         }
 
+    }
+
+    private fun initInfoObservers(mToken: String) {
+        mViewModel.getStudentInfo(mToken)
+        mViewModel.infoResponse.observeOnce(this, { kt ->
+            if (kt != null) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    delay(TimeUnit.SECONDS.toMillis(1))
+                    withContext(Dispatchers.Main) {
+                        checkUserOnBoard(kt.data.onBoarded)
+                    }
+                }
+            }
+        })
+        mViewModel.mShowResponseError.observeOnce(this, {
+            AlertDialog.Builder(this).setMessage(it).show()
+        })
+        mViewModel.mShowProgressBar.observe(this, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        mViewModel.mShowNetworkError.observeOnce(this, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
+
+        })
     }
 
 //    private fun initInfoObservers() {

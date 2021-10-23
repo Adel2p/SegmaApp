@@ -68,7 +68,7 @@
                 android:fontFamily="@font/semibold"
                 android:text="@string/title_cources"
                 android:textColor="@color/gray_purple"
-                android:textSize="@dimen/_16ssp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtFaculty" />
 
