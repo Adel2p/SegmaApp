@@ -126,7 +126,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 TAG,
                 "onRouteSelected: route=$route"
             )
-            if (route.name != "Phone")
+            if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
 
@@ -152,7 +152,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 TAG,
                 "onRoutePresentationDisplayChanged: route=$route"
             )
-            if (route.name != "Phone")
+            if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
         }
@@ -547,7 +547,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         qualityAdapter.setData(resolutions)
         val lecture = lecturesDB.filter { it.uuid == lectureResponse.uuid }
         if (lecture.isNotEmpty() &&
-            lectureResponse.actualSessions < lectureResponse.allowedSessions
+            lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
             releasePlayer()
             initializePlayer()
@@ -565,7 +565,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     LectureWatchDialog.TAG
                 )
         else if (
-            lectureResponse.actualSessions < lectureResponse.allowedSessions
+            lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
             releasePlayer()
             initializePlayer()

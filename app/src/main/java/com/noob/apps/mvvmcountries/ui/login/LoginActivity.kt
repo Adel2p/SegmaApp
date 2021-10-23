@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity() {
                 TAG,
                 "onRouteSelected: route=$route"
             )
-            if (route.name != "Phone")
+            if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
 
@@ -98,7 +98,7 @@ class LoginActivity : BaseActivity() {
                 "onRoutePresentationDisplayChanged: route=$route"
             )
 
-            if (route.name != "Phone")
+            if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
         }

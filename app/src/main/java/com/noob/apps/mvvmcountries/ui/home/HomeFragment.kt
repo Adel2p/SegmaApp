@@ -154,13 +154,14 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
         courseViewModel.infoResponse.observeOnce(viewLifecycleOwner, { kt ->
             if (kt != null) {
                 mActivityBinding.txtFaculty.text = kt.data.studyFieldName
-                mActivityBinding.txtDepartment.text = kt.data.departmentName
+                mActivityBinding.txtDepartment.text =
+                    kt.data.levelName + " " + kt.data.departmentName
                 if (!kt.data.enabled)
                     BlockUserDialog.newInstance("")
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
                 if (fcmToken.isNotEmpty())
                     initFCMTokenObservers()
-                if (kt.data.deviceId != deviceId)
+                if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
                     BlockUserDialog.newInstance("App installed on other device")
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
             }

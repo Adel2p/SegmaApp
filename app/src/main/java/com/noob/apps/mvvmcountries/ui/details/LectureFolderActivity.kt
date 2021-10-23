@@ -52,7 +52,7 @@ class LectureFolderActivity : BaseActivity(), RecyclerViewClickListener {
                 TAG,
                 "onRouteSelected: route=$route"
             )
-            if (route.name != "Phone")
+            if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
 
@@ -78,7 +78,7 @@ class LectureFolderActivity : BaseActivity(), RecyclerViewClickListener {
                 TAG,
                 "onRoutePresentationDisplayChanged: route=$route"
             )
-            if (route.name != "Phone")
+            if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
 
         }

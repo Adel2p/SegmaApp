@@ -64,12 +64,6 @@ class SplashActivity : BaseActivity() {
         if (isEmulator()) {
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
-        val tm = getSystemService(TELEPHONY_SERVICE) as TelephonyManager
-        val networkOperator = tm.networkOperatorName
-        if ("Android" == networkOperator) {
-            return BlockUserDialog.newInstance("App can't run on Emulators")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
         } else {
             userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
                 isloggedin = it

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class RestClient private constructor() {
     companion object {
-        private const val BASE_URL = "https://sigma-api-production.herokuapp.com/"
+        private const val BASE_URL = "https://sigma-api-production.herokuapp.com/api/v1/"
         private lateinit var mApiServices: ApiServices
         private var mInstance: RestClient? = null
         fun getInstance(): RestClient {
