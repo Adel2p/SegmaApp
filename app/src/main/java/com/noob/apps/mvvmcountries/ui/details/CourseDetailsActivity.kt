@@ -7,6 +7,7 @@ import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Display
@@ -37,6 +38,7 @@ import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -235,9 +237,12 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 isFullScreen = true
                 supportActionBar?.hide()
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                val displayMetrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(displayMetrics)
+                val height = displayMetrics.heightPixels / 2
                 val layoutParams = ConstraintLayout.LayoutParams(
                     ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    1100,
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
                 )
                 mActivityBinding.aspect.layoutParams = layoutParams
                 //  mActivityBinding.continueButton.visibility = View.INVISIBLE
@@ -254,25 +259,36 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             }
         }
         mActivityBinding.btnBack.setOnClickListener {
-            lastDuration = (player!!.currentPosition / 1000) % 60
-            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-            val total = hours * 60 * 60 + minutes * 60
-            if (lastLecId.isNotEmpty() && duration != 0) {
-                isBack = true
-                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-                roomViewModel.updateLecture(lecture)
-                val progress = (duration * 10) / 100
-                if (total >= progress) {
-                    if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
-                    )
+            if (isFullScreen) {
+                isFullScreen = false
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                val layoutParams = ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    600
+                )
+                mActivityBinding.aspect.layoutParams = layoutParams
+            } else {
+                lastDuration = (player!!.currentPosition / 1000) % 60
+                val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+                val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+                val total = hours * 60 * 60 + minutes * 60
+                if (lastLecId.isNotEmpty() && duration != 0) {
+                    isBack = true
+                    val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                    roomViewModel.updateLecture(lecture)
+                    val progress = (duration * 10) / 100
+                    if (total >= progress) {
+                        if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                        )
 
-                        initAddSession(lastLecId)
+                            initAddSession(lastLecId)
 
+                    } else
+                        finish()
                 } else
                     finish()
-            } else
-                finish()
+            }
+
         }
         mActivityBinding.btnSetting.setOnClickListener {
             mActivityBinding.qualityCard.visibility = View.VISIBLE
@@ -548,7 +564,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private fun checkVideoSession() {
         qualityAdapter.setData(resolutions)
         val lecture = lecturesDB.filter { it.uuid == lectureResponse.uuid }
-        if (lecture.isNotEmpty() &&
+        if (lectureResponse.allowedSessions - lectureResponse.actualSessions == 0) {
+            invalidWatchDialog(getString(R.string.excced_watch))
+        } else if (lecture.isNotEmpty() &&
             lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
             releasePlayer()
@@ -712,10 +730,35 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         fragment = BaseActivity.DiscoveryFragment()
         fragment.setCallback(mMediaRouterCB)
         fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
+//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
     }
 
     override fun onPause() {
         super.onPause()
+
+        if (player != null) {
+            lastDuration = (player!!.currentPosition / 1000) % 60
+            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+            val total = hours * 60 * 60 + minutes * 60
+            if (selectedLectureId.isNotEmpty()) {
+                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                roomViewModel.updateLecture(lecture)
+            }
+            if (lastLecId.isNotEmpty() && duration != 0) {
+                isBack = true
+                val progress = (duration * 10) / 100
+                if (total >= progress) {
+                    if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                    )
+                        initAddSession(lastLecId)
+
+                }
+            }
+        }
         if (Util.SDK_INT < 24) {
             releasePlayer()
         }
@@ -882,25 +925,50 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     override fun onBackPressed() {
-        lastDuration = (player!!.currentPosition / 1000) % 60
-        val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-        val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-        val total = hours * 60 * 60 + minutes * 60
-        if (selectedLectureId.isNotEmpty()) {
-            val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-            roomViewModel.updateLecture(lecture)
-        }
-        if (lastLecId.isNotEmpty() && duration != 0) {
-            isBack = true
-            val progress = (duration * 10) / 100
-            if (total >= progress) {
-                if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
-                )
-                    initAddSession(lastLecId)
+        if (player != null) {
+            lastDuration = (player!!.currentPosition / 1000) % 60
+            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
+            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
+            val total = hours * 60 * 60 + minutes * 60
+            if (selectedLectureId.isNotEmpty()) {
+                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                roomViewModel.updateLecture(lecture)
+            }
+            if (lastLecId.isNotEmpty() && duration != 0) {
+                isBack = true
+                val progress = (duration * 10) / 100
+                if (total >= progress) {
+                    if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                    )
+                        initAddSession(lastLecId)
 
+                }
             }
         }
+
         super.onBackPressed()
     }
+
+    override fun onDestroy() {
+
+        super.onDestroy()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            hideSystemUI2()
+        }
+    }
+
+    fun hideSystemUI2() {
+        // Enables  "lean back" mode
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        val decorView = window.decorView
+        decorView.systemUiVisibility = ( // Hide the nav bar and status bar
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
 
 }

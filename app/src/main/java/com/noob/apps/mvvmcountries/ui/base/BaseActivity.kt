@@ -29,7 +29,9 @@ import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import androidx.mediarouter.app.MediaRouteDiscoveryFragment
 import androidx.mediarouter.media.MediaRouter
 import com.noob.apps.mvvmcountries.ui.dialog.MirroringDialog
+import com.noob.apps.mvvmcountries.ui.splash.SplashActivity
 import com.noob.apps.mvvmcountries.utils.SystemProperties
+import java.security.AccessController.getContext
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -212,11 +214,10 @@ open class BaseActivity : AppCompatActivity() {
 
     protected open fun hideSystemUI() {
         val decorView = window.decorView
-        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 
     private val bluetoothChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -253,16 +254,14 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
-
-        val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
-        registerReceiver(bluetoothChangeReceiver, filter)
         val filter2 = IntentFilter()
         filter2.addAction(AudioManager.ACTION_HDMI_AUDIO_PLUG)
         registerReceiver(eventReceiver, filter2)
+        if (
+            Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
     }
 
     class DiscoveryFragment : MediaRouteDiscoveryFragment() {
@@ -303,7 +302,6 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(bluetoothChangeReceiver)
         unregisterReceiver(eventReceiver)
 
     }

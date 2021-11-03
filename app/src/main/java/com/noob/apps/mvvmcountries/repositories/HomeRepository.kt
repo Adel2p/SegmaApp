@@ -29,6 +29,8 @@ class HomeRepository private constructor() {
         MutableLiveData<LectureDetailsResponse?>()
     var sessionResponse: MutableLiveData<SessionResponse?> =
         MutableLiveData<SessionResponse?>()
+    var deviceIdResponse: MutableLiveData<BaseResponse?> =
+        MutableLiveData<BaseResponse?>()
     private lateinit var mUserCall: Call<DepartmentCourseResponse>
     private lateinit var mInfoCall: Call<UserInfoResponse>
     private lateinit var mTokenCall: Call<LoginResponse>
@@ -36,6 +38,8 @@ class HomeRepository private constructor() {
     private lateinit var lecInfoCall: Call<LectureDetailsResponse>
     private lateinit var addSessionCall: Call<SessionResponse>
     private lateinit var mCoursesCall: Call<DepartmentCourseResponse>
+    private lateinit var mDeviceIdCall: Call<BaseResponse>
+
 
     var usersToInsertInDB = mutableListOf<User>()
 
@@ -270,7 +274,7 @@ class HomeRepository private constructor() {
         callback: NetworkResponseCallback,
     ): MutableLiveData<LectureDetailsResponse?> {
         mCallback = callback
-        if (fcmResponse.value != null) {
+        if (lectureResponse.value != null) {
             mCallback.onNetworkSuccess()
             lectureResponse = MutableLiveData()
         }
@@ -341,5 +345,44 @@ class HomeRepository private constructor() {
 
         })
         return sessionResponse
+    }
+
+    fun addDeviceId(
+        token: String, deviceId: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<BaseResponse?> {
+        mCallback = callback
+        if (deviceIdResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            deviceIdResponse = MutableLiveData()
+        }
+        mDeviceIdCall = RestClient.getInstance().getApiService()
+            .changeDeviceId(
+                token,
+                DeviceIdModel(deviceId)
+            )
+        mDeviceIdCall.enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(
+                call: Call<BaseResponse>,
+                response: Response<BaseResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    deviceIdResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return deviceIdResponse
     }
 }

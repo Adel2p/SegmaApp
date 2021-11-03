@@ -29,6 +29,8 @@ class CourseViewModel(
         MutableLiveData<LoginResponse?>()
     var fcmResponse: MutableLiveData<BaseResponse?> =
         MutableLiveData<BaseResponse?>()
+    var deviceIdResponse: MutableLiveData<BaseResponse?> =
+        MutableLiveData<BaseResponse?>()
     var lectureResponse: MutableLiveData<LectureDetailsResponse?> =
         MutableLiveData<LectureDetailsResponse?>()
     var sessionResponse: MutableLiveData<SessionResponse?> =
@@ -213,6 +215,33 @@ class CourseViewModel(
             sessionResponse =
                 mRepository.addSession(token,
                     lecId,
+                    object : NetworkResponseCallback {
+                        override fun onNetworkFailure(th: Throwable) {
+                            mShowApiError.value = th.message
+                        }
+
+                        override fun onNetworkSuccess() {
+                            mShowProgressBar.value = false
+                        }
+
+                        override fun onResponseError(message: String) {
+                            mShowProgressBar.value = false
+                            mShowResponseError.value = message
+                        }
+
+                    })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
+
+    fun addDeviceId(token: String, deviceId: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            deviceIdResponse =
+                mRepository.addDeviceId(token,
+                    deviceId,
                     object : NetworkResponseCallback {
                         override fun onNetworkFailure(th: Throwable) {
                             mShowApiError.value = th.message

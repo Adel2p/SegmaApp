@@ -1,6 +1,6 @@
 <resources>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="fcm_message">FCM Message</string>
+    <string name="fcm_message">New Course added</string>
     <string name="app_name">Sigma</string>
     <string name="app_no_internet_msg">Internet connection is required!</string>
     <string name="refresh_button">Refresh Button</string>
@@ -103,6 +103,7 @@
     <string name="Facebook">FaceBook</string>
     <string name="ratio">rate</string>
     <string name="enrrol_first">You must participate in the course,open course from My Courses Tab</string>
+    <string name="ivalid_login">Invalid Username or password</string>
 
     <string-array name="Collages">
         <item>please select collage</item>

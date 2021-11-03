@@ -161,6 +161,9 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
                 if (fcmToken.isNotEmpty())
                     initFCMTokenObservers()
+                if (kt.data.deviceId == null) {
+                    addDeviceId()
+                }
                 if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
                     BlockUserDialog.newInstance("App installed on other device")
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
@@ -242,6 +245,33 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
 
         })
     }
+
+    private fun addDeviceId() {
+        courseViewModel.addDeviceId(token, deviceId)
+        courseViewModel.deviceIdResponse.observeOnce(viewLifecycleOwner, { kt ->
+            if (kt != null) {
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
+            AlertDialog.Builder(requireActivity()).setMessage(it).show()
+        })
+        courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
+
+        })
+    }
+
 
     companion object {
         fun newInstance(param1: String, param2: String) =

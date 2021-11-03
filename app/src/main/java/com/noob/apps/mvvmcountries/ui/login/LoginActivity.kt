@@ -221,7 +221,7 @@ class LoginActivity : BaseActivity() {
                 //    }
             })
         mViewModel.mShowResponseError.observe(this, Observer {
-            AlertDialog.Builder(this).setMessage(it).show()
+            AlertDialog.Builder(this).setMessage(getString(R.string.ivalid_login)).show()
         })
         mViewModel.mShowProgressBar.observe(this, Observer { bt ->
             if (bt) {

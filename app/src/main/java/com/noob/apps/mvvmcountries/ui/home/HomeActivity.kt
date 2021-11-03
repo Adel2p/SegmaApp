@@ -13,6 +13,7 @@ import com.noob.apps.mvvmcountries.ui.library.LibraryFragment
 import com.noob.apps.mvvmcountries.ui.more.MoreFragment
 import kotlinx.coroutines.launch
 import android.content.Intent
+import android.provider.Settings
 import android.util.Log
 import androidx.mediarouter.media.MediaRouter
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
@@ -123,6 +124,10 @@ class HomeActivity : BaseActivity() {
             }
             true
         }
+//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
     }
 
     private fun setCurrentFragment(fragment: Fragment) =

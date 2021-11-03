@@ -100,5 +100,9 @@ interface ApiServices {
         @Body otpModel: ForgetPasswordModel
     ): Call<BaseResponse>
 
-
+    @POST("students/changeDeviceId")
+    fun changeDeviceId(
+        @Header("Authorization") Authorization: String?,
+        @Body otpModel: DeviceIdModel,
+    ): Call<BaseResponse>
 }

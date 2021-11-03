@@ -10,6 +10,16 @@ import com.noob.apps.mvvmcountries.databinding.ActivityWebBinding
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import kotlinx.android.synthetic.main.activity_web.*
+import android.webkit.WebSettings
+import android.webkit.WebView
+
+import android.webkit.WebViewClient
+
+
+
+
+
+
 
 class WebActivity : BaseActivity() {
     //   private lateinit var mActivityBinding: ActivityWebBinding
@@ -96,9 +106,17 @@ class WebActivity : BaseActivity() {
         //     DataBindingUtil.setContentView(this, R.layout.activity_web)
         setContentView(R.layout.activity_web)
         url = intent.getStringExtra(Constant.WEB_URL).toString()
-        myWebView.settings.javaScriptEnabled = true
+        val settings: WebSettings = myWebView.settings
+        settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
         myWebView.loadUrl(url)
+        myWebView.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
 
+                //Block all URL accesses.
+                return false
+            }
+        }
 
     }
 

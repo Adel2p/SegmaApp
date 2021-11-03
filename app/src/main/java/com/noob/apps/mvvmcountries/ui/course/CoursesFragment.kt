@@ -2,10 +2,10 @@ package com.noob.apps.mvvmcountries.ui.course
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -17,10 +17,10 @@ import com.noob.apps.mvvmcountries.adapters.RecyclerViewClickListener
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.databinding.FragmentCoursesBinding
-import com.noob.apps.mvvmcountries.databinding.FragmentHomeBinding
 import com.noob.apps.mvvmcountries.models.Course
 import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -45,7 +45,7 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         mActivityBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_courses, container, false)
@@ -77,7 +77,38 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
             mActivityBinding.swipeContainer.isRefreshing = false
             getData()
         }
+
     }
+
+    private fun initInfoObservers() {
+        courseViewModel.getStudentInfo(token)
+        courseViewModel.infoResponse.observeOnce(viewLifecycleOwner, { kt ->
+            if (kt != null) {
+                if (!kt.data.enabled)
+                    BlockUserDialog.newInstance("")
+                        .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+                if (fcmToken.isNotEmpty())
+                    if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
+                        BlockUserDialog.newInstance("App installed on other device")
+                            .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {
+            AlertDialog.Builder(requireActivity()).setMessage(it).show()
+        })
+        courseViewModel.mShowProgressBar.observe(viewLifecycleOwner, { bt ->
+
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(viewLifecycleOwner, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(requireActivity().supportFragmentManager, ConnectionDialogFragment.TAG)
+            }
+
+        })
+    }
+
 
     private fun initializeRecyclerView() {
         mAdapter = CourseAdapter(this)
@@ -101,6 +132,7 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
                                 userPreferences.saveRefreshToken(refreshToken)
                             }
                             initializeObservers()
+                            initInfoObservers()
                         } else {
                             logOut()
                         }

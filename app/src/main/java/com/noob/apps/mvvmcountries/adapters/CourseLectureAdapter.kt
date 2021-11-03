@@ -85,7 +85,8 @@ class CourseLectureAdapter(
             )
 
         }
-        holder.itemBinding.number.text = number.toString() + "_"
+        //   holder.itemBinding.number.text = number.toString() + "_"
+        //  holder.itemBinding.number.visibility = View.INVISIBLE
         val jsonObject: JSONObject?
         jsonObject = JSONObject(mList!![position].resolutions)
         val duration = jsonObject.getString("duration")
