@@ -81,8 +81,8 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".ui.visitor.VisitorActivity"
             android:exported="true"

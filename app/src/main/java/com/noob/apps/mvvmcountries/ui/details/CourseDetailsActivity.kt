@@ -7,7 +7,6 @@ import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Display
@@ -38,7 +37,6 @@ import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
-import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
 import com.noob.apps.mvvmcountries.utils.Constant
@@ -562,9 +560,14 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     private fun checkVideoSession() {
+        var expired = true
+        if (lectureResponse.studentSessions.isNotEmpty())
+            expired = lectureResponse.studentSessions[0].expired
         qualityAdapter.setData(resolutions)
         val lecture = lecturesDB.filter { it.uuid == lectureResponse.uuid }
-        if (lectureResponse.allowedSessions - lectureResponse.actualSessions == 0) {
+        if (lectureResponse.allowedSessions - lectureResponse.actualSessions == 0 &&
+            expired
+        ) {
             invalidWatchDialog(getString(R.string.excced_watch))
         } else if (lecture.isNotEmpty() &&
             lectureResponse.actualSessions <= lectureResponse.allowedSessions
@@ -759,9 +762,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 }
             }
         }
-        if (Util.SDK_INT < 24) {
-            releasePlayer()
-        }
+//        if (Util.SDK_INT < 24) {
+//            releasePlayer()
+//        }
     }
 
     override fun onStop() {
