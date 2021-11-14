@@ -23,6 +23,7 @@ import androidx.lifecycle.asLiveData
 import androidx.mediarouter.media.MediaRouter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.analytics.AnalyticsListener
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.*
 import com.google.android.exoplayer2.util.Util
@@ -76,8 +77,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private var link = ""
     private var isFullScreen = false
     private lateinit var qualityAdapter: QualityAdapter
-    private val playSpeeds: MutableList<String> =
-        mutableListOf("0.75", "1", "1.25", "1.5", "1.75", "2")
     private var duration: Int = 0
     private lateinit var roomViewModel: RoomViewModel
     private lateinit var user: User
@@ -87,6 +86,44 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private var selectedPosition = 0
     private var lecturesDB = mutableListOf<WatchedLectures>()
     private var currentSpeed = "1"
+    private var playTime = 0L // in ms
+    private var pauseTime = 0L // in ms
+    private var totalTime = 0L // in ms
+    private var pressedPaused = 0
+    private var mPlayDurationInSec = 0
+    private var initTime = 0L
+
+    private val analyticsListener: AnalyticsListener = object : AnalyticsListener {
+
+
+        override fun onIsPlayingChanged(
+            eventTime: AnalyticsListener.EventTime,
+            isPlaying: Boolean
+        ) {
+            if (isPlaying) {
+                if (initTime != 0L) pauseTime += System.currentTimeMillis() - initTime
+                initTime = System.currentTimeMillis()
+            } else {
+                if (initTime != 0L) playTime += System.currentTimeMillis() - initTime
+                initTime = System.currentTimeMillis()
+                pressedPaused++
+            }
+            totalTime = playTime + pauseTime
+            val seconds = (totalTime / 1000) % 60
+            val minutes = (totalTime / (1000 * 60) % 60)
+            val hours = (totalTime / (1000 * 60 * 60) % 24)
+            val mTotalDurationInSec = seconds + (minutes * 60) + (hours * 60 * 60)
+            mPlayDurationInSec = mTotalDurationInSec.toInt()
+            Log.e("onIsPlaying", "PLAYTIME: $playTime")
+            Log.e("onIsPlaying", "PRESSEDPAUSE: $pressedPaused")
+            Log.e("onIsPlaying", "PAUSETIME: $pauseTime")
+            Log.e("onIsPlaying", "TOTALTIME: $totalTime")
+            Log.e("onIsPlaying", "TOTALTIMEinSeconds: $mPlayDurationInSec")
+
+
+            super.onIsPlayingChanged(eventTime, isPlaying)
+        }
+    }
 
     companion object {
         var lastQualityPosition = 0
@@ -128,6 +165,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             )
             if (route.connectionState == 2)
                 showBlockDialog("You Cannot run App on Screen Mirroring")
+            showBlockDialog("You Cannot run App on Screen Mirroring")
 
 
         }
@@ -193,6 +231,10 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
         })
         initPlayerView()
+        if (Util.SDK_INT >= 24) {
+            initializePlayer()
+            createMediaItem(course.introUrl)
+        }
     }
 
     @SuppressLint("CutPasteId")
@@ -237,13 +279,11 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 val displayMetrics = DisplayMetrics()
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
-                val height = displayMetrics.heightPixels / 2
                 val layoutParams = ConstraintLayout.LayoutParams(
                     ConstraintLayout.LayoutParams.MATCH_PARENT,
                     ConstraintLayout.LayoutParams.MATCH_PARENT,
                 )
                 mActivityBinding.aspect.layoutParams = layoutParams
-                //  mActivityBinding.continueButton.visibility = View.INVISIBLE
             } else {
                 isFullScreen = false
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -252,7 +292,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     600
                 )
                 mActivityBinding.aspect.layoutParams = layoutParams
-                //  mActivityBinding.continueButton.visibility = View.VISIBLE
 
             }
         }
@@ -266,25 +305,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 )
                 mActivityBinding.aspect.layoutParams = layoutParams
             } else {
-                lastDuration = (player!!.currentPosition / 1000) % 60
-                val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-                val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-                val total = hours * 60 * 60 + minutes * 60
-                if (lastLecId.isNotEmpty() && duration != 0) {
-                    isBack = true
-                    val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-                    roomViewModel.updateLecture(lecture)
-                    val progress = (duration * 10) / 100
-                    if (total >= progress) {
-                        if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
-                        )
 
-                            initAddSession(lastLecId)
-
-                    } else
-                        finish()
-                } else
-                    finish()
+                Log.e("onIsPlaying", "newTOTALTIME: $totalTime")
+                finish()
             }
 
         }
@@ -366,6 +389,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 player!!.setPlaybackSpeed(1f)
             }
         }
+
     }
 
     private fun readValues() {
@@ -419,6 +443,12 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     private fun createMediaItem(url: String) {
+        playTime = 0L // in ms
+        pauseTime = 0L // in ms
+        totalTime = 0L // in ms
+        initTime = 0L
+        pressedPaused = 0
+        mPlayDurationInSec = 0
         roomViewModel.getLectures()
             .observe(this, { result ->
                 lecturesDB = result
@@ -432,6 +462,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         val mediaItem = MediaItem.fromUri(url)
         player!!.setMediaItem(mediaItem)
         player!!.prepare()
+        player?.addAnalyticsListener(analyticsListener)
         if (resolutions.isEmpty()) {
             mActivityBinding.btnSetting.visibility = View.INVISIBLE
             mActivityBinding.mobileNumber.visibility = View.INVISIBLE
@@ -478,20 +509,23 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             lastQualityPosition = 0
             selectedPosition = position
             resolutions.clear()
-            lastDuration = (player!!.currentPosition / 1000) % 60
-            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-            val total = hours * 60 * 60 + minutes * 60
-            if (lastLecId.isEmpty()) {
-                lastLecId = course.lectures?.get(position)?.uuid.toString()
-            } else {
-                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-                roomViewModel.updateLecture(lecture)
-                val progress = (duration * 10) / 100
-                if (total >= progress) {
-                    if (course.lectures?.get(position)?.studentSessions!!.isEmpty()
-                    )
-                        initAddSession(lastLecId)
+            if (player != null) {
+                player!!.playWhenReady = false
+                player!!.stop()
+                lastDuration = (totalTime / 1000) % 60
+                if (lastLecId.isNotEmpty() && duration != 0) {
+                    isBack = true
+                    val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                    roomViewModel.updateLecture(lecture)
+                    val progress = (duration * 10) / 100
+                    if (mPlayDurationInSec >= progress) {
+                        if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                        )
+
+                            initAddSession(lastLecId)
+                    }
+
+
                 }
             }
             if (eligibleToWatch) {
@@ -524,7 +558,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         initializePlayer()
         printDifferenceDateForHours(startTime, endTime)
         createMediaItem(resolutions[0].link)
-        //  initAddSession(selectedLectureId)
+          initAddSession(selectedLectureId)
     }
 
     private fun initLectureInfo(lecId: String) {
@@ -532,6 +566,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         courseViewModel.getLectureInfo(token, lecId)
         courseViewModel.lectureResponse.observeOnce(this, { kt ->
             if (kt != null) {
+                lastLecId = kt.data.uuid
                 getResolutions(kt)
                 sessionTimeout = lectureResponse.sessionTimeout
                 checkVideoSession()
@@ -569,7 +604,13 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             expired
         ) {
             invalidWatchDialog(getString(R.string.excced_watch))
-        } else if (lecture.isNotEmpty() &&
+        }  else if (lectureResponse.studentSessions.isEmpty())
+            LectureWatchDialog.newInstance(lectureResponse)
+                .show(
+                    supportFragmentManager,
+                    LectureWatchDialog.TAG
+                )
+        else if (lecture.isNotEmpty() &&
             lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
             releasePlayer()
@@ -581,12 +622,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 printDifferenceDateForHours(startTime, endTime)
             }
             createMediaItem(resolutions[0].link)
-        } else if (lectureResponse.studentSessions.isEmpty())
-            LectureWatchDialog.newInstance(lectureResponse)
-                .show(
-                    supportFragmentManager,
-                    LectureWatchDialog.TAG
-                )
+        }
         else if (
             lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
@@ -713,26 +749,23 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (Util.SDK_INT >= 24) {
-            initializePlayer()
-            createMediaItem(course.introUrl)
-        }
-    }
 
     override fun onResume() {
         super.onResume()
-        hideSystemUi()
-        if ((Util.SDK_INT < 24 || player == null)) {
-            initializePlayer()
+        if (lastLecId.isNotEmpty()) {
+            initLectureInfo(lastLecId)
+        } else {
+            hideSystemUi()
+            if ((Util.SDK_INT < 24 || player == null)) {
+                initializePlayer()
+            }
+            mMediaRouter = MediaRouter.getInstance(this)
+            val fm = supportFragmentManager
+            val fragment: BaseActivity.DiscoveryFragment?
+            fragment = BaseActivity.DiscoveryFragment()
+            fragment.setCallback(mMediaRouterCB)
+            fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
         }
-        mMediaRouter = MediaRouter.getInstance(this)
-        val fm = supportFragmentManager
-        val fragment: BaseActivity.DiscoveryFragment?
-        fragment = BaseActivity.DiscoveryFragment()
-        fragment.setCallback(mMediaRouterCB)
-        fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
 //        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
 //            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
 //                .show(supportFragmentManager, BlockUserDialog.TAG)
@@ -741,30 +774,29 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
     override fun onPause() {
         super.onPause()
-
         if (player != null) {
-            lastDuration = (player!!.currentPosition / 1000) % 60
-            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-            val total = hours * 60 * 60 + minutes * 60
-            if (selectedLectureId.isNotEmpty()) {
-                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-                roomViewModel.updateLecture(lecture)
-            }
+            player!!.playWhenReady = false
+            player!!.stop()
+            lastDuration = (totalTime / 1000) % 60
             if (lastLecId.isNotEmpty() && duration != 0) {
                 isBack = true
+                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                roomViewModel.updateLecture(lecture)
                 val progress = (duration * 10) / 100
-                if (total >= progress) {
+                if (mPlayDurationInSec >= progress) {
                     if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
                     )
-                        initAddSession(lastLecId)
 
+                        initAddSession(lastLecId)
                 }
+
+
             }
-        }
 //        if (Util.SDK_INT < 24) {
 //            releasePlayer()
 //        }
+        }
+
     }
 
     override fun onStop() {
@@ -928,28 +960,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     override fun onBackPressed() {
-        if (player != null) {
-            lastDuration = (player!!.currentPosition / 1000) % 60
-            val minutes = (player!!.currentPosition / (1000 * 60) % 60)
-            val hours = (player!!.currentPosition / (1000 * 60 * 60) % 24)
-            val total = hours * 60 * 60 + minutes * 60
-            if (selectedLectureId.isNotEmpty()) {
-                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-                roomViewModel.updateLecture(lecture)
-            }
-            if (lastLecId.isNotEmpty() && duration != 0) {
-                isBack = true
-                val progress = (duration * 10) / 100
-                if (total >= progress) {
-                    if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
-                    )
-                        initAddSession(lastLecId)
-
-                }
-            }
-        }
-
-        super.onBackPressed()
+        finish()
     }
 
     override fun onDestroy() {

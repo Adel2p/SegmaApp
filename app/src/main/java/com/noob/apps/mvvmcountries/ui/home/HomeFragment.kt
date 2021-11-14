@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,7 @@ import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.details.CourseDetailsActivity
 import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
+import com.noob.apps.mvvmcountries.ui.fcm.MyFirebaseMessagingService
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
@@ -66,6 +68,7 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         token = ""
+        fcmToken = MyFirebaseMessagingService.mToken
         courseViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
@@ -75,14 +78,15 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
         ).get(CourseViewModel::class.java)
         initializeRecyclerView()
         getData()
-        userPreferences.getFCMToken.asLiveData().observeOnce(viewLifecycleOwner, {
-            fcmToken = it
-
-        })
+//        userPreferences.getFCMToken.asLiveData().observeOnce(viewLifecycleOwner, {
+//            fcmToken = it
+//
+//        })
         mActivityBinding.swipeContainer.setOnRefreshListener {
             mActivityBinding.swipeContainer.isRefreshing = false
             getData()
         }
+
 
     }
 
@@ -161,12 +165,12 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
                 if (fcmToken.isNotEmpty())
                     initFCMTokenObservers()
-//                if (kt.data.deviceId == null) {
-//                    addDeviceId()
-//                }
-//                if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
-//                    BlockUserDialog.newInstance("App installed on other device")
-//                        .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+                if (kt.data.deviceId == null) {
+                    addDeviceId()
+                }
+                if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
+                    BlockUserDialog.newInstance("App installed on other device")
+                        .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
             }
         })
         courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {

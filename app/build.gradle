@@ -8,6 +8,9 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.gms.google-services'
 
+apply plugin: 'com.google.firebase.crashlytics'
+
+
 
 android {
     compileSdkVersion 31
@@ -15,8 +18,8 @@ android {
         applicationId "com.smart.sigma"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 6
-        versionName "1.6"
+        versionCode 7
+        versionName "1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
@@ -90,6 +93,7 @@ dependencies {
     implementation 'com.github.framgia:android-emulator-detector:1.4.0'
     implementation 'androidx.mediarouter:mediarouter:1.2.5'
     implementation 'com.google.android.gms:play-services-safetynet:17.0.1'
-
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 }

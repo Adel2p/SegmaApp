@@ -54,10 +54,10 @@ class SplashActivity : BaseActivity() {
 //            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
 //                .show(supportFragmentManager, BlockUserDialog.TAG)
 //        }
-//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
+        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)

@@ -330,7 +330,7 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
+           //         val userMessage = jsonObject.getString("error")
                     val internalMessage = jsonObject.getString("error_description")
                     mCallback.onResponseError(internalMessage)
                 } else {

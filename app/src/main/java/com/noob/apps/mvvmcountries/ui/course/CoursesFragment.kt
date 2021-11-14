@@ -37,10 +37,6 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
     private var token = ""
     private var fcmToken = ""
     private var refreshToken = ""
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,10 +47,6 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
             DataBindingUtil.inflate(inflater, R.layout.fragment_courses, container, false)
         // Inflate the layout for this fragment
         return mActivityBinding.root
-    }
-
-    companion object {
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,10 +61,10 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
         ).get(CourseViewModel::class.java)
         initializeRecyclerView()
         getData()
-        userPreferences.getFCMToken.asLiveData().observeOnce(viewLifecycleOwner, {
-            fcmToken = it
-
-        })
+//        userPreferences.getFCMToken.asLiveData().observeOnce(viewLifecycleOwner, {
+//            fcmToken = it
+//
+//        })
         mActivityBinding.swipeContainer.setOnRefreshListener {
             mActivityBinding.swipeContainer.isRefreshing = false
             getData()
@@ -87,8 +79,7 @@ class CoursesFragment : BaseFragment(), RecyclerViewClickListener {
                 if (!kt.data.enabled)
                     BlockUserDialog.newInstance("")
                         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
-                if (fcmToken.isNotEmpty())
-                    if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
+                    if (kt.data.deviceId != deviceId)
                         BlockUserDialog.newInstance("App installed on other device")
                             .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
             }

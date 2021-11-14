@@ -98,23 +98,6 @@ open class BaseActivity : AppCompatActivity() {
                 createConfigurationContext(config)
             resources.updateConfiguration(config, resources.displayMetrics)
         })
-        EmulatorDetector.with(this)
-            .setCheckTelephony(true)
-            .addPackageName("com.bluestacks")
-            .setDebug(true)
-            .detect {
-                if (it) {
-                    runOnUiThread {
-                        Toast.makeText(
-                            this,
-                            "you cannot use App",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        //   finish()
-                    }
-
-                }
-            }
 
     }
 
@@ -257,11 +240,11 @@ open class BaseActivity : AppCompatActivity() {
         val filter2 = IntentFilter()
         filter2.addAction(AudioManager.ACTION_HDMI_AUDIO_PLUG)
         registerReceiver(eventReceiver, filter2)
-//        if (
-//            Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
+        if (
+            Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
     }
 
     class DiscoveryFragment : MediaRouteDiscoveryFragment() {

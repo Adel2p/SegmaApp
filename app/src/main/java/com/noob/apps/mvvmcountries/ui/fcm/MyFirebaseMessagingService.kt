@@ -20,6 +20,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
+
     lateinit var userPreferences: UserPreferences
 
     /**
@@ -108,6 +110,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param token The new token.
      */
     private fun sendRegistrationToServer(token: String?) {
+        mToken = token!!
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
         userPreferences = UserPreferences(this)
         GlobalScope.launch {
@@ -156,7 +159,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     companion object {
-
+        var mToken = ""
         private const val TAG = "MyFirebaseMsgService"
     }
 }
