@@ -105,4 +105,16 @@ interface ApiServices {
         @Header("Authorization") Authorization: String?,
         @Body otpModel: DeviceIdModel,
     ): Call<BaseResponse>
+
+    @GET("courses/{id}/lectures")
+    fun getCourseLecture(
+        @Header("Authorization") Authorization: String?,
+        @Path("id") id: String
+    ): Call<CourseLectureResponse>
+
+    @GET("courses/{id}/attachments")
+    fun getCourseAttachments(
+        @Header("Authorization") Authorization: String?,
+        @Path("id") id: String
+    ): Call<AttachmentResponse>
 }

@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/regular"
-                    android:text="@{String.valueOf(lecture.lectures.size())}"
+                    android:text="@{lecture.lecturesCount}"
                     android:textColor="@color/gray_purple"
                     android:textSize="@dimen/_11ssp"
                     app:layout_constraintStart_toStartOf="@+id/txtDoctorName"

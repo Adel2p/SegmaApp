@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.LecturesCourseCellBinding
+import com.noob.apps.mvvmcountries.models.LectureDetails
 import com.noob.apps.mvvmcountries.models.Lectures
 import kotlinx.android.extensions.LayoutContainer
 import org.json.JSONObject
@@ -21,11 +22,11 @@ class CourseLectureAdapter(
     context: Context,
     private val listener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<CourseLectureAdapter.ViewHolder>() {
-    private var mList: List<Lectures>? = listOf()
+    private var mList: List<LectureDetails>? = listOf()
     private var lastPosition = -1
     private var mContext: Context = context
 
-    fun setData(list: List<Lectures>) {
+    fun setData(list: List<LectureDetails>) {
         mList = list
         notifyDataSetChanged()
     }

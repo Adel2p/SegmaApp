@@ -117,7 +117,6 @@ class CourseDetailsActivity2 : BaseActivity(), RecyclerViewClickListener,
 
         }
         initializeRecyclerView()
-        mAdapter.setData(course.lectures!!)
         userPreferences.getUserId.asLiveData().observeOnce(this, {
             if (it != null) {
                 userId = it

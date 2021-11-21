@@ -61,6 +61,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private var playbackPosition: Long = 0
     private lateinit var mAdapter: CourseLectureAdapter
     private lateinit var course: Course
+    private var courseLectures: MutableList<LectureDetails> = mutableListOf()
     private var eligibleToWatch = false
     private val resolutions: MutableList<Files> = mutableListOf()
     private lateinit var lectureResponse: LectureDetails
@@ -215,7 +216,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         readValues()
         initView()
         initializeRecyclerView()
-        mAdapter.setData(course.lectures!!)
         userPreferences.getUserId.asLiveData().observeOnce(this, {
             if (it != null) {
                 userId = it
@@ -225,6 +225,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                             user = result[0]
                             token = "Bearer " + result[0].access_token.toString()
                             mActivityBinding.mobileNumber.text = user.user_mobile_number
+                            getCourseLecture(course.uuid)
                         }
                     })
             }
@@ -356,6 +357,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             if (eligibleToWatch) {
                 val intent = Intent(this, LectureFolderActivity::class.java)
                 intent.putExtra(Constant.SELECTED_COURSE, course)
+                intent.putExtra(Constant.USER_TOKEN, token)
                 startActivity(intent)
             } else
                 invalidWatchDialog(getString(R.string.enrrol_first))
@@ -397,8 +399,38 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
         eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
         mActivityBinding.txtLecId.text = course.name
-        mActivityBinding.txtLecNum.text = course.lectures!!.size.toString()
+        mActivityBinding.txtLecNum.text = course.lecturesCount
         mActivityBinding.price.text = course.price.toString() + " " + getString(R.string.pound)
+    }
+
+    private fun getCourseLecture(lecId: String) {
+        courseViewModel.getCourseLecture(token, lecId)
+        courseViewModel.courseLectureResponse.observeOnce(this, { kt ->
+            if (kt != null) {
+                courseLectures=kt.data.toMutableList()
+                mAdapter.setData(kt.data)
+            }
+        })
+        courseViewModel.mShowResponseError.observeOnce(this, {
+        })
+        courseViewModel.mShowProgressBar.observe(this, { bt ->
+            if (bt) {
+                showLoader()
+            } else {
+                hideLoader()
+            }
+
+        })
+        courseViewModel.mShowNetworkError.observeOnce(this, {
+            if (it != null) {
+                ConnectionDialogFragment.newInstance(Constant.RETRY_LOGIN)
+                    .show(
+                        supportFragmentManager,
+                        ConnectionDialogFragment.TAG
+                    )
+            }
+
+        })
     }
 
     private fun initViewModel() {
@@ -519,7 +551,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     roomViewModel.updateLecture(lecture)
                     val progress = (duration * 10) / 100
                     if (mPlayDurationInSec >= progress) {
-                        if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                        if (courseLectures[selectedPosition].studentSessions.isEmpty()
                         )
 
                             initAddSession(lastLecId)
@@ -529,7 +561,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 }
             }
             if (eligibleToWatch) {
-                course.lectures?.get(position)?.let { initLectureInfo(it.uuid) }
+                courseLectures[position].let { initLectureInfo(it.uuid) }
             }
         }
 
@@ -558,7 +590,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         initializePlayer()
         printDifferenceDateForHours(startTime, endTime)
         createMediaItem(resolutions[0].link)
-          initAddSession(selectedLectureId)
+        initAddSession(selectedLectureId)
     }
 
     private fun initLectureInfo(lecId: String) {
@@ -604,7 +636,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             expired
         ) {
             invalidWatchDialog(getString(R.string.excced_watch))
-        }  else if (lectureResponse.studentSessions.isEmpty())
+        } else if (lectureResponse.studentSessions.isEmpty())
             LectureWatchDialog.newInstance(lectureResponse)
                 .show(
                     supportFragmentManager,
@@ -622,8 +654,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 printDifferenceDateForHours(startTime, endTime)
             }
             createMediaItem(resolutions[0].link)
-        }
-        else if (
+        } else if (
             lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
             releasePlayer()

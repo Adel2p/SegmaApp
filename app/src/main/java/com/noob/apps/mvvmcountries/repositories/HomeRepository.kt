@@ -27,6 +27,10 @@ class HomeRepository private constructor() {
         MutableLiveData<BaseResponse?>()
     var lectureResponse: MutableLiveData<LectureDetailsResponse?> =
         MutableLiveData<LectureDetailsResponse?>()
+    var courseLectureResponse: MutableLiveData<CourseLectureResponse?> =
+        MutableLiveData<CourseLectureResponse?>()
+    var attachmentResponse: MutableLiveData<AttachmentResponse?> =
+        MutableLiveData<AttachmentResponse?>()
     var sessionResponse: MutableLiveData<SessionResponse?> =
         MutableLiveData<SessionResponse?>()
     var deviceIdResponse: MutableLiveData<BaseResponse?> =
@@ -36,9 +40,11 @@ class HomeRepository private constructor() {
     private lateinit var mTokenCall: Call<LoginResponse>
     private lateinit var fcmTokenCall: Call<BaseResponse>
     private lateinit var lecInfoCall: Call<LectureDetailsResponse>
+    private lateinit var lecCourseCall: Call<CourseLectureResponse>
     private lateinit var addSessionCall: Call<SessionResponse>
     private lateinit var mCoursesCall: Call<DepartmentCourseResponse>
     private lateinit var mDeviceIdCall: Call<BaseResponse>
+    private lateinit var mAttachmentCall: Call<AttachmentResponse>
 
 
     var usersToInsertInDB = mutableListOf<User>()
@@ -308,6 +314,45 @@ class HomeRepository private constructor() {
         return lectureResponse
     }
 
+    fun getCourseLecture(
+        token: String, lecId: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<CourseLectureResponse?> {
+        mCallback = callback
+        if (courseLectureResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            courseLectureResponse = MutableLiveData()
+        }
+        lecCourseCall = RestClient.getInstance().getApiService()
+            .getCourseLecture(
+                token,
+                lecId
+            )
+        lecCourseCall.enqueue(object : Callback<CourseLectureResponse> {
+            override fun onResponse(
+                call: Call<CourseLectureResponse>,
+                response: Response<CourseLectureResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    courseLectureResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<CourseLectureResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return courseLectureResponse
+    }
+
     fun addSession(
         token: String, lecId: String,
         callback: NetworkResponseCallback,
@@ -330,9 +375,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-           //         val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                    //         val userMessage = jsonObject.getString("error")
+                    //          val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("")
                 } else {
                     sessionResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -385,4 +430,44 @@ class HomeRepository private constructor() {
         })
         return deviceIdResponse
     }
+
+    fun getCourseAttachment(
+        token: String, lecId: String,
+        callback: NetworkResponseCallback,
+    ): MutableLiveData<AttachmentResponse?> {
+        mCallback = callback
+        if (attachmentResponse.value != null) {
+            mCallback.onNetworkSuccess()
+            attachmentResponse = MutableLiveData()
+        }
+        mAttachmentCall = RestClient.getInstance().getApiService()
+            .getCourseAttachments(
+                token,
+                lecId
+            )
+        mAttachmentCall.enqueue(object : Callback<AttachmentResponse> {
+            override fun onResponse(
+                call: Call<AttachmentResponse>,
+                response: Response<AttachmentResponse>
+            ) {
+                if (response.code() != 200) {
+                    val jsonObject: JSONObject?
+                    jsonObject = JSONObject(response.errorBody()!!.string())
+                    val userMessage = jsonObject.getString("error")
+                    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError(internalMessage)
+                } else {
+                    attachmentResponse.value = response.body()
+                    mCallback.onNetworkSuccess()
+                }
+            }
+
+            override fun onFailure(call: Call<AttachmentResponse>, t: Throwable) {
+                mCallback.onNetworkFailure(t)
+            }
+
+        })
+        return attachmentResponse
+    }
+
 }

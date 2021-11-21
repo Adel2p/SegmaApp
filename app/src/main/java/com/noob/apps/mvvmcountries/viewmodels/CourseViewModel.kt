@@ -33,6 +33,10 @@ class CourseViewModel(
         MutableLiveData<BaseResponse?>()
     var lectureResponse: MutableLiveData<LectureDetailsResponse?> =
         MutableLiveData<LectureDetailsResponse?>()
+    var courseLectureResponse: MutableLiveData<CourseLectureResponse?> =
+        MutableLiveData<CourseLectureResponse?>()
+    var attachmentResponse: MutableLiveData<AttachmentResponse?> =
+        MutableLiveData<AttachmentResponse?>()
     var sessionResponse: MutableLiveData<SessionResponse?> =
         MutableLiveData<SessionResponse?>()
     val mShowProgressBar = MutableLiveData(true)
@@ -209,6 +213,33 @@ class CourseViewModel(
         }
     }
 
+    fun getCourseLecture(token: String, lecId: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            courseLectureResponse =
+                mRepository.getCourseLecture(token,
+                    lecId,
+                    object : NetworkResponseCallback {
+                        override fun onNetworkFailure(th: Throwable) {
+                            mShowApiError.value = th.message
+                        }
+
+                        override fun onNetworkSuccess() {
+                            mShowProgressBar.value = false
+                        }
+
+                        override fun onResponseError(message: String) {
+                            mShowProgressBar.value = false
+                            mShowResponseError.value = message
+                        }
+
+                    })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
+
     fun addSession(token: String, lecId: String) {
         if (NetworkHelper.isOnline(app.baseContext)) {
             mShowProgressBar.value = true
@@ -263,5 +294,30 @@ class CourseViewModel(
         }
     }
 
+    fun getCourseAttachments(token: String, lecId: String) {
+        if (NetworkHelper.isOnline(app.baseContext)) {
+            mShowProgressBar.value = true
+            attachmentResponse =
+                mRepository.getCourseAttachment(token,
+                    lecId,
+                    object : NetworkResponseCallback {
+                        override fun onNetworkFailure(th: Throwable) {
+                            mShowApiError.value = th.message
+                        }
 
+                        override fun onNetworkSuccess() {
+                            mShowProgressBar.value = false
+                        }
+
+                        override fun onResponseError(message: String) {
+                            mShowProgressBar.value = false
+                            mShowResponseError.value = message
+                        }
+
+                    })
+        } else {
+            mShowProgressBar.value = false
+            mShowNetworkError.value = true
+        }
+    }
 }
