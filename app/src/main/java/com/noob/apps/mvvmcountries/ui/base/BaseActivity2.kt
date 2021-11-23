@@ -364,8 +364,8 @@ open class BaseActivity2 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
-        registerReceiver(bluetoothChangeReceiver, filter)
+        //  val filter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+        //   registerReceiver(bluetoothChangeReceiver, filter)
         val filter2 = IntentFilter()
         filter2.addAction(AudioManager.ACTION_HDMI_AUDIO_PLUG)
         registerReceiver(eventReceiver, filter2)
@@ -373,7 +373,7 @@ open class BaseActivity2 : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(bluetoothChangeReceiver)
+        //      unregisterReceiver(bluetoothChangeReceiver)
         unregisterReceiver(eventReceiver)
     }
 

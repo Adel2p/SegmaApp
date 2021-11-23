@@ -81,8 +81,8 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                //    val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     depResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -116,8 +116,8 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                 //   val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     myCourseResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -151,9 +151,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+               //     val userMessage = jsonObject.getString("error")
+             //       val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     infoResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -192,9 +192,11 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+               //     val userMessage = jsonObject.getString("error")
+                //    val internalMessage = jsonObject.getString("error_description")
+                //    mCallback.onResponseError(internalMessage)
+                    mCallback.onResponseError("un Expected Error")
+
                 } else {
                     CoroutineScope(Dispatchers.IO).launch {
                         dbHelper.deleteAll()
@@ -258,9 +260,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+             //       val userMessage = jsonObject.getString("error")
+              //      val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     fcmResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -297,9 +299,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                  //  val userMessage = jsonObject.getString("error")
+               //     val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     lectureResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -336,9 +338,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                 //   val userMessage = jsonObject.getString("error")
+                  //  val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     courseLectureResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -377,7 +379,7 @@ class HomeRepository private constructor() {
                     jsonObject = JSONObject(response.errorBody()!!.string())
                     //         val userMessage = jsonObject.getString("error")
                     //          val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError("")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     sessionResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -414,9 +416,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                  //  val userMessage = jsonObject.getString("error")
+                   // val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     deviceIdResponse.value = response.body()
                     mCallback.onNetworkSuccess()
@@ -453,9 +455,9 @@ class HomeRepository private constructor() {
                 if (response.code() != 200) {
                     val jsonObject: JSONObject?
                     jsonObject = JSONObject(response.errorBody()!!.string())
-                    val userMessage = jsonObject.getString("error")
-                    val internalMessage = jsonObject.getString("error_description")
-                    mCallback.onResponseError(internalMessage)
+                //    val userMessage = jsonObject.getString("error")
+               //     val internalMessage = jsonObject.getString("error_description")
+                    mCallback.onResponseError("un Expected Error")
                 } else {
                     attachmentResponse.value = response.body()
                     mCallback.onNetworkSuccess()

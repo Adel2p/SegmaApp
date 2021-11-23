@@ -69,6 +69,7 @@ open class BaseActivity : AppCompatActivity() {
 
     @SuppressLint("HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
@@ -78,8 +79,6 @@ open class BaseActivity : AppCompatActivity() {
             window.attributes.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
-        super.onCreate(savedInstanceState)
-
         deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         userPreferences = UserPreferences(this)
 
@@ -240,11 +239,11 @@ open class BaseActivity : AppCompatActivity() {
         val filter2 = IntentFilter()
         filter2.addAction(AudioManager.ACTION_HDMI_AUDIO_PLUG)
         registerReceiver(eventReceiver, filter2)
-//        if (
-//            Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
+        if (
+            Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
     }
 
     class DiscoveryFragment : MediaRouteDiscoveryFragment() {

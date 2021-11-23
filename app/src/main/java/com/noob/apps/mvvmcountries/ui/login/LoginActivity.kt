@@ -182,6 +182,44 @@ class LoginActivity : BaseActivity() {
                         .show(supportFragmentManager, BlockUserDialog.TAG)
                 }
             }
+        SafetyNet.getClient(this)
+            .listHarmfulApps()
+            .addOnCompleteListener { task ->
+                Log.d(TAG, "Received listHarmfulApps() result")
+
+                if (task.isSuccessful) {
+                    val result = task.result
+                    val scanTimeMs = result.lastScanTimeMs
+
+                    val appList = result.harmfulAppsList
+                    if (appList.isNotEmpty()) {
+                        BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
+
+                        for (harmfulApp in appList) {
+                            Log.e("MY_APP_TAG", "Information about a harmful app:")
+                            Log.e("MY_APP_TAG", "  APK: ${harmfulApp.apkPackageName}")
+                            Log.e("MY_APP_TAG", "  SHA-256: ${harmfulApp.apkSha256}")
+
+                            // Categories are defined in VerifyAppsConstants.
+                            Log.e("MY_APP_TAG", "  Category: ${harmfulApp.apkCategory}")
+                        }
+                    } else {
+                        Log.d(
+                            "MY_APP_TAG",
+                            "There are no known potentially harmful apps installed."
+                        )
+                    }
+                } else {
+                    Log.d(
+                        "MY_APP_TAG",
+                        "An error occurred. Call isVerifyAppsEnabled() to ensure that the user "
+                                + "has consented."
+                    )
+                    BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+                }
+            }
     }
 
     private fun checkValidation(): Boolean {

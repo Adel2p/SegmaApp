@@ -17,5 +17,4 @@ data class Course(
     val facebook: String,
     val attachments: List<Attachments>,
     val lecturesCount: String,
-
 ) : Serializable

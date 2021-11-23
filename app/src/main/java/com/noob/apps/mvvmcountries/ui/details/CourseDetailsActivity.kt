@@ -36,7 +36,6 @@ import com.noob.apps.mvvmcountries.databinding.ActivityCourseDetailsBinding
 import com.noob.apps.mvvmcountries.databinding.CallDialogBinding
 import com.noob.apps.mvvmcountries.databinding.InvalidWatchDialogBinding
 import com.noob.apps.mvvmcountries.models.*
-import com.noob.apps.mvvmcountries.ui.base.BaseActivity
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
@@ -62,7 +61,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     private lateinit var mAdapter: CourseLectureAdapter
     private lateinit var course: Course
     private var courseLectures: MutableList<LectureDetails> = mutableListOf()
-    private var eligibleToWatch = false
+    private var eligibleToWatch = true
     private val resolutions: MutableList<Files> = mutableListOf()
     private lateinit var lectureResponse: LectureDetails
     private lateinit var courseViewModel: CourseViewModel
@@ -395,19 +394,24 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     private fun readValues() {
-        val i = intent
-        course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
-        eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
-        mActivityBinding.txtLecId.text = course.name
-        mActivityBinding.txtLecNum.text = course.lecturesCount
-        mActivityBinding.price.text = course.price.toString() + " " + getString(R.string.pound)
+        try {
+            val i = intent
+            course = i.getSerializableExtra(Constant.SELECTED_COURSE) as Course
+            eligibleToWatch = i.getBooleanExtra(Constant.ELIGIBLE_TO_WATCH, false)
+            mActivityBinding.txtLecId.text = course.name
+            mActivityBinding.txtLecNum.text = course.lecturesCount
+            mActivityBinding.price.text = course.price.toString() + " " + getString(R.string.pound)
+        } catch (e: Exception) {
+            e.message
+        }
+
     }
 
     private fun getCourseLecture(lecId: String) {
         courseViewModel.getCourseLecture(token, lecId)
         courseViewModel.courseLectureResponse.observeOnce(this, { kt ->
             if (kt != null) {
-                courseLectures=kt.data.toMutableList()
+                courseLectures = kt.data.toMutableList()
                 mAdapter.setData(kt.data)
             }
         })
@@ -792,8 +796,8 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
             }
             mMediaRouter = MediaRouter.getInstance(this)
             val fm = supportFragmentManager
-            val fragment: BaseActivity.DiscoveryFragment?
-            fragment = BaseActivity.DiscoveryFragment()
+            val fragment: DiscoveryFragment?
+            fragment = DiscoveryFragment()
             fragment.setCallback(mMediaRouterCB)
             fm.beginTransaction().add(fragment, DISCOVERY_FRAGMENT_TAG).commit()
         }
@@ -805,27 +809,27 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
 
     override fun onPause() {
         super.onPause()
-        if (player != null) {
-            player!!.playWhenReady = false
-            player!!.stop()
-            lastDuration = (totalTime / 1000) % 60
-            if (lastLecId.isNotEmpty() && duration != 0) {
-                isBack = true
-                val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
-                roomViewModel.updateLecture(lecture)
-                val progress = (duration * 10) / 100
-                if (mPlayDurationInSec >= progress) {
-                    if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
-                    )
+        try {
+            if (player != null) {
+                player!!.playWhenReady = false
+                player!!.stop()
+                lastDuration = (totalTime / 1000) % 60
+                if (lastLecId.isNotEmpty() && duration != 0) {
+                    isBack = true
+                    val lecture = WatchedLectures(selectedLectureId, player!!.currentPosition)
+                    roomViewModel.updateLecture(lecture)
+                    val progress = (duration * 10) / 100
+                    if (mPlayDurationInSec >= progress) {
+                        if (course.lectures?.get(selectedPosition)?.studentSessions!!.isEmpty()
+                        )
 
-                        initAddSession(lastLecId)
+                            initAddSession(lastLecId)
+                    }
                 }
-
-
             }
-//        if (Util.SDK_INT < 24) {
-//            releasePlayer()
-//        }
+
+        } catch (e: Exception) {
+            e.message
         }
 
     }

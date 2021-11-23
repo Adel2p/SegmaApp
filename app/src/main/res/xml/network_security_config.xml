@@ -1,10 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">http://playerservices.streamtheworld.com/api/livestream-redirect/SUNO917.mp3</domain>
-        <domain includeSubdomains="true">http://playerservices.streamtheworld.com/api/livestream-redirect/OLIVE1063.mp3</domain>
-        <domain includeSubdomains="true">http://20103.live.streamtheworld.com/SUNO917.mp3</domain>
-        <domain includeSubdomains="true">http://19073.live.streamtheworld.com/OLIVE1063.mp3</domain>
-
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">secure.example.com</domain>
+        ...
     </domain-config>
 </network-security-config>
