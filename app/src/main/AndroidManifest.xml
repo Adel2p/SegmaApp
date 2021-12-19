@@ -16,9 +16,12 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/segma_icon"
         android:supportsRtl="true"
+        android:allowBackup="true"
+        android:hasFragileUserData="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="q">
         <activity
             android:name=".ui.details.WebActivity"
             android:exported="false" />

@@ -16,12 +16,10 @@ import com.noob.apps.mvvmcountries.adapters.TermAdapter
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
 import com.noob.apps.mvvmcountries.data.DatabaseHelperImpl
 import com.noob.apps.mvvmcountries.data.RoomViewModel
-import com.noob.apps.mvvmcountries.databinding.ActivityHomeBinding
 import com.noob.apps.mvvmcountries.databinding.ActivityUniversityBinding
 import com.noob.apps.mvvmcountries.models.BoardingRequest
 import com.noob.apps.mvvmcountries.models.Collage
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity
-import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
@@ -118,7 +116,7 @@ class UniversityActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         mActivityBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_university)
-        mViewModel = ViewModelProvider(this).get(UniversityViewModel::class.java)
+        mViewModel = ViewModelProvider(this)[UniversityViewModel::class.java]
 
         roomViewModel = ViewModelProvider(
             this,
@@ -126,7 +124,7 @@ class UniversityActivity : BaseActivity() {
                 application,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
-        ).get(RoomViewModel::class.java)
+        )[RoomViewModel::class.java]
 
         mActivityBinding.collageSp.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {

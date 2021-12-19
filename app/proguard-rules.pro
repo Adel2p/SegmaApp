@@ -19,3 +19,11 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-keepclassmembers,allowobfuscation class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}
+-keep public class com.noob.apps.mvvmcountries.models.** {*;}
+
