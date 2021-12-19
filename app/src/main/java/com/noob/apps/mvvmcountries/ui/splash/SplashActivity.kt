@@ -1,5 +1,6 @@
 package com.noob.apps.mvvmcountries.ui.splash
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,10 @@ import android.telephony.TelephonyManager
 import android.hardware.display.DisplayManager
 import android.provider.Settings
 import android.view.Display
+import com.noob.apps.mvvmcountries.utils.DeviceUtils
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import kotlin.system.exitProcess
 
 
 class SplashActivity : BaseActivity() {
@@ -61,8 +66,11 @@ class SplashActivity : BaseActivity() {
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
-        if (isEmulator()) {
+        if (isEmulator())
             return BlockUserDialog.newInstance("App can't run on Emulators")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        if (checkRootMethod3()) {
+            return BlockUserDialog.newInstance("App can't run on RootedDevice")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         } else {
             userPreferences.savedLogginedFlow.asLiveData().observeOnce(this, {
@@ -171,5 +179,16 @@ class SplashActivity : BaseActivity() {
 
     }
 
-
+    private fun checkRootMethod3(): Boolean {
+        var process: Process? = null
+        return try {
+            process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
+            val `in` = BufferedReader(InputStreamReader(process.inputStream))
+            `in`.readLine() != null
+        } catch (t: Throwable) {
+            false
+        } finally {
+            process?.destroy()
+        }
+    }
 }

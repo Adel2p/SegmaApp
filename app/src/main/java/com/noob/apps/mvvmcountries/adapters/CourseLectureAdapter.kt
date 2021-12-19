@@ -14,17 +14,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.databinding.LecturesCourseCellBinding
 import com.noob.apps.mvvmcountries.models.LectureDetails
-import com.noob.apps.mvvmcountries.models.Lectures
+import com.noob.apps.mvvmcountries.models.User
+import com.noob.apps.mvvmcountries.utils.AESUtils
 import kotlinx.android.extensions.LayoutContainer
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
-class CourseLectureAdapter(
+class CourseLectureAdapter(user: User,
     context: Context,
     private val listener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<CourseLectureAdapter.ViewHolder>() {
     private var mList: List<LectureDetails>? = listOf()
     private var lastPosition = -1
     private var mContext: Context = context
+    private var mUser: User = user
 
     fun setData(list: List<LectureDetails>) {
         mList = list
@@ -89,11 +93,22 @@ class CourseLectureAdapter(
         //   holder.itemBinding.number.text = number.toString() + "_"
         //  holder.itemBinding.number.visibility = View.INVISIBLE
         val jsonObject: JSONObject?
-        jsonObject = JSONObject(mList!![position].resolutions)
-        val duration = jsonObject.getString("duration")
-        val minutes: Long = (duration.toLong() / 60)
-        holder.itemBinding.duration.text =
-            minutes.toString() + " " + mContext.resources.getString(R.string.mintes)
+        val currentDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        val x = AESUtils.decrypt(
+            mList!![position].resolutions,
+            mUser.user_mobile_number,
+            mUser.user_email,
+            mUser.user_uuid, currentDate
+        )
+        jsonObject = JSONObject(x)
+        try {
+            val duration = jsonObject.getString("duration")
+            val minutes: Long = (duration.toLong() / 60)
+            holder.itemBinding.duration.text =
+                minutes.toString() + " " + mContext.resources.getString(R.string.mintes)
+        } catch (e: Exception) {
+            e.message
+        }
 
 
     }

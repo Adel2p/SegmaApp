@@ -12,10 +12,7 @@ import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
 
 class ViewModelFactory(private val app: Application, private val dbHelper: DatabaseHelper) :
     ViewModelProvider.Factory {
-
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-
-
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
             return SplashViewModel(app, dbHelper) as T
         }

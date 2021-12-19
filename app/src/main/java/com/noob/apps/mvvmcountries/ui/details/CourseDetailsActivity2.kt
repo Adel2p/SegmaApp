@@ -157,12 +157,12 @@ class CourseDetailsActivity2 : BaseActivity(), RecyclerViewClickListener,
     }
 
     private fun initializeRecyclerView() {
-        mAdapter = CourseLectureAdapter(this, this)
-        mActivityBinding.lectureRv.apply {
-            setHasFixedSize(true)
-            layoutManager = GridLayoutManager(this@CourseDetailsActivity2, 1)
-            adapter = mAdapter
-        }
+//        mAdapter = CourseLectureAdapter(this, this)
+//        mActivityBinding.lectureRv.apply {
+//            setHasFixedSize(true)
+//            layoutManager = GridLayoutManager(this@CourseDetailsActivity2, 1)
+//            adapter = mAdapter
+//        }
     }
 
     private fun initializePlayer() {

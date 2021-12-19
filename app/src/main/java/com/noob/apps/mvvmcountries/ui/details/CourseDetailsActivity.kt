@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Point
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
@@ -39,6 +41,7 @@ import com.noob.apps.mvvmcountries.models.*
 import com.noob.apps.mvvmcountries.ui.base.BaseActivity2
 import com.noob.apps.mvvmcountries.ui.dialog.ConnectionDialogFragment
 import com.noob.apps.mvvmcountries.ui.dialog.LectureWatchDialog
+import com.noob.apps.mvvmcountries.utils.AESUtils
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
@@ -214,7 +217,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         initViewModel()
         readValues()
         initView()
-        initializeRecyclerView()
         userPreferences.getUserId.asLiveData().observeOnce(this, {
             if (it != null) {
                 userId = it
@@ -222,6 +224,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     .observeOnce(this, { result ->
                         if (result != null && result.size > 0) {
                             user = result[0]
+                            initializeRecyclerView()
                             token = "Bearer " + result[0].access_token.toString()
                             mActivityBinding.mobileNumber.text = user.user_mobile_number
                             getCourseLecture(course.uuid)
@@ -419,9 +422,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         })
         courseViewModel.mShowProgressBar.observe(this, { bt ->
             if (bt) {
-                showLoader()
+           //     showLoader()
             } else {
-                hideLoader()
+            //    hideLoader()
             }
 
         })
@@ -444,23 +447,22 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 application,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(this))
             )
-        ).get(CourseViewModel::class.java)
+        )[CourseViewModel::class.java]
         roomViewModel = ViewModelProvider(
             this,
             ViewModelFactory(
                 application,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(this))
             )
-        ).get(RoomViewModel::class.java)
+        )[RoomViewModel::class.java]
         roomViewModel.getLectures()
             .observe(this, { result ->
                 lecturesDB = result
             })
-
     }
 
     private fun initializeRecyclerView() {
-        mAdapter = CourseLectureAdapter(this, this)
+        mAdapter = CourseLectureAdapter(user,this, this)
         mActivityBinding.lectureRv.apply {
             setHasFixedSize(true)
             mActivityBinding.lectureRv.isNestedScrollingEnabled = false
@@ -597,6 +599,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         initAddSession(selectedLectureId)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initLectureInfo(lecId: String) {
         selectedLectureId = lecId
         courseViewModel.getLectureInfo(token, lecId)
@@ -675,11 +678,19 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun getResolutions(kt: LectureDetailsResponse) {
         resolutions.clear()
         lectureResponse = kt.data
         val jsonObject: JSONObject?
-        jsonObject = JSONObject(kt.data.resolutions)
+        val currentDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        val x = AESUtils.decrypt(
+            kt.data.resolutions,
+            user.user_mobile_number,
+            user.user_email,
+            user.user_uuid,currentDate
+        )
+        jsonObject = JSONObject(x)
         duration = jsonObject.getString("duration").toInt()
         val files: JSONArray = jsonObject.getJSONArray("files")
         for (i in 0 until files.length()) {

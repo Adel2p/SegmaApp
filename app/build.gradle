@@ -18,14 +18,14 @@ android {
         applicationId "com.smart.sigma"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 8
-        versionName "1.8"
+        versionCode 9
+        versionName "1.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
