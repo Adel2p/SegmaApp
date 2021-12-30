@@ -11,5 +11,6 @@ data class LectureDetails(
     val actualSessions: Int,
     val resolutions: String,
     val publicWatch: Boolean,
+    val  duration:String,
     val studentSessions: List<StudentSessions>
 ) : Serializable

@@ -15,7 +15,9 @@ interface ApiServices {
         @Header("Authorization") Authorization: String?,
         @Field("grant_type") grant_type: String?,
         @Field("username") username: String?,
-        @Field("password") password: String?
+        @Field("password") password: String?,
+        @Field("deviceId") deviceId: String?
+
     ): Call<LoginResponse>
 
     @GET("category/UNIVERSITY/fields")

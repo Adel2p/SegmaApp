@@ -138,7 +138,7 @@ class VerifyOtpActivity : BaseActivity() {
             )
         ).get(LoginViewModel::class.java)
 
-        loginViewModel.fetchCountriesFromServer(mobileNumber, password)
+        loginViewModel.fetchCountriesFromServer(mobileNumber, password,deviceId)
             .observeOnce(this, { user ->
                 if (user != null) {
                     lifecycleScope.launch {

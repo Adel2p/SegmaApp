@@ -21,7 +21,8 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CourseLectureAdapter(user: User,
+class CourseLectureAdapter(
+    user: User,
     context: Context,
     private val listener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<CourseLectureAdapter.ViewHolder>() {
@@ -94,20 +95,25 @@ class CourseLectureAdapter(user: User,
         //  holder.itemBinding.number.visibility = View.INVISIBLE
         val jsonObject: JSONObject?
         val currentDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
-        val x = AESUtils.decrypt(
-            mList!![position].resolutions,
-            mUser.user_mobile_number,
-            mUser.user_email,
-            mUser.user_uuid, currentDate
-        )
-        jsonObject = JSONObject(x)
-        try {
-            val duration = jsonObject.getString("duration")
-            val minutes: Long = (duration.toLong() / 60)
-            holder.itemBinding.duration.text =
-                minutes.toString() + " " + mContext.resources.getString(R.string.mintes)
-        } catch (e: Exception) {
-            e.message
+        val minutes: Long = ( mList!![position].duration.toLong() / 60)
+        holder.itemBinding.duration.text =
+            minutes.toString() + " " + mContext.resources.getString(R.string.mintes)
+        if (mList!![position].resolutions != null) {
+            val x = AESUtils.decrypt(
+                mList!![position].resolutions,
+                mUser.user_mobile_number,
+                mUser.user_email,
+                mUser.user_uuid, currentDate
+            )
+            jsonObject = JSONObject(x)
+            try {
+                val duration = jsonObject.getString("duration")
+                val minutes: Long = (duration.toLong() / 60)
+                holder.itemBinding.duration.text =
+                    minutes.toString() + " " + mContext.resources.getString(R.string.mintes)
+            } catch (e: Exception) {
+                e.message
+            }
         }
 
 

@@ -42,7 +42,7 @@ class LoginRepository private constructor() {
 
     fun login(
         dbHelper: DatabaseHelper,
-        mobile: String, password: String,
+        mobile: String, password: String,deviceId:String,
         callback: NetworkResponseCallback,
     ): MutableLiveData<LoginResponse> {
         mCallback = callback
@@ -51,7 +51,7 @@ class LoginRepository private constructor() {
             loginResponse = MutableLiveData()
         }
         mUserCall = RestClient.getInstance().getApiService()
-            .userLogin("Basic U2lnbWEtTW9iaWxlOjEyMzQ1Ng==", "password", mobile, password)
+            .userLogin("Basic U2lnbWEtTW9iaWxlOjEyMzQ1Ng==", "password", mobile, password,deviceId)
         mUserCall.enqueue(object : Callback<LoginResponse> {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {

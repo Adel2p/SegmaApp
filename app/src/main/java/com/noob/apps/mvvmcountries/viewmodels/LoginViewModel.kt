@@ -24,10 +24,10 @@ class LoginViewModel(
     val mShowResponseError = MutableLiveData<String>()
     private var mRepository = LoginRepository.getInstance()
 
-    fun fetchCountriesFromServer(mobile: String, password: String): MutableLiveData<LoginResponse> {
+    fun fetchCountriesFromServer(mobile: String, password: String,deviceId:String): MutableLiveData<LoginResponse> {
         if (NetworkHelper.isOnline(app.baseContext)) {
             mShowProgressBar.value = true
-            user = mRepository.login(dbHelper, mobile, password, object : NetworkResponseCallback {
+            user = mRepository.login(dbHelper, mobile, password,deviceId, object : NetworkResponseCallback {
                 override fun onNetworkFailure(th: Throwable) {
                     mShowApiError.value = th.message
                 }
@@ -48,6 +48,7 @@ class LoginViewModel(
         }
         return user
     }
+
     fun getStudentInfo(token: String) {
         if (NetworkHelper.isOnline(app.baseContext)) {
             mShowProgressBar.value = true

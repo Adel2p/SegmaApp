@@ -422,9 +422,9 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         })
         courseViewModel.mShowProgressBar.observe(this, { bt ->
             if (bt) {
-           //     showLoader()
+                //     showLoader()
             } else {
-            //    hideLoader()
+                //    hideLoader()
             }
 
         })
@@ -462,7 +462,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     private fun initializeRecyclerView() {
-        mAdapter = CourseLectureAdapter(user,this, this)
+        mAdapter = CourseLectureAdapter(user, this, this)
         mActivityBinding.lectureRv.apply {
             setHasFixedSize(true)
             mActivityBinding.lectureRv.isNestedScrollingEnabled = false
@@ -567,7 +567,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 }
             }
             if (eligibleToWatch) {
-                courseLectures[position].let { initLectureInfo(it.uuid) }
+                initLectureInfo(courseLectures[position].uuid)
             }
         }
 
@@ -684,23 +684,25 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
         lectureResponse = kt.data
         val jsonObject: JSONObject?
         val currentDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
-        val x = AESUtils.decrypt(
-            kt.data.resolutions,
-            user.user_mobile_number,
-            user.user_email,
-            user.user_uuid,currentDate
-        )
-        jsonObject = JSONObject(x)
-        duration = jsonObject.getString("duration").toInt()
-        val files: JSONArray = jsonObject.getJSONArray("files")
-        for (i in 0 until files.length()) {
-            val winspeed = files.getString(i)
-            val jsonObject: JSONObject?
-            jsonObject = JSONObject(winspeed)
-            resolutions.add(
-                i,
-                Files(jsonObject.getString("quality"), jsonObject.getString("link"))
+        if (kt.data.resolutions != null) {
+            val x = AESUtils.decrypt(
+                kt.data.resolutions,
+                user.user_mobile_number,
+                user.user_email,
+                user.user_uuid, currentDate
             )
+            jsonObject = JSONObject(x)
+            duration = jsonObject.getString("duration").toInt()
+            val files: JSONArray = jsonObject.getJSONArray("files")
+            for (i in 0 until files.length()) {
+                val winspeed = files.getString(i)
+                val jsonObject: JSONObject?
+                jsonObject = JSONObject(winspeed)
+                resolutions.add(
+                    i,
+                    Files(jsonObject.getString("quality"), jsonObject.getString("link"))
+                )
+            }
         }
     }
 

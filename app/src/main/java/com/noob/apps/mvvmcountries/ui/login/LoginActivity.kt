@@ -3,11 +3,12 @@ package com.noob.apps.mvvmcountries.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import androidx.mediarouter.media.MediaRouter
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.safetynet.SafetyNet
 import com.noob.apps.mvvmcountries.R
 import com.noob.apps.mvvmcountries.data.DatabaseBuilder
@@ -28,6 +29,10 @@ import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.LoginViewModel
 import com.noob.apps.mvvmcountries.viewmodels.SharedViewModel
 import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.security.SecureRandom
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : BaseActivity() {
@@ -42,6 +47,8 @@ class LoginActivity : BaseActivity() {
     private var mMediaRouter: MediaRouter? = null
     private val DISCOVERY_FRAGMENT_TAG = "DiscoveryFragment"
     private var token = ""
+    private val mRandom: Random = SecureRandom()
+
 
     private val mMediaRouterCB: MediaRouter.Callback = object : MediaRouter.Callback() {
         override fun onRouteAdded(router: MediaRouter, route: MediaRouter.RouteInfo) {
@@ -164,7 +171,36 @@ class LoginActivity : BaseActivity() {
             //     if (token.isNotEmpty())
             //  initInfoObservers()
         })
+        val nonceData = "Safety Net Sample: " + System.currentTimeMillis()
+        val nonce: ByteArray? = getRequestNonce(nonceData)
+        if (nonce != null) {
+            SafetyNet.getClient(this).attest(nonce, "AIzaSyA9b2exp1IUKZtmdqxYjqTDfiqfoHSkmK0")
+                .addOnSuccessListener(this) {
+                    // Indicates communication with the service was successful.
+                    // Use response.getJwsResult() to get the result data.
+                }
+                .addOnFailureListener(this) { e ->
+                    // An error occurred while communicating with the service.
+                    if (e is ApiException) {
+                        // An error with the Google Play services API contains some
+                        // additional details.
+                        val apiException = e as ApiException
 
+                        // You can retrieve the status code using the
+                        // apiException.statusCode property.
+                        BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
+                    } else {
+                        // A different, unknown type of error occurred.
+                        Log.d(
+                            TAG,
+                            "Error=${e.message}"
+                        )
+                        BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                            .show(supportFragmentManager, BlockUserDialog.TAG)
+                    }
+                }
+        }
         SafetyNet.getClient(this)
             .isVerifyAppsEnabled
             .addOnCompleteListener { task ->
@@ -193,7 +229,7 @@ class LoginActivity : BaseActivity() {
 
                     val appList = result.harmfulAppsList
                     if (appList.isNotEmpty()) {
-                        BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                        BlockUserDialog.newInstance("please remove harmful app from your phone")
                             .show(supportFragmentManager, BlockUserDialog.TAG)
 
                         for (harmfulApp in appList) {
@@ -216,10 +252,23 @@ class LoginActivity : BaseActivity() {
                         "An error occurred. Call isVerifyAppsEnabled() to ensure that the user "
                                 + "has consented."
                     )
-                    BlockUserDialog.newInstance("App not working on Disable Flag Secure")
+                    BlockUserDialog.newInstance("please remove harmful app from your phone")
                         .show(supportFragmentManager, BlockUserDialog.TAG)
                 }
             }
+    }
+
+    private fun getRequestNonce(data: String): ByteArray? {
+        val byteStream = ByteArrayOutputStream()
+        val bytes = ByteArray(24)
+        mRandom.nextBytes(bytes)
+        try {
+            byteStream.write(bytes)
+            byteStream.write(data.toByteArray())
+        } catch (e: IOException) {
+            return null
+        }
+        return byteStream.toByteArray()
     }
 
     private fun checkValidation(): Boolean {
@@ -236,7 +285,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun initializeObservers() {
-        mViewModel.fetchCountriesFromServer(mobileNumber, password)
+        mViewModel.fetchCountriesFromServer(mobileNumber, password, deviceId)
             .observeOnce(this, { user ->
                 if (user != null) {
 //                    if (token.isEmpty() && user.user_device_id != deviceId)

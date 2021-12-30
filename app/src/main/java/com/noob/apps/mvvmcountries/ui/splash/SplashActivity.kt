@@ -1,8 +1,9 @@
 package com.noob.apps.mvvmcountries.ui.splash
 
-import android.app.AlertDialog
 import android.content.Intent
+import android.hardware.display.DisplayManager
 import android.os.Bundle
+import android.view.Display
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.noob.apps.mvvmcountries.R
@@ -18,17 +19,11 @@ import com.noob.apps.mvvmcountries.ui.welcome.UniversityActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.SplashViewModel
+import com.scottyab.rootbeer.RootBeer
 import kotlinx.coroutines.*
-import java.util.concurrent.TimeUnit
-import android.bluetooth.BluetoothAdapter
-import android.telephony.TelephonyManager
-import android.hardware.display.DisplayManager
-import android.provider.Settings
-import android.view.Display
-import com.noob.apps.mvvmcountries.utils.DeviceUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import kotlin.system.exitProcess
+import java.util.concurrent.TimeUnit
 
 
 class SplashActivity : BaseActivity() {
@@ -52,17 +47,17 @@ class SplashActivity : BaseActivity() {
                 application,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
-        ).get(SplashViewModel::class.java)
+        )[SplashViewModel::class.java]
 
 //        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 //        if (mBluetoothAdapter.isEnabled) {
 //            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
 //                .show(supportFragmentManager, BlockUserDialog.TAG)
 //        }
-        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-                .show(supportFragmentManager, BlockUserDialog.TAG)
-        }
+//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+//                .show(supportFragmentManager, BlockUserDialog.TAG)
+//        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
@@ -70,6 +65,11 @@ class SplashActivity : BaseActivity() {
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         if (checkRootMethod3()) {
+            return BlockUserDialog.newInstance("App can't run on RootedDevice")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
+        val rootBeer = RootBeer(this)
+        if (rootBeer.isRooted) {
             return BlockUserDialog.newInstance("App can't run on RootedDevice")
                 .show(supportFragmentManager, BlockUserDialog.TAG)
         } else {

@@ -5,33 +5,30 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.kaopiz.kprogresshud.KProgressHUD
-import com.noob.apps.mvvmcountries.data.UserPreferences
 import androidx.lifecycle.asLiveData
-import com.framgia.android.emulator.EmulatorDetector
-import java.io.File
-import java.util.*
-import android.content.Intent
-import android.content.IntentFilter
-import android.media.AudioManager
-import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import androidx.mediarouter.app.MediaRouteDiscoveryFragment
 import androidx.mediarouter.media.MediaRouter
+import com.framgia.android.emulator.EmulatorDetector
+import com.kaopiz.kprogresshud.KProgressHUD
+import com.noob.apps.mvvmcountries.data.UserPreferences
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.MirroringDialog
-import com.noob.apps.mvvmcountries.ui.splash.SplashActivity
 import com.noob.apps.mvvmcountries.utils.SystemProperties
-import java.security.AccessController.getContext
+import java.io.File
+import java.util.*
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -97,6 +94,7 @@ open class BaseActivity : AppCompatActivity() {
                 createConfigurationContext(config)
             resources.updateConfiguration(config, resources.displayMetrics)
         })
+
 
     }
 
@@ -236,6 +234,15 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        EmulatorDetector.with(this)
+            .setCheckTelephony(true)
+            .addPackageName("com.bluestacks")
+            .setDebug(true)
+            .detect {
+                if (it)
+                    return@detect BlockUserDialog.newInstance("App can't run on Emulators")
+                        .show(supportFragmentManager, BlockUserDialog.TAG)
+            }
         val filter2 = IntentFilter()
         filter2.addAction(AudioManager.ACTION_HDMI_AUDIO_PLUG)
         registerReceiver(eventReceiver, filter2)

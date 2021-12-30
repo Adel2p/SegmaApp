@@ -28,6 +28,7 @@ import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
 import com.noob.apps.mvvmcountries.viewmodels.CourseViewModel
+import com.scottyab.rootbeer.RootBeer
 import kotlinx.coroutines.launch
 
 
@@ -74,9 +75,14 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                 requireActivity().application,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext()))
             )
-        ).get(CourseViewModel::class.java)
+        )[CourseViewModel::class.java]
         initializeRecyclerView()
-        getData()
+        val rootBeer = RootBeer(context)
+        if (rootBeer.isRooted) {
+            return BlockUserDialog.newInstance("App can't run on RootedDevice")
+                .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+        } else
+            getData()
 //        userPreferences.getFCMToken.asLiveData().observeOnce(viewLifecycleOwner, {
 //            fcmToken = it
 //
@@ -167,9 +173,9 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                 if (kt.data.deviceId == null) {
                     addDeviceId()
                 }
-                if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
-                    BlockUserDialog.newInstance("App installed on other device")
-                        .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+                //  if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
+                //     BlockUserDialog.newInstance("App installed on other device")
+                //         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
             }
         })
         courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {

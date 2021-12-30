@@ -3,7 +3,6 @@ package com.noob.apps.mvvmcountries.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.noob.apps.mvvmcountries.data.DatabaseHelper
 import com.noob.apps.mvvmcountries.interfaces.NetworkResponseCallback
 import com.noob.apps.mvvmcountries.models.*
