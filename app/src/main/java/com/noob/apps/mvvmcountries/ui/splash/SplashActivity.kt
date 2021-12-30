@@ -3,6 +3,7 @@ package com.noob.apps.mvvmcountries.ui.splash
 import android.content.Intent
 import android.hardware.display.DisplayManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Display
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -54,10 +55,10 @@ class SplashActivity : BaseActivity() {
 //            return BlockUserDialog.newInstance("Please turn off Bluetooth\n")
 //                .show(supportFragmentManager, BlockUserDialog.TAG)
 //        }
-//        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
-//            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
-//                .show(supportFragmentManager, BlockUserDialog.TAG)
-//        }
+        if (Settings.Secure.getInt(contentResolver, Settings.Secure.ADB_ENABLED, 0) == 1) {
+            return BlockUserDialog.newInstance("Please turn off usb debugging\n")
+                .show(supportFragmentManager, BlockUserDialog.TAG)
+        }
         if (checkEmulatorFiles())
             return BlockUserDialog.newInstance("App can't run on Emulators")
                 .show(supportFragmentManager, BlockUserDialog.TAG)

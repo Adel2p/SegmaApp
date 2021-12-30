@@ -18,12 +18,14 @@ import com.noob.apps.mvvmcountries.databinding.FragmentMoreBinding
 import com.noob.apps.mvvmcountries.models.User
 import com.noob.apps.mvvmcountries.ui.base.BaseFragment
 import com.noob.apps.mvvmcountries.ui.dialog.AboutSegmaDialog
+import com.noob.apps.mvvmcountries.ui.dialog.BlockUserDialog
 import com.noob.apps.mvvmcountries.ui.dialog.LanguageBottomDialog
 import com.noob.apps.mvvmcountries.ui.dialog.NotificationSettingDialog
 import com.noob.apps.mvvmcountries.ui.login.LoginActivity
 import com.noob.apps.mvvmcountries.ui.profile.ProfileActivity
 import com.noob.apps.mvvmcountries.utils.Constant
 import com.noob.apps.mvvmcountries.utils.ViewModelFactory
+import com.scottyab.rootbeer.RootBeer
 import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
@@ -72,13 +74,19 @@ class MoreFragment : BaseFragment() {
                 requireActivity().application,
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext().applicationContext))
             )
-        ).get(RoomViewModel::class.java)
-        roomViewModel.findUser(userId)
-            .observe(requireActivity(), { result ->
-                user = result[0]
-                mActivityBinding.txtStudentName.text = user.user_name
-                mActivityBinding.txtStudentNumber.text = user.user_mobile_number
-            })
+        )[RoomViewModel::class.java]
+        val rootBeer = RootBeer(context)
+        if (rootBeer.isRooted) {
+            return BlockUserDialog.newInstance("App can't run on RootedDevice")
+                .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+        } else {
+            roomViewModel.findUser(userId)
+                .observe(requireActivity(), { result ->
+                    user = result[0]
+                    mActivityBinding.txtStudentName.text = user.user_name
+                    mActivityBinding.txtStudentNumber.text = user.user_mobile_number
+                })
+        }
 
         mActivityBinding.txtFavoriteLec.setOnClickListener {
             activity?.let {
