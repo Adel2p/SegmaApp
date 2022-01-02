@@ -173,9 +173,9 @@ class HomeFragment : BaseFragment(), RecyclerViewClickListener {
                 if (kt.data.deviceId == null) {
                     addDeviceId()
                 }
-                //  if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
-                //     BlockUserDialog.newInstance("App installed on other device")
-                //         .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
+                if (kt.data.deviceId != null && kt.data.deviceId != deviceId)
+                    BlockUserDialog.newInstance("App installed on other device")
+                        .show(requireActivity().supportFragmentManager, BlockUserDialog.TAG)
             }
         })
         courseViewModel.mShowResponseError.observeOnce(viewLifecycleOwner, {

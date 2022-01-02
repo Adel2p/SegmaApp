@@ -105,8 +105,8 @@ class CourseLectureAdapter(
                 mUser.user_email,
                 mUser.user_uuid, currentDate
             )
-            jsonObject = JSONObject(x)
             try {
+                jsonObject = JSONObject(x)
                 val duration = jsonObject.getString("duration")
                 val minutes: Long = (duration.toLong() / 60)
                 holder.itemBinding.duration.text =

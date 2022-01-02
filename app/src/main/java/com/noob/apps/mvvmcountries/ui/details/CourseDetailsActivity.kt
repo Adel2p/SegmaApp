@@ -513,6 +513,8 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
     }
 
     private fun startAnimation() {
+        val rand = Random()
+        //   val randomNum: Int = rand.nextInt(10000 - 4000 + 1) + 4000
         val display: Display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
@@ -528,7 +530,6 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     val R = Random()
                     val dx = R.nextFloat() * width
                     val dy = R.nextFloat() * 450
-                    val timer = Timer()
                     mActivityBinding.mobileNumber.animate()
                         .x(dx)
                         .y(dy)
@@ -536,7 +537,7 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                         .start()
                 }
             }
-        }, 0, 6000)
+        }, 0, rand.nextInt(10000-2000+1000 ) + 2000.toLong())
     }
 
 
@@ -660,7 +661,8 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                 endTime = getStartDate(sessionTimeout)
                 printDifferenceDateForHours(startTime, endTime)
             }
-            createMediaItem(resolutions[0].link)
+            if (resolutions.size > 0)
+                createMediaItem(resolutions[0].link)
         } else if (
             lectureResponse.actualSessions <= lectureResponse.allowedSessions
         ) {
@@ -703,7 +705,8 @@ class CourseDetailsActivity : BaseActivity2(), RecyclerViewClickListener,
                     Files(jsonObject.getString("quality"), jsonObject.getString("link"))
                 )
             }
-        }
+        } else
+            invalidWatchDialog(getString(R.string.excced_watch))
     }
 
     private fun initAddSession(lecId: String) {
